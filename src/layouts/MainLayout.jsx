@@ -24,6 +24,7 @@ const MainLayout = () => {
     { key: 'history', path: 'historia' },
     { key: 'artists', path: 'artistas' },
     { key: 'restaurant', path: 'restaurante' },
+    { key: 'b2b', path: 'agencias' },
     { key: 'contact', path: 'contacto' }
   ];
 
@@ -66,8 +67,8 @@ const MainLayout = () => {
                })}
             </div>
           </div>
-          <Link to="/contacto" className="hidden lg:block btn-gold shadow-[0_0_20px_rgba(212,175,55,0.15)]">
-            Vivir la Experiencia
+          <Link to="/contacto" className="hidden lg:block btn-gold rounded-xl shadow-[0_0_20px_rgba(212,175,55,0.15)]">
+            {t('hero.cta') || 'Reserva tu Mesa'}
           </Link>
           
           <button 
@@ -123,9 +124,9 @@ const MainLayout = () => {
                  <Link 
                    to="/contacto" 
                    onClick={() => setIsMenuOpen(false)}
-                   className="btn-gold px-12 py-5 shadow-[0_0_40px_rgba(212,175,55,0.2)]"
+                   className="btn-gold rounded-xl px-12 py-5 shadow-[0_0_40px_rgba(212,175,55,0.2)]"
                  >
-                   Vivir la Experiencia
+                   {t('hero.cta') || 'Reserva tu Mesa'}
                  </Link>
                </motion.div>
             </div>

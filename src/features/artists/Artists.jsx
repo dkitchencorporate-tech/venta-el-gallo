@@ -32,7 +32,7 @@ const artistsData = [
     name: "Dinastía Heredia",
     role: "Hijas del Fundador",
     imageUrl: daughtersGroupImg,
-    description: "El alma femenina de la Venta El Gallo. Las hijas de Juan Heredia representan la continuidad histórica y el compromiso inquebrantable con el arte puro que su padre inició en 1953."
+    description: "El alma femenina de la Venta El Gallo. Las hijas de Juan Heredia representan la continuidad histórica y el compromiso inquebrantable con el arte puro que su padre inició."
   },
   {
     name: "Antonio Heredia «El Chonico»",

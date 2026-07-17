@@ -9,13 +9,13 @@ const resources = {
         history: 'El Legado',
         artists: 'Artistas',
         restaurant: 'Restaurante',
-        events: 'Eventos',
+        b2b: 'Agencias y Profesionales',
         contact: 'Contacto'
       },
       hero: {
         title: 'Alma de Roca, Corazón de Fuego',
         subtitle: 'Una cueva legendaria donde el flamenco trasciende el tiempo.',
-        cta: 'Vivir la Experiencia'
+        cta: 'Reserva tu Mesa'
       }
     }
   },
@@ -26,13 +26,13 @@ const resources = {
         history: 'The Legacy',
         artists: 'Artists',
         restaurant: 'Restaurant',
-        events: 'Events',
+        b2b: 'Agencies & Professionals',
         contact: 'Contact'
       },
       hero: {
         title: 'Rock Soul, Heart of Fire',
         subtitle: 'A legendary cave where flamenco transcends time.',
-        cta: 'Live the Experience'
+        cta: 'Book a Table'
       }
     }
   }
