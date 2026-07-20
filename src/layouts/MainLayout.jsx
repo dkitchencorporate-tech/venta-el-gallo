@@ -80,23 +80,6 @@ const MainLayout = () => {
           <button onClick={() => openBooking({from: 'header'})} className="hidden lg:block btn-gold rounded-full shadow-[0_0_20px_rgba(212,175,55,0.15)] whitespace-nowrap px-4 xl:px-6 py-2.5 xl:py-3.5 ml-auto text-[8px] lg:text-[9px] xl:text-[10px] uppercase tracking-widest font-bold">
             {t('hero.cta') || 'Reservar'}
           </button>
-          
-          {/* Mobile: inline language selector in navbar */}
-          <div className="lg:hidden flex items-center gap-0.5 ml-auto mr-2">
-            {['es','en','fr'].map((code) => (
-              <button
-                key={code}
-                onClick={() => { i18n.changeLanguage(code); setActiveLang(code); localStorage.setItem('i18nextLng', code); }}
-                className={`text-[9px] uppercase tracking-widest font-bold px-2 py-1 rounded-full transition-all duration-300 ${
-                  activeLang === code
-                    ? 'text-gold border border-gold/50 bg-gold/10'
-                    : 'text-white/50 border border-transparent hover:text-white'
-                }`}
-              >
-                {code.toUpperCase()}
-              </button>
-            ))}
-          </div>
 
           <button 
             onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -106,6 +89,22 @@ const MainLayout = () => {
             <div className={`w-4 h-px bg-gold transition-all duration-300 ${isMenuOpen ? 'opacity-0' : 'opacity-100'}`}></div>
             <div className={`w-6 h-px bg-white transition-all duration-300 ${isMenuOpen ? '-rotate-45 -translate-y-[1px]' : ''}`}></div>
           </button>
+        </div>
+        {/* Mobile second row: Language selector, below logo/hamburger, inside fixed nav */}
+        <div className={`lg:hidden flex items-center justify-center gap-2 px-4 pb-2 pointer-events-auto ${isMenuOpen ? 'hidden' : ''}`}>
+          {['es','en','fr'].map((code) => (
+            <button
+              key={code}
+              onClick={() => { i18n.changeLanguage(code); setActiveLang(code); localStorage.setItem('i18nextLng', code); }}
+              className={`text-[10px] uppercase tracking-[0.2em] font-bold px-3 py-1 rounded-full transition-all duration-300 ${
+                activeLang === code
+                  ? 'text-deep-black bg-gold'
+                  : 'text-white/50 border border-white/20 hover:text-white hover:border-white/50'
+              }`}
+            >
+              {code.toUpperCase()}
+            </button>
+          ))}
         </div>
       </nav>
 
