@@ -32,7 +32,7 @@ const Pillars = () => {
       title: 'Eventos', 
       desc: 'Exclusividad en el Sacromonte', 
       img: eventsImg,
-      link: '#', // Placeholder or route
+      link: '/agencias',
       num: '03'
     },
     { 
@@ -85,7 +85,7 @@ const Pillars = () => {
                 to={point.link} 
                 className="btn-gold flex items-center gap-3 text-[9px] uppercase tracking-widest px-6 py-3 shadow-lg transform translate-y-8 opacity-0 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500"
               >
-                Vivir la Experiencia <ArrowRight size={14} />
+                Descubrir <ArrowRight size={14} />
               </Link>
             </div>
             

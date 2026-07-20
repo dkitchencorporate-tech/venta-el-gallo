@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dosier Operativo de Toma de Datos - Venta El Gallo (400 €)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-body: #FDFCF8;
+            --bg-paper: #FFFFFF;
+            --text-main: #111111;
+            --text-secondary: #444444;
+            --border-warm: #EADEC9;
+            --brand-gold: #B8862A;
+            --brand-dark: #1A1A1E;
+            --surface-guide: #FFFDF5;
+        }
+
+        @page {
+            size: A4;
+            margin: 15mm;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 30px 20px;
+        }
+
+        .document-container {
+            max-width: 860px;
+            margin: 0 auto;
+            background-color: var(--bg-paper);
+            border: 1px solid var(--border-warm);
+            border-radius: 12px;
+            padding: 50px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+        }
+
+        header {
+            border-bottom: 2px solid var(--brand-gold);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .brand-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--brand-dark);
+            letter-spacing: 1px;
+        }
+
+        .brand-subtitle {
+            font-size: 0.95rem;
+            color: var(--brand-gold);
+            font-weight: 600;
+        }
+
+        .doc-meta {
+            text-align: right;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            color: var(--brand-dark);
+            margin-bottom: 12px;
+        }
+
+        p {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+        }
+
+        .guide-box {
+            background-color: var(--surface-guide);
+            border: 1px solid var(--brand-gold);
+            border-left: 5px solid var(--brand-gold);
+            border-radius: 8px;
+            padding: 22px;
+            margin-bottom: 35px;
+        }
+
+        .guide-box h3 {
+            color: var(--brand-dark);
+            font-size: 1.15rem;
+            margin-bottom: 10px;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px;
+            border: 1px solid var(--border-warm);
+            border-radius: 8px;
+            background: #FAFAFA;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .option-label:hover {
+            border-color: var(--brand-gold);
+            background: #FFFDF0;
+        }
+
+        .section-box {
+            border: 1px solid var(--border-warm);
+            border-radius: 10px;
+            padding: 28px;
+            margin-bottom: 30px;
+            background: #FFFFFF;
+        }
+
+        .section-box h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.35rem;
+            color: var(--brand-dark);
+            border-bottom: 1px solid var(--border-warm);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
+        .full-width {
+            grid-column: span 2;
+        }
+
+        .field-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        label {
+            font-weight: 600;
+            font-size: 0.92rem;
+            color: var(--text-main);
+        }
+
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 11px 14px;
+            border: 1px solid var(--border-warm);
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 0.95rem;
+            color: var(--text-main);
+            background-color: #FAFAFA;
+        }
+
+        textarea {
+            min-height: 110px;
+            resize: vertical;
+        }
+
+        .print-btn {
+            display: block;
+            width: 100%;
+            max-width: 340px;
+            margin: 40px auto 0 auto;
+            background: var(--brand-dark);
+            color: #ffffff;
+            text-align: center;
+            font-weight: 700;
+            padding: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            border: none;
+            font-size: 1.05rem;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+            transition: transform 0.2s, background 0.2s;
+        }
+
+        .print-btn:hover {
+            background: var(--brand-gold);
+            transform: translateY(-2px);
+        }
+
+        @media print {
+            body {
+                background-color: #fff !important;
+                padding: 0 !important;
+            }
+            .document-container {
+                box-shadow: none !important;
+                border: none !important;
+                max-width: 100% !important;
+                padding: 15px !important;
+            }
+            .print-btn {
+                display: none !important;
+            }
+            .section-box {
+                page-break-inside: avoid;
+                margin-bottom: 20px !important;
+            }
+        }
+
+        @media screen and (max-width: 600px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            .full-width {
+                grid-column: span 1;
+            }
+            .document-container {
+                padding: 25px 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="document-container">
+    <header>
+        <div>
+            <div class="brand-logo">ARCHITECT.SYS</div>
+            <div class="brand-subtitle">División de Ingeniería & Arquitectura PWA</div>
+        </div>
+        <div class="doc-meta">
+            <strong>Anexo Operativo de Toma de Datos</strong><br>
+            <strong>Ref:</strong> AS-2026-ONB-400<br>
+            <strong>Cliente:</strong> Venta El Gallo
+        </div>
+    </header>
+
+    <h1>ANEXO OPERATIVO: TOMA DE DATOS Y PERSONALIZACIÓN WEB</h1>
+    <p>Este breve documento tiene como objetivo recopilar de forma ágil y estructurada los datos fiscales para la emisión de su factura de pago único (400 €), los accesos a su servidor en IONOS para subir la web, y las modificaciones o contenidos que desean incorporar en su nueva aplicación PWA.</p>
+
+    <!-- SECCIÓN CLAVE DE PREFERENCIA DE COORDINACIÓN -->
+    <div class="guide-box">
+        <h3>📌 ¿Cómo prefiere transmitirnos la información o modificaciones?</h3>
+        <p style="margin-bottom: 12px;">Para su máxima comodidad, indique su modalidad preferida para coordinar los datos operativos y ajustes finales:</p>
+        <div class="options-grid">
+            <label class="option-label"><input type="radio" name="coord_mode" checked> 📞 Llamada telefónica rápida de 15 min</label>
+            <label class="option-label"><input type="radio" name="coord_mode"> 🤝 Reunión corta / Videollamada</label>
+            <label class="option-label"><input type="radio" name="coord_mode"> 📝 Rellenar o enviar datos por Email / WhatsApp</label>
+        </div>
+    </div>
+
+    <!-- SECCIÓN 1: DATOS FISCALES -->
+    <div class="section-box">
+        <h2>1. Datos Fiscales para Emisión de Factura Oficial (Post-Pago)</h2>
+        <div class="form-grid">
+            <div class="field-group full-width">
+                <label>Razón Social / Nombre Fiscal de la Empresa:</label>
+                <input type="text" placeholder="Ej. Venta El Gallo S.L.">
+            </div>
+            <div class="field-group">
+                <label>CIF / NIF:</label>
+                <input type="text" placeholder="Ej. B18XXXXXX">
+            </div>
+            <div class="field-group">
+                <label>Correo Electrónico para Facturación:</label>
+                <input type="text" placeholder="Ej. administracion@ventaelgallo.com">
+            </div>
+            <div class="field-group full-width">
+                <label>Domicilio Fiscal Completo:</label>
+                <input type="text" placeholder="Ej. Barranco de los Negros n.º 5, Cuevas del Sacromonte, 18010 Granada">
+            </div>
+        </div>
+    </div>
+
+    <!-- SECCIÓN 2: ACCESOS IONOS -->
+    <div class="section-box">
+        <h2>2. Accesos al Servidor para Despliegue en IONOS</h2>
+        <p style="font-size: 0.92rem; margin-bottom: 16px;"><em>Nota: Si prefiere no facilitar contraseñas por escrito, podemos realizar la subida de los archivos juntos en una sesión guiada de 5 minutos o por llamada.</em></p>
+        <div class="form-grid">
+            <div class="field-group full-width">
+                <label>Dominio Oficial en Producción:</label>
+                <input type="text" placeholder="Ej. https://www.ventaelgallo.com">
+            </div>
+            <div class="field-group">
+                <label>Usuario / Email del Panel de IONOS o FTP:</label>
+                <input type="text" placeholder="Ej. cliente@ventaelgallo.com / u12345678">
+            </div>
+            <div class="field-group">
+                <label>Contraseña de Acceso (IONOS / FTP):</label>
+                <input type="text" placeholder="Ej. ************ (O dejar en blanco si prefiere llamada guiada)">
+            </div>
+        </div>
+    </div>
+
+    <!-- SECCIÓN 3: CONTENIDOS Y MODIFICACIONES -->
+    <div class="section-box">
+        <h2>3. Modificaciones de Contenido, Carta y Horarios de Pases</h2>
+        <p style="font-size: 0.92rem; margin-bottom: 16px;">Detalle de forma libre los horarios exactos de sus espectáculos flamencos, precios de pases/cenas o cualquier aclaración sobre fotografías y textos que debamos actualizar antes de publicar la web:</p>
+        <div class="field-group">
+            <textarea style="min-height: 140px;" placeholder="Ej. Horarios de pases: 19:30h (Cena) y 21:30h (Espectáculo). Precio pase con consumición: 35 €. Precio con menú degustación: 65 €. Adjuntamos por WhatsApp la carta de platos en PDF y las 12 fotos finales que queremos poner en la galería..."></textarea>
+        </div>
+    </div>
+
+    <button class="print-btn" onclick="window.print()">🖨️ Guardar como PDF / Imprimir Documento</button>
+
+</div>
+
+</body>
+</html>

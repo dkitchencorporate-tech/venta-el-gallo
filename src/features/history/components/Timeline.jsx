@@ -1,24 +1,25 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-import juanilloImg from '../../../assets/raw/Juanillo-Heredia.webp';
+import juanilloImg from '../../../assets/raw/juanillo-solo.jpeg';
 import zambraImg from '../../../assets/raw/Venta-El-Gallo-1-1280x961-2.jpg';
 import exteriorImg from '../../../assets/raw/Cueva-Venta-El-Gallo-6-Julio-7-1.jpg';
 import daughtersImg from '../../../assets/raw/Venta-El-Gallo-15-1.jpg';
 
 const events = [
   { 
-    year: "1953", 
+    year: "1996", 
     title: "El Origen en la Roca", 
     desc: "Juanillo Heredia adquiere la cueva en el mítico barranco de los Negros. Lo que comenzó excavando la roca, pronto se convertiría en un santuario del cante y el baile puro, cimentando nuestra leyenda.",
     img: juanilloImg,
     isCircle: true,
     filter: "contrast-[1.1] saturate-[1.2]",
+    objectPosition: "object-top",
     align: "left"
   },
   { 
     year: "1970s", 
-    title: "El Templo de la Zambra", 
+    title: "El Origen de la Zambra", 
     desc: "Definimos nuestro formato de 'Zambra Gitana'. El boca a boca, el sudor y la pasión atraen a personalidades de todo el mundo. La acústica natural de la cal y la roca se revela como nuestro mayor tesoro.",
     img: zambraImg,
     isCircle: false,
@@ -37,7 +38,7 @@ const events = [
   { 
     year: "Legado", 
     title: "La Sangre Continúa", 
-    desc: "Hoy, las herederas directas velan por el fuego. No solo custodian el templo, sino que imponen su respeto sobre el escenario cada noche, fundiendo la tradición intransigente con la más alta gastronomía.",
+    desc: "Hoy, las herederas directas velan por el fuego. No solo custodian el origen, sino que imponen su respeto sobre el escenario cada noche, fundiendo la tradición intransigente con la más alta gastronomía.",
     img: daughtersImg,
     isCircle: false,
     filter: "contrast-100",
@@ -82,7 +83,7 @@ const MuseumCard = ({ event, index }) => {
               <img 
                 src={event.img} 
                 alt={event.title} 
-                className={`w-full h-full object-cover transition-transform duration-[1500ms] ease-out group-hover:scale-105 ${event.filter}`} 
+                className={`w-full h-full object-cover transition-transform duration-[1500ms] ease-out group-hover:scale-105 ${event.filter} ${event.objectPosition || 'object-center'}`} 
               />
             </div>
           </motion.div>

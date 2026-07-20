@@ -5,10 +5,12 @@ import { ArrowRight } from 'lucide-react';
 import Timeline from './components/Timeline';
 import heroBg from '../../assets/raw/Cueva-Venta-El-Gallo-6-Julio-2-1280x914-2.jpg';
 import ctaBg from '../../assets/raw/Restaurante-Venta-El-Gallo-Alhambra-de-Granada-1-1.jpg';
+import { useBooking } from '../../context/BookingContext';
 
 const History = () => {
   const { scrollYProgress } = useScroll();
   const yBg = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
+  const { openBooking } = useBooking();
 
   return (
     <div className="flex flex-col bg-deep-black text-white min-h-screen">
@@ -66,9 +68,9 @@ const History = () => {
             La cueva te espera. Ven a sentir el peso del legado en directo con nuestra gastronomía y la Zambra Gitana original.
           </p>
           
-          <Link to="/contacto" className="btn-primary flex items-center gap-4 bg-sacromonte-red border-none text-white px-10 py-5 text-sm md:text-base tracking-[0.2em] font-black uppercase transition-all duration-500 shadow-[0_0_40px_rgba(153,27,27,0.4)] hover:shadow-[0_0_80px_rgba(212,175,55,0.6)] hover:bg-gold hover:text-deep-black transform hover:-translate-y-1">
-             Vivir la Experiencia <ArrowRight size={20} />
-          </Link>
+          <button onClick={() => openBooking({from: 'history'})} className="btn-primary flex items-center gap-4 bg-sacromonte-red border-none text-white px-10 py-5 text-sm md:text-base tracking-[0.2em] font-black uppercase transition-all duration-500 shadow-[0_0_40px_rgba(153,27,27,0.4)] hover:shadow-[0_0_80px_rgba(212,175,55,0.6)] hover:bg-gold hover:text-deep-black transform hover:-translate-y-1">
+             Reservar <ArrowRight size={20} />
+          </button>
         </motion.div>
       </section>
 

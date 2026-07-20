@@ -64,7 +64,7 @@ const Legacy = () => {
               </p>
               
               <p className="text-base text-gray-600 font-light leading-relaxed mb-10">
-                No solo dirigen este templo, sino que despliegan su poderío en el escenario cada noche, asegurando que la fuerza y la técnica mantengan el prestigioso estándar que estableció su padre.
+                No solo dirigen este origen, sino que despliegan su poderío en el escenario cada noche, asegurando que la fuerza y la técnica mantengan el prestigioso estándar que estableció su padre.
               </p>
               
               <div className="flex gap-6 items-center">

@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import heroBg from '../../../assets/raw/Cueva-Venta-El-Gallo-6-Julio-2-1280x914-2.jpg';
 import { useBooking } from '../../../context/BookingContext';
@@ -13,14 +14,18 @@ const Hero = () => {
     <section className="relative min-h-[85vh] md:min-h-[95vh] pt-32 lg:pt-40 pb-24 flex items-center overflow-hidden bg-deep-black text-white">
       {/* Cinematic Background Layer */}
       <div className="absolute inset-0 z-0">
-        <motion.img 
-           initial={{ scale: 1.1 }}
-           animate={{ scale: 1 }}
-           transition={{ duration: 10, ease: 'easeOut' }}
-           src={heroBg} 
-           alt="Zambra Gitana Venta El Gallo" 
+        <video 
+           autoPlay 
+           loop 
+           muted 
+           playsInline
+           poster={heroBg}
            className="w-full h-full object-cover opacity-70"
-        />
+        >
+          {/* TODO: Add final video src here. Placeholders for now. */}
+          <source src="/assets/raw/hero-video.webm" type="video/webm" />
+          <source src="/assets/raw/hero-video.mp4" type="video/mp4" />
+        </video>
         {/* Lighter Gradient Mask for better Background Visibility */}
         <div className="absolute inset-0 bg-gradient-to-t from-deep-black via-deep-black/30 to-transparent"></div>
         <div className="absolute inset-0 bg-gradient-to-r from-deep-black/80 via-deep-black/30 to-transparent"></div>
@@ -44,15 +49,15 @@ const Hero = () => {
           </h1>
           
           <p className="text-lg md:text-xl text-white/90 font-light max-w-2xl mb-10 leading-relaxed drop-shadow-md">
-            Una cueva milenaria donde el flamenco no se actúa, se vive. Siente el latido de la zambra en el templo del Sacromonte.
+            Una cueva milenaria donde el flamenco no se actúa, se vive. Siente el latido de la zambra en el origen del Sacromonte.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-8 items-start sm:items-center">
             <button 
-              onClick={() => openBooking({ from: 'home_hero' })}
+              onClick={() => openBooking({from: 'hero'})}
               className="btn-primary flex items-center gap-4 hover:bg-gold hover:text-white transition-colors duration-500 shadow-xl"
             >
-               Vivir la Experiencia <ArrowRight size={16} />
+               Reservar <ArrowRight size={16} />
             </button>
             <div className="flex flex-col border-l border-white/30 pl-6">
               <span className="text-[9px] uppercase tracking-[0.3em] text-white/60 mb-2">Coordenadas de Origen</span>

@@ -13,7 +13,7 @@ const Narrative = () => {
       
       {/* Massive Background Watermark for Wow Factor */}
       <div className="absolute top-1/2 left-0 -translate-y-1/2 -ml-20 font-serif font-black text-[15rem] md:text-[25rem] lg:text-[40rem] text-black/[0.02] tracking-tighter leading-none pointer-events-none select-none mix-blend-multiply">
-        1953
+        1996
       </div>
 
       <div className="section-container relative z-10 w-full max-w-7xl mx-auto">
@@ -22,14 +22,14 @@ const Narrative = () => {
           {/* Narrative Content (High Density, 1:1 Scale) */}
           <div className="flex-1 order-2 lg:order-1 relative z-10">
             <div className="inline-block px-4 py-2 border border-gold/40 text-gold-700 bg-gold/5 text-[8px] uppercase tracking-widest font-black mb-8 rounded-sm shadow-sm">
-              El Templo de la Zambra
+              El Origen de la Zambra
             </div>
             <h2 className="text-4xl md:text-6xl font-serif text-deep-black mb-10 leading-[1.1] tracking-tight">
               Una acústica <br/> 
               <span className="italic text-sacromonte-red">tallada a mano.</span>
             </h2>
             <p className="text-base md:text-lg text-gray-700 font-light leading-relaxed mb-10 max-w-lg drop-shadow-sm">
-              Desde 1953, nuestras paredes de cal vibran con la pura verdad del flamenco. Un escenario íntimo donde la soleá y la seguiriya te alcanzan a centímetros de distancia, fundiendo al espectador con el artista.
+              Desde 1996, nuestras paredes de cal vibran con la pura verdad del flamenco. Un escenario íntimo donde la soleá y la seguiriya te alcanzan a centímetros de distancia, fundiendo al espectador con el artista.
             </p>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 pt-8 pb-10 border-t border-gray-300">
@@ -43,7 +43,7 @@ const Narrative = () => {
               </div>
             </div>
 
-            <Link to="/artistas" className="inline-flex items-center gap-4 text-[10px] md:text-xs font-bold uppercase tracking-widest text-white bg-deep-black px-8 py-4 shadow-xl hover:bg-gold hover:text-white transition-all duration-300 group rounded-[4px]">
+            <Link to="/artistas" className="inline-flex items-center gap-4 text-[10px] md:text-xs font-bold uppercase tracking-widest text-white bg-deep-black px-8 py-4 shadow-xl hover:bg-gold hover:text-white transition-all duration-300 group rounded-full">
                Descubrir el Escenario
                <ArrowRight size={16} className="transform group-hover:translate-x-1 transition-transform" />
             </Link>
@@ -66,7 +66,7 @@ const Narrative = () => {
               
               {/* Glassmorphic Data Card overlaying the image directly */}
               <div className="absolute -bottom-1 -left-1 bg-white/95 backdrop-blur-xl p-8 shadow-[20px_-20px_40px_rgba(0,0,0,0.05)] rounded-tr-[50px] border-r border-t border-gray-100 max-w-[240px] transform transition-transform duration-500 z-20">
-                <p className="text-5xl font-serif text-sacromonte-red font-bold mb-2 leading-none">1953</p>
+                <p className="text-5xl font-serif text-sacromonte-red font-bold mb-2 leading-none">1996</p>
                 <div className="w-10 h-px bg-gold mb-3"></div>
                 <p className="uppercase tracking-[0.3em] text-[8px] font-black text-deep-black">Fundación de la Cueva</p>
                 <p className="text-[10px] text-gray-500 font-light mt-2">Patrimonio del Sacromonte</p>

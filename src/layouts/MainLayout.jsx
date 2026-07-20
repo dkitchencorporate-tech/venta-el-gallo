@@ -5,10 +5,13 @@ import { Menu, Instagram, Facebook, MapPin, Phone, Mail, X } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion';
 import logoGallo from '../assets/raw/logoVentaelGallo.webp';
 import FloatingActions from '../components/layout/FloatingActions';
+import CookieBanner from '../components/common/CookieBanner';
+import { useBooking } from '../context/BookingContext';
 
 const MainLayout = () => {
   const { t } = useTranslation();
   const location = useLocation();
+  const { openBooking } = useBooking();
   const [scrolled, setScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -25,6 +28,7 @@ const MainLayout = () => {
     { key: 'artists', path: 'artistas' },
     { key: 'restaurant', path: 'restaurante' },
     { key: 'b2b', path: 'agencias' },
+    { key: 'blog', path: 'blog' },
     { key: 'contact', path: 'contacto' }
   ];
 
@@ -32,8 +36,8 @@ const MainLayout = () => {
     <div className="min-h-screen flex flex-col bg-deep-black">
       {/* Structural Navbar - Nuclear Standard (Glassmorphism) */}
       <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ${scrolled ? 'py-4' : 'py-8'} px-6 lg:px-12 pointer-events-none`}>
-        <div className={`max-w-7xl mx-auto rounded-full px-8 py-4 flex items-center justify-between transition-all duration-700 pointer-events-auto ${scrolled ? 'bg-deep-black/85 backdrop-blur-2xl border border-white/10 shadow-[0_10px_40px_rgba(0,0,0,0.5)]' : 'bg-transparent border border-transparent'}`}>
-          <div className="flex items-center gap-12">
+        <div className={`w-full max-w-7xl mx-auto rounded-full px-4 md:px-8 py-4 flex items-center justify-between transition-all duration-700 pointer-events-auto ${scrolled ? 'bg-deep-black/85 backdrop-blur-2xl shadow-[0_10px_40px_rgba(0,0,0,0.5)]' : 'bg-transparent border border-transparent'}`}>
+          <div className="flex items-center gap-4 lg:gap-6 xl:gap-12">
             <Link to="/" onClick={() => setIsMenuOpen(false)} className="flex items-center gap-3 md:gap-4 group">
               <img src={logoGallo} alt="Venta El Gallo Logo" className="w-10 h-10 md:w-14 md:h-14 object-contain group-hover:scale-105 transition-transform duration-500 drop-shadow-[0_0_15px_rgba(212,175,55,0.4)]" />
               <div className="flex flex-col items-start leading-none gap-0.5">
@@ -49,14 +53,14 @@ const MainLayout = () => {
               </div>
             </Link>
             
-            <div className="hidden lg:flex items-center gap-8 ml-8">
+            <div className="hidden lg:flex items-center gap-2 lg:gap-3 xl:gap-6 ml-2 lg:ml-4 xl:ml-6">
                {navLinks.map((link) => {
                  const isActive = location.pathname.includes(link.path);
                  return (
                    <Link 
                      key={link.key} 
                      to={`/${link.path}`} 
-                     className={`relative text-[10px] uppercase font-black tracking-[0.2em] transition-all duration-500 hover:text-gold ${isActive ? 'text-gold' : 'text-gray-300'}`}
+                     className={`relative text-[8px] lg:text-[9px] xl:text-[10px] uppercase font-black tracking-widest whitespace-nowrap transition-all duration-500 hover:text-gold ${isActive ? 'text-gold' : 'text-gray-300'}`}
                    >
                      {t(`nav.${link.key}`) || link.key}
                      {isActive && (
@@ -67,9 +71,10 @@ const MainLayout = () => {
                })}
             </div>
           </div>
-          <Link to="/contacto" className="hidden lg:block btn-gold rounded-xl shadow-[0_0_20px_rgba(212,175,55,0.15)]">
-            {t('hero.cta') || 'Reserva tu Mesa'}
-          </Link>
+          {/* CTA - Fixed Spacing and Rounding */}
+          <button onClick={() => openBooking({from: 'header'})} className="hidden lg:block btn-gold rounded-full shadow-[0_0_20px_rgba(212,175,55,0.15)] whitespace-nowrap px-4 xl:px-6 py-2.5 xl:py-3.5 ml-auto text-[8px] lg:text-[9px] xl:text-[10px] uppercase tracking-widest font-bold">
+            {t('hero.cta') || 'Reservar'}
+          </button>
           
           <button 
             onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -121,13 +126,12 @@ const MainLayout = () => {
                  transition={{ delay: 0.5 }}
                  className="mt-8"
                >
-                 <Link 
-                   to="/contacto" 
-                   onClick={() => setIsMenuOpen(false)}
-                   className="btn-gold rounded-xl px-12 py-5 shadow-[0_0_40px_rgba(212,175,55,0.2)]"
+                 <button 
+                   onClick={() => { setIsMenuOpen(false); openBooking({from: 'mobile_menu'}); }}
+                   className="btn-gold rounded-full px-12 py-5 shadow-[0_0_40px_rgba(212,175,55,0.2)] font-bold tracking-widest uppercase text-sm"
                  >
-                   {t('hero.cta') || 'Reserva tu Mesa'}
-                 </Link>
+                   {t('hero.cta') || 'Reservar'}
+                 </button>
                </motion.div>
             </div>
           </motion.div>
@@ -141,6 +145,7 @@ const MainLayout = () => {
 
       {/* Global Actions (WhatsApp/ScrollTop) */}
       <FloatingActions />
+      <CookieBanner />
 
       {/* Footer - High End Professional */}
       <footer className="bg-gradient-to-b from-deep-black to-[#0a0a0a] pt-24 pb-12 text-white/70 relative overflow-hidden border-t border-white/5">
@@ -155,11 +160,11 @@ const MainLayout = () => {
                 <span className="text-xl font-serif font-black tracking-widest uppercase text-white">Venta El Gallo</span>
              </Link>
              <p className="text-sm font-light leading-relaxed mb-6">
-               Una cueva milenaria donde el flamenco se vive en su estado más puro. Manteniendo vivo el legado de Juanillo Heredia desde 1953.
+               Una cueva milenaria donde el flamenco se vive en su estado más puro. Manteniendo vivo el legado de Juanillo Heredia desde 1996.
              </p>
              <div className="flex items-center gap-4">
-               <a href="#" className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:bg-gold hover:text-deep-black hover:border-gold transition-all duration-300"><Instagram size={18} /></a>
-               <a href="#" className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:bg-gold hover:text-deep-black hover:border-gold transition-all duration-300"><Facebook size={18} /></a>
+               <a href="https://instagram.com/ventaelgalloficial" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:bg-gold hover:text-deep-black hover:border-gold transition-all duration-300"><Instagram size={18} /></a>
+               <a href="https://www.facebook.com/ventaelgalloficial" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:bg-gold hover:text-deep-black hover:border-gold transition-all duration-300"><Facebook size={18} /></a>
              </div>
            </div>
 
@@ -178,10 +183,10 @@ const MainLayout = () => {
            <div className="flex flex-col">
              <h4 className="text-xs uppercase font-bold tracking-[0.2em] text-white mb-8">Políticas Legales</h4>
              <ul className="space-y-4">
-               <li><Link to="#" className="text-sm font-light hover:text-gold transition-colors">Aviso Legal</Link></li>
-               <li><Link to="#" className="text-sm font-light hover:text-gold transition-colors">Política de Privacidad</Link></li>
-               <li><Link to="#" className="text-sm font-light hover:text-gold transition-colors">Política de Cookies</Link></li>
-               <li><Link to="#" className="text-sm font-light hover:text-gold transition-colors">Términos de Reserva</Link></li>
+               <li><Link to="/aviso-legal" className="text-sm font-light hover:text-gold transition-colors">Aviso Legal</Link></li>
+               <li><Link to="/privacidad" className="text-sm font-light hover:text-gold transition-colors">Política de Privacidad</Link></li>
+               <li><Link to="/alergenos" className="text-sm font-light hover:text-gold transition-colors">Información de Alérgenos</Link></li>
+               <li><Link to="/terminos-reserva" className="text-sm font-light hover:text-gold transition-colors">Términos de Reserva</Link></li>
              </ul>
            </div>
 
@@ -190,8 +195,10 @@ const MainLayout = () => {
              <h4 className="text-xs uppercase font-bold tracking-[0.2em] text-white mb-8">Contacto</h4>
              <ul className="space-y-6">
                <li className="flex items-start gap-4">
-                 <MapPin size={18} className="text-gold shrink-0 mt-1" />
-                 <span className="text-sm font-light leading-relaxed">Barranco de los Negros, 5<br/> 18010 Sacromonte, Granada</span>
+                 <a href="https://www.google.com/maps/place/Cueva+Venta+El+Gallo/" target="_blank" rel="noopener noreferrer" className="flex items-start gap-4 group">
+                   <MapPin size={18} className="text-gold shrink-0 mt-1 group-hover:scale-110 transition-transform" />
+                   <span className="text-sm font-light leading-relaxed group-hover:text-gold transition-colors">Barranco de los Negros, 5<br/> 18010 Sacromonte, Granada</span>
+                 </a>
                </li>
                <li className="flex items-center gap-4">
                  <Phone size={18} className="text-gold shrink-0" />
@@ -209,7 +216,10 @@ const MainLayout = () => {
         <div className="max-w-7xl mx-auto px-8 lg:px-12 flex flex-col items-center">
            <div className="w-full h-px bg-white/5 mb-8"></div>
            <p className="text-[10px] uppercase tracking-[0.3em] font-bold text-white/30 mb-2">Patrimonio del Sacromonte</p>
-           <p className="text-[10px] uppercase tracking-wider text-white/20">© 2026 Cueva Venta El Gallo. Todos los derechos reservados.</p>
+           <p className="text-[10px] uppercase tracking-wider text-white/20 mb-4">© 2026 Cueva Venta El Gallo. Todos los derechos reservados.</p>
+           <p className="text-[10px] uppercase tracking-wider text-white/20">
+             Designed & Developed by <a href="https://hosteleria.architectsys.com/" target="_blank" rel="noopener noreferrer" className="text-gold hover:text-white transition-colors">Architect Sys</a>
+           </p>
         </div>
       </footer>
     </div>

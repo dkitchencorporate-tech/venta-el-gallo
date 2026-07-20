@@ -2,7 +2,6 @@ import React from 'react';
 import RestaurantHero from './components/RestaurantHero';
 import PasesPricing from './components/PasesPricing';
 import InteractiveMenu from './components/InteractiveMenu';
-import GroupEvents from './components/GroupEvents';
 
 const Restaurant = () => {
   return (
@@ -10,7 +9,6 @@ const Restaurant = () => {
       <RestaurantHero />
       <PasesPricing />
       <InteractiveMenu />
-      <GroupEvents />
     </div>
   );
 };

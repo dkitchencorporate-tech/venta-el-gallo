@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Instagram, Facebook, Star, ExternalLink, Quote } from 'lucide-react';
+import InstagramReels from './InstagramReels';
 
 const FAKE_REVIEWS = [
   {
@@ -89,6 +90,9 @@ const Reviews = () => {
           </motion.div>
         </div>
 
+        {/* Instagram Reels Component */}
+        <InstagramReels />
+
         {/* Social Ecosystem */}
         <div className="mt-20 pt-16 border-t border-gray-200/60 w-full flex flex-col items-center">
            
@@ -100,7 +104,7 @@ const Reviews = () => {
            </div>
            
            <div className="flex flex-wrap justify-center gap-4 md:gap-6 w-full">
-             <a href="https://www.instagram.com/ventaelgalloficial/" target="_blank" rel="noopener noreferrer" className="flex flex-1 min-w-[200px] max-w-[280px] items-center gap-4 bg-white px-6 py-5 rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_40px_rgba(225,48,108,0.2)] hover:bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] hover:text-white transition-all duration-500 border border-gray-100 group">
+             <a href="https://instagram.com/ventaelgalloficial" target="_blank" rel="noopener noreferrer" className="flex flex-1 min-w-[200px] max-w-[280px] items-center gap-4 bg-white px-6 py-5 rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_40px_rgba(225,48,108,0.2)] hover:bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] hover:text-white transition-all duration-500 border border-gray-100 group">
                <Instagram size={28} className="text-gray-800 group-hover:text-white group-hover:scale-110 transition-all duration-500"/>
                <div>
                   <div className="text-[10px] uppercase font-black tracking-[0.2em] text-gray-400 group-hover:text-white/80 transition-colors">Comunidad</div>

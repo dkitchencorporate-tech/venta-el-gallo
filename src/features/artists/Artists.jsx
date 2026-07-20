@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import ArtistsHero from './components/ArtistsHero';
 import ArtistCard from './components/ArtistCard';
 import BiographyModal from './components/BiographyModal';
+import { useBooking } from '../../context/BookingContext';
 
 // Real Asset Imports
 import daughtersGroupImg from '../../assets/raw/Venta-El-Gallo-15-1.jpg';
@@ -11,7 +13,7 @@ import chonicoImg from '../../assets/raw/Antonio-el-Chonico-guitarra-Venta-el-Ga
 import miguelImg from '../../assets/raw/Miguel-Angel-Cortes-Venta-el-Gallo-guitarra.webp';
 import coralImg from '../../assets/raw/13-1.webp';
 import pacoImg from '../../assets/raw/Artista-1.jpg';
-import rayImg from '../../assets/raw/ray-1280x852-2.jpg';
+import rayImg from '../../assets/raw/Raimundo.jpg';
 import agustinImg from '../../assets/raw/Venta-El-Gallo-37-1.jpg';
 import antonioCantaorImg from '../../assets/raw/antonio-heredia-cantaor.jpg';
 
@@ -24,7 +26,7 @@ const artistsData = [
   },
   {
     name: "Antonia Heredia",
-    role: "DIRECCIÓN ARTÍSTICA",
+    role: "Bailaora",
     imageUrl: antoniaImg,
     description: "Antonia Heredia comenzó su carrera artística con la bailaora Angustias Ruiz y con su hermana Jara Heredia. Más tarde comienza a formarse profesionalmente con profesores como Mario Maya, Eduardo Serrano «guiri», Belén Maya, Rafaela Carrasco, Manuel Liñán… Comienza a actuar en los tablaos flamencos de Granada a los 12 años. Actuó en los festivales de música y danza de Granada. Ha actuado con artistas como Juan Moneo «El tortas» en el festival de Almuñécar, Pepe Habichuela y Josemi Carmona en una gira por toda India y Festival de Mont de Marsan con Pepe Luis Carmona en numerosos festivales. Participa con Antonio Canales en el corral del carbón en varios videoclips de la talla de «Manzanita, Remedios Amaya, Antonio Carmona, Pepe Luis Carmona…»"
   },
@@ -74,6 +76,7 @@ const artistsData = [
 
 const Artists = () => {
   const [selectedIdx, setSelectedIdx] = useState(null);
+  const { openBooking } = useBooking();
 
   const handleNext = () => {
     setSelectedIdx((prev) => (prev + 1) % artistsData.length);
@@ -138,11 +141,11 @@ const Artists = () => {
             </p>
             
             {/* Botón CTA con Estilo Oro Puro y Transición Suave */}
-            <a href="/reservas" className="group relative inline-flex items-center justify-center px-12 md:px-16 py-5 md:py-6 bg-deep-black border border-gold/50 rounded-full shadow-[0_0_40px_rgba(212,175,55,0.1)] hover:shadow-[0_0_60px_rgba(212,175,55,0.4)] hover:border-gold hover:-translate-y-1 transition-all duration-500">
+            <button onClick={() => openBooking({from: 'artists'})} className="group relative inline-flex items-center justify-center px-12 md:px-16 py-5 md:py-6 bg-deep-black border border-gold/50 rounded-full shadow-[0_0_40px_rgba(212,175,55,0.1)] hover:shadow-[0_0_60px_rgba(212,175,55,0.4)] hover:border-gold hover:-translate-y-1 transition-all duration-500">
               <span className="relative z-10 text-gold font-extrabold uppercase tracking-[0.3em] text-[10px] md:text-sm drop-shadow-md group-hover:text-gold/80 group-hover:scale-105 transition-all duration-500">
-                Reservar Mi Mesa
+                Reservar
               </span>
-            </a>
+            </button>
           </div>
         </div>
       </div>

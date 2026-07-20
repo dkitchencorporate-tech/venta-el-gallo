@@ -22,13 +22,13 @@
   }
 
   .btn-primary {
-    @apply px-10 py-4 bg-sacromonte-red text-white font-bold uppercase tracking-widest text-[10px]
+    @apply px-10 py-4 rounded-full bg-sacromonte-red text-white font-bold uppercase tracking-widest text-[10px]
            transition-all duration-500 hover:shadow-[0_0_30px_rgba(139,0,0,0.3)] hover:-translate-y-1 
            active:scale-95 disabled:opacity-50 disabled:pointer-events-none;
   }
 
   .btn-gold {
-    @apply px-10 py-4 bg-gold text-white font-bold uppercase tracking-widest text-[10px]
+    @apply px-10 py-4 rounded-full bg-gold text-white font-bold uppercase tracking-widest text-[10px]
            transition-all duration-500 hover:shadow-[0_0_30px_rgba(212,175,55,0.3)] hover:-translate-y-1 
            active:scale-95;
   }
