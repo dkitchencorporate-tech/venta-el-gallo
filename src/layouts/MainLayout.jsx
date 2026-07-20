@@ -20,6 +20,15 @@ const MainLayout = () => {
   const [isShareOpen, setIsShareOpen] = useState(false);
   const shareUrl = 'https://dkitchencorporate-tech.github.io/venta-el-gallo/#/';
 
+  // Keep activeLang in sync with i18n regardless of which component triggered the change
+  useEffect(() => {
+    const handleLangChange = (lng) => {
+      setActiveLang(lng.split('-')[0]);
+    };
+    i18n.on('languageChanged', handleLangChange);
+    return () => i18n.off('languageChanged', handleLangChange);
+  }, [i18n]);
+
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
