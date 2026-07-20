@@ -30,7 +30,7 @@ const BookingAgentModal = () => {
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.95, opacity: 0, y: 30 }}
             transition={{ type: "spring", damping: 25, stiffness: 200 }}
-            className="relative w-full max-w-6xl h-[100dvh] md:h-[85vh] md:max-h-[800px] bg-deep-black md:rounded-[2.5rem] shadow-[0_50px_100px_rgba(0,0,0,0.8)] border-0 md:border border-gold/30 overflow-hidden flex flex-col md:flex-row z-10"
+            className="relative w-full h-full md:w-auto md:max-w-6xl md:h-[85vh] md:max-h-[800px] bg-deep-black md:rounded-[2.5rem] shadow-[0_50px_100px_rgba(0,0,0,0.8)] border-0 md:border border-gold/30 overflow-hidden flex flex-col md:flex-row z-10"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Close Button */}
