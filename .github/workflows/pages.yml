@@ -28,9 +28,11 @@ jobs:
         with:
           node-version: 20
       - name: Install dependencies
-        run: npm install
+        run: npm install --no-audit --no-fund --legacy-peer-deps
       - name: Build
-        run: npm run build
+        run: CI=false npm run build
+      - name: Debug Output
+        run: ls -la dist
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Upload artifact
