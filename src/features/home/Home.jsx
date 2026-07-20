@@ -11,9 +11,11 @@ import InstagramReels from './components/InstagramReels';
 import FAQ from './components/FAQ';
 import ctaBg from '../../assets/raw/Cueva-Venta-El-Gallo-6-Julio-2-1280x914-2.jpg';
 import { useBooking } from '../../context/BookingContext';
+import { useTranslation } from 'react-i18next';
 
 const Home = () => {
   const { openBooking } = useBooking();
+  const { t } = useTranslation();
 
   return (
     <div className="bg-deep-black flex flex-col">
@@ -30,13 +32,13 @@ const Home = () => {
          
          <div className="section-container relative z-10 text-center flex flex-col items-center">
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif text-white mb-6 tracking-tighter shadow-black drop-shadow-2xl">
-              El latido del Sacromonte <br className="hidden md:block"/><span className="italic text-gold">te está esperando.</span>
+              {t('home_mid.title_1')} <br className="hidden md:block"/><span className="italic text-gold">{t('home_mid.title_2')}</span>
             </h2>
             <button 
               onClick={() => openBooking({from: 'home_mid'})}
               className="btn-primary flex items-center gap-4 bg-sacromonte-red border-none text-white px-8 py-4 text-xs md:text-sm tracking-[0.2em] font-black uppercase transition-all duration-500 shadow-[0_0_40px_rgba(153,27,27,0.4)] hover:shadow-[0_0_60px_rgba(212,175,55,0.6)] hover:bg-gold hover:text-deep-black transform hover:-translate-y-1"
             >
-               Reservar <ArrowRight size={18} />
+               {t('home_mid.cta')} <ArrowRight size={18} />
             </button>
          </div>
       </section>
@@ -64,17 +66,17 @@ const Home = () => {
         >
           <div className="w-px h-16 md:h-24 bg-gradient-to-b from-transparent to-gold mb-8"></div>
           <h2 className="text-5xl md:text-6xl lg:text-7xl font-serif text-white mb-6 tracking-tighter leading-none shadow-black drop-shadow-2xl">
-            Tu asiento en la <br/> <span className="italic text-gold">historia.</span>
+            {t('home_bottom.title_1')} <br/> <span className="italic text-gold">{t('home_bottom.title_2')}</span>
           </h2>
           <p className="text-base text-white/50 max-w-lg mb-12 font-light">
-            Las plazas en la cueva son limitadas para preservar la pureza acústica y la intimidad del espectáculo. Asegura tu lugar en la Zambra.
+            {t('home_bottom.desc')}
           </p>
           
           <button 
             onClick={() => openBooking({from: 'home_bottom'})}
             className="btn-gold flex items-center gap-4 text-xs md:text-sm px-10 py-5 shadow-[0_0_40px_rgba(212,175,55,0.2)] hover:shadow-[0_0_60px_rgba(212,175,55,0.4)] relative overflow-hidden group"
           >
-            <span className="relative z-10 font-bold tracking-widest uppercase">Reservar</span>
+            <span className="relative z-10 font-bold tracking-widest uppercase">{t('home_bottom.cta')}</span>
             <div className="absolute inset-0 bg-white/20 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-700 ease-out z-0"></div>
           </button>
         </motion.div>

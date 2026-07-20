@@ -739,5 +739,35 @@
       "rights": "© 2026 Cueva Venta El Gallo. All rights reserved.",
       "designed_by": "Designed & Developed by "
     }
+  },
+  "home_mid": {
+    "title_1": "The heartbeat of Sacromonte ",
+    "title_2": "is waiting for you.",
+    "cta": "Book Now"
+  },
+  "home_bottom": {
+    "title_1": "Your seat in ",
+    "title_2": "history.",
+    "desc": "Seats in the cave are limited to preserve acoustic purity and the intimacy of the show. Secure your place at the Zambra.",
+    "cta": "Book Now"
+  },
+  "blog": {
+    "title_1": "Our ",
+    "title_2": "Blog",
+    "subtitle": "Immerse yourself in the culture, history, and news of authentic Sacromonte flamenco.",
+    "read_more": "Read More"
+  },
+  "artist_card": {
+    "bio_btn": "View Biography",
+    "sample": "Artistic Sample"
+  },
+  "booking_modal": {
+    "title_1": "Book your ",
+    "title_2": "Flamenco Experience",
+    "desc": "Secure your place in the legendary Cueva Venta El Gallo. Enjoy the purest flamenco in the heart of Sacromonte.",
+    "guarantee_title": "Guarantee",
+    "guarantee_desc": "Official booking and 100% secure payment.",
+    "location_title": "Location",
+    "location_desc": "Barranco de los Negros, 5, Sacromonte."
   }
 }

@@ -1,7 +1,9 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 const ArtistCard = ({ name, role, imageUrl, description, onOpenBiography }) => {
+  const { t } = useTranslation();
   return (
     <motion.div 
       initial={{ opacity: 0, y: 30 }}
@@ -31,7 +33,7 @@ const ArtistCard = ({ name, role, imageUrl, description, onOpenBiography }) => {
             />
           ) : (
             <div className="w-full h-full bg-gray-900 flex items-center justify-center italic text-gray-500 text-xs">
-              Muestra Artística
+              {t('artist_card.sample')}
             </div>
           )}
         </div>
@@ -53,7 +55,7 @@ const ArtistCard = ({ name, role, imageUrl, description, onOpenBiography }) => {
             onClick={(e) => { e.stopPropagation(); onOpenBiography(); }}
             className="px-8 py-3 bg-white text-deep-black text-[10px] font-black uppercase tracking-[0.3em] rounded-full shadow-2xl hover:bg-gold-500 hover:scale-105 transition-all duration-300 transform"
           >
-            Ver Biografía
+            {t('artist_card.bio_btn')}
           </button>
         </div>
       </motion.div>

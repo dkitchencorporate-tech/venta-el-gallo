@@ -4,8 +4,10 @@ import { Calendar, User, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { blogPosts } from './blogData';
 import heroBg from '../../assets/raw/Cueva-Venta-El-Gallo-6-Julio-7-1.jpg';
+import { useTranslation } from 'react-i18next';
 
 const Blog = () => {
+  const { t } = useTranslation();
   useEffect(() => {
     window.scrollTo(0, 0);
     // Dynamic SEO Meta tags for the index
@@ -38,7 +40,7 @@ const Blog = () => {
         >
           <div className="w-px h-16 bg-gold drop-shadow-md mb-6"></div>
           <h1 className="text-5xl md:text-7xl font-serif text-white drop-shadow-2xl">
-            Nuestro <span className="text-gold">Blog</span>
+            {t('blog.title_1')} <span className="text-gold">{t('blog.title_2')}</span>
           </h1>
         </motion.div>
       </section>
@@ -47,7 +49,7 @@ const Blog = () => {
       <div className="container mx-auto px-6 max-w-7xl py-12">
         <div className="mb-16 text-center max-w-2xl mx-auto">
           <p className="text-gray-700 font-light text-lg md:text-xl leading-relaxed">
-            Sumérgete en la cultura, historia y noticias del auténtico flamenco del Sacromonte.
+            {t('blog.subtitle')}
           </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -71,7 +73,7 @@ const Blog = () => {
                   {post.excerpt}
                 </p>
                 <Link to={`/blog/${post.slug}`} className="text-sacromonte-red uppercase tracking-widest text-xs font-black flex items-center gap-2 group w-fit">
-                  Leer Más
+                  {t('blog.read_more')}
                   <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
                 </Link>
               </div>

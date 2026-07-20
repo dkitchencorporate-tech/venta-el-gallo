@@ -3,9 +3,11 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useBooking } from '../../context/BookingContext';
 import BookingAgent from './components/BookingAgent';
 import logoGallo from '../../assets/raw/logoVentaelGallo.webp';
+import { useTranslation } from 'react-i18next';
 
 const BookingAgentModal = () => {
   const { isBookingOpen, closeBooking } = useBooking();
+  const { t } = useTranslation();
 
   return (
     <AnimatePresence>
@@ -49,21 +51,21 @@ const BookingAgentModal = () => {
               <div className="relative z-10">
                 <img src={logoGallo} alt="Venta El Gallo" className="w-16 h-16 opacity-90 mb-8" />
                 <h2 className="text-4xl font-serif text-white leading-tight mb-4">
-                  Reserva tu <span className="text-gold block">Experiencia Flamenca</span>
+                  {t('booking_modal.title_1')} <span className="text-gold block">{t('booking_modal.title_2')}</span>
                 </h2>
                 <p className="text-gray-400 font-light max-w-sm text-sm leading-relaxed">
-                  Asegura tu lugar en la mítica Cueva Venta El Gallo. Disfruta del flamenco más puro en el corazón del Sacromonte.
+                  {t('booking_modal.desc')}
                 </p>
               </div>
 
               <div className="relative z-10 grid grid-cols-2 gap-8">
                 <div>
-                  <h4 className="text-gold text-[9px] uppercase tracking-widest font-bold mb-2">Garantía</h4>
-                  <p className="text-white text-sm font-light">Reserva oficial y pago 100% seguro.</p>
+                  <h4 className="text-gold text-[9px] uppercase tracking-widest font-bold mb-2">{t('booking_modal.guarantee_title')}</h4>
+                  <p className="text-white text-sm font-light">{t('booking_modal.guarantee_desc')}</p>
                 </div>
                 <div>
-                  <h4 className="text-gold text-[9px] uppercase tracking-widest font-bold mb-2">Ubicación</h4>
-                  <p className="text-white text-sm font-light">Barranco de los Negros, 5, Sacromonte.</p>
+                  <h4 className="text-gold text-[9px] uppercase tracking-widest font-bold mb-2">{t('booking_modal.location_title')}</h4>
+                  <p className="text-white text-sm font-light">{t('booking_modal.location_desc')}</p>
                 </div>
               </div>
             </div>
