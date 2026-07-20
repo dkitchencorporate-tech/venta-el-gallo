@@ -89,7 +89,7 @@ const MainLayout = () => {
       </nav>
 
       {/* Global Language Selector (Floating) */}
-      <div className="block">
+      <div className="block relative z-50">
         <LanguageSelector scrolled={scrolled} />
       </div>
 

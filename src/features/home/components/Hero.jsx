@@ -36,7 +36,7 @@ const Hero = () => {
            initial={{ opacity: 0, y: 30 }}
            animate={{ opacity: 1, y: 0 }}
            transition={{ duration: 1.5, delay: 0.2 }}
-           className="max-w-5xl"
+           className="max-w-5xl mt-12 lg:mt-16"
         >
           <div className="flex items-center gap-4 mb-6">
             <div className="w-16 h-px bg-gold drop-shadow-[0_0_10px_rgba(212,175,55,0.8)]"></div>
