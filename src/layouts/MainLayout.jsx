@@ -111,7 +111,7 @@ const MainLayout = () => {
               <div className="absolute bottom-[20%] right-[-10%] w-[60%] h-[60%] bg-gold/5 rounded-full blur-[120px]"></div>
             </div>
 
-            <div className="flex flex-col items-center justify-start gap-8 md:gap-12 relative z-10 w-full px-8 pb-12 text-center">
+            <div className="flex flex-col items-center justify-start gap-8 md:gap-12 relative z-10 w-full px-8 pt-28 pb-12 text-center">
                <LanguageSelector isMobileMenu={true} />
                
                {navLinks.map((link, idx) => (
