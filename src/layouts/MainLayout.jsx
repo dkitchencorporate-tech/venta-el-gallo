@@ -88,8 +88,8 @@ const MainLayout = () => {
         </div>
       </nav>
 
-      {/* Desktop Language Selector */}
-      <div className="hidden lg:block">
+      {/* Global Language Selector (Floating) */}
+      <div className="block">
         <LanguageSelector scrolled={scrolled} />
       </div>
 
