@@ -1,50 +1,13 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 import juanilloImg from '../../../assets/raw/juanillo-solo.jpeg';
 import zambraImg from '../../../assets/raw/Venta-El-Gallo-1-1280x961-2.jpg';
 import exteriorImg from '../../../assets/raw/Cueva-Venta-El-Gallo-6-Julio-7-1.jpg';
 import daughtersImg from '../../../assets/raw/Venta-El-Gallo-15-1.jpg';
 
-const events = [
-  { 
-    year: "1996", 
-    title: "El Origen en la Roca", 
-    desc: "Juanillo Heredia adquiere la cueva en el mítico barranco de los Negros. Lo que comenzó excavando la roca, pronto se convertiría en un santuario del cante y el baile puro, cimentando nuestra leyenda.",
-    img: juanilloImg,
-    isCircle: true,
-    filter: "contrast-[1.1] saturate-[1.2]",
-    objectPosition: "object-top",
-    align: "left"
-  },
-  { 
-    year: "1970s", 
-    title: "El Origen de la Zambra", 
-    desc: "Definimos nuestro formato de 'Zambra Gitana'. El boca a boca, el sudor y la pasión atraen a personalidades de todo el mundo. La acústica natural de la cal y la roca se revela como nuestro mayor tesoro.",
-    img: zambraImg,
-    isCircle: false,
-    filter: "contrast-100",
-    align: "right"
-  },
-  { 
-    year: "2001", 
-    title: "Galardón de Prestigio", 
-    desc: "Venta El Gallo recibe el Premio al Prestigio Turístico de Granada. Un reconocimiento oficial que valida décadas de dedicación ininterrumpida a la preservación del arte flamenco en su estado más visceral.",
-    img: exteriorImg,
-    isCircle: false,
-    filter: "contrast-[1.05]",
-    align: "left"
-  },
-  { 
-    year: "Legado", 
-    title: "La Sangre Continúa", 
-    desc: "Hoy, las herederas directas velan por el fuego. No solo custodian el origen, sino que imponen su respeto sobre el escenario cada noche, fundiendo la tradición intransigente con la más alta gastronomía.",
-    img: daughtersImg,
-    isCircle: false,
-    filter: "contrast-100",
-    align: "right"
-  }
-];
+// Events array moved into the component
 
 const MuseumCard = ({ event, index }) => {
   const isImageLeft = event.align === 'left';
@@ -118,19 +81,61 @@ const MuseumCard = ({ event, index }) => {
 };
 
 const Timeline = () => {
+  const { t } = useTranslation();
+
+  const events = [
+    { 
+      year: t('history_page.timeline.events.e1.year'), 
+      title: t('history_page.timeline.events.e1.title'), 
+      desc: t('history_page.timeline.events.e1.desc'),
+      img: juanilloImg,
+      isCircle: true,
+      filter: "contrast-[1.1] saturate-[1.2]",
+      objectPosition: "object-top",
+      align: "left"
+    },
+    { 
+      year: t('history_page.timeline.events.e2.year'), 
+      title: t('history_page.timeline.events.e2.title'), 
+      desc: t('history_page.timeline.events.e2.desc'),
+      img: zambraImg,
+      isCircle: false,
+      filter: "contrast-100",
+      align: "right"
+    },
+    { 
+      year: t('history_page.timeline.events.e3.year'), 
+      title: t('history_page.timeline.events.e3.title'), 
+      desc: t('history_page.timeline.events.e3.desc'),
+      img: exteriorImg,
+      isCircle: false,
+      filter: "contrast-[1.05]",
+      align: "left"
+    },
+    { 
+      year: t('history_page.timeline.events.e4.year'), 
+      title: t('history_page.timeline.events.e4.title'), 
+      desc: t('history_page.timeline.events.e4.desc'),
+      img: daughtersImg,
+      isCircle: false,
+      filter: "contrast-100",
+      align: "right"
+    }
+  ];
+
   return (
     <div className="relative z-20 mt-4 lg:mt-8 mx-4 sm:mx-8 lg:mx-20 rounded-[40px] lg:rounded-[60px] bg-white shadow-[0_40px_100px_rgba(0,0,0,0.12)] border border-gray-100/50 mb-8 lg:mb-12 overflow-hidden">
         
         {/* Gallery Intro */}
         <div className="max-w-2xl mx-auto text-center py-24 md:py-32 px-6">
            <div className="inline-block px-4 py-1.5 border border-sacromonte-red/20 text-sacromonte-red bg-transparent text-[9px] uppercase tracking-[0.3em] font-bold mb-6 rounded-sm">
-             Nuestro Mapa del Tiempo
+             {t('history_page.timeline.badge')}
            </div>
            
            {/* Greatly reduced Intro Header */}
            <h2 className="text-3xl md:text-4xl font-serif text-deep-black leading-[1.2] tracking-tight">
-             Piedra, sudor y <br className="hidden md:block"/>
-             <span className="italic text-sacromonte-red font-light">tradición intacta.</span>
+             {t('history_page.timeline.title_1')}<br className="hidden md:block"/>
+             <span className="italic text-sacromonte-red font-light">{t('history_page.timeline.title_2')}</span>
            </h2>
         </div>
 

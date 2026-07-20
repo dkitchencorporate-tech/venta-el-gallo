@@ -21,7 +21,7 @@ const Privacy = () => {
           <div className="prose prose-invert prose-gold max-w-none font-light leading-relaxed text-gray-400">
             <h3 className="text-xl font-serif text-white mb-4">1. Información de contacto</h3>
             <p className="mb-6">
-              De acuerdo con el Reglamento General de Protección de Datos (RGPD), le informamos que el responsable del tratamiento de los datos personales recogidos en este sitio web es Venta El Gallo. Puede contactarnos en <strong>info@ventaelgallo.com</strong>.
+              De acuerdo con el Reglamento General de Protección de Datos (RGPD), le informamos que el responsable del tratamiento de los datos personales recogidos en este sitio web es Venta El Gallo. Puede contactarnos en <strong>info@cuevaventaelgallo.es</strong>.
             </p>
 
             <h3 className="text-xl font-serif text-white mb-4">2. Recogida de datos</h3>
@@ -47,7 +47,7 @@ const Privacy = () => {
 
             <h3 className="text-xl font-serif text-white mb-4">5. Derechos del usuario</h3>
             <p className="mb-6">
-              Usted tiene derecho a acceder, rectificar, borrar, restringir u oponerse al tratamiento de sus datos personales. Para ejercer estos derechos, por favor envíe un correo a info@ventaelgallo.com adjuntando una copia de su DNI.
+              Usted tiene derecho a acceder, rectificar, borrar, restringir u oponerse al tratamiento de sus datos personales. Para ejercer estos derechos, por favor envíe un correo a info@cuevaventaelgallo.es adjuntando una copia de su DNI.
             </p>
           </div>
         </motion.div>

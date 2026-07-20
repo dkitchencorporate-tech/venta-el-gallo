@@ -1,51 +1,29 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
+import LanguageDetector from 'i18next-browser-languagedetector';
+
+// Translation dictionaries will be progressively populated
+import es from './locales/es.json';
+import en from './locales/en.json';
+import fr from './locales/fr.json';
 
 const resources = {
-  es: {
-    translation: {
-      nav: {
-        home: 'Inicio',
-        history: 'El Legado',
-        artists: 'Artistas',
-        restaurant: 'Restaurante',
-        b2b: 'Agencias y Profesionales',
-        blog: 'Blog',
-        contact: 'Contacto'
-      },
-      hero: {
-        title: 'Alma de Roca, Corazón de Fuego',
-        subtitle: 'Una cueva legendaria donde el flamenco trasciende el tiempo.',
-        cta: 'Reserva'
-      }
-    }
-  },
-  en: {
-    translation: {
-      nav: {
-        home: 'Home',
-        history: 'The Legacy',
-        artists: 'Artists',
-        restaurant: 'Restaurant',
-        b2b: 'Agencies & Professionals',
-        blog: 'Blog',
-        contact: 'Contact'
-      },
-      hero: {
-        title: 'Rock Soul, Heart of Fire',
-        subtitle: 'A legendary cave where flamenco transcends time.',
-        cta: 'Book'
-      }
-    }
-  }
+  es: { translation: es },
+  en: { translation: en },
+  fr: { translation: fr }
 };
 
 i18n
+  .use(LanguageDetector)
   .use(initReactI18next)
   .init({
     resources,
-    lng: 'es',
-    fallbackLng: 'en',
+    fallbackLng: 'es',
+    supportedLngs: ['es', 'en', 'fr'],
+    detection: {
+      order: ['localStorage', 'navigator'],
+      caches: ['localStorage'],
+    },
     interpolation: {
       escapeValue: false
     }

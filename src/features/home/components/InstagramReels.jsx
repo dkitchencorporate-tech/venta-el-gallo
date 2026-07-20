@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Play, Heart, ExternalLink, Instagram } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 import img1 from '../../../assets/raw/antonia-heredia-dancing.jpg';
 import img2 from '../../../assets/raw/Antonio-el-Chonico-guitarra-Venta-el-Gallo.jpg';
@@ -22,6 +23,7 @@ const reelsData = [
 ];
 
 const InstagramReels = () => {
+  const { t } = useTranslation();
   const containerRef = useRef(null);
   const [isHovered, setIsHovered] = useState(false);
 
@@ -62,10 +64,10 @@ const InstagramReels = () => {
     <section className="py-24 bg-[#050505] overflow-hidden relative">
       <div className="section-container relative z-20 text-center mb-16">
         <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif text-white mb-6 tracking-tighter">
-          La magia en <span className="italic text-sacromonte-red">movimiento.</span>
+          {t('reels.title_1')}<span className="italic text-sacromonte-red">{t('reels.title_2')}</span>
         </h2>
         <p className="text-gray-400 text-lg md:text-xl font-light max-w-2xl mx-auto">
-          Atmósfera real, sin filtros. Así se vive una noche en la Venta El Gallo.
+          {t('reels.subtitle')}
         </p>
       </div>
 
@@ -110,7 +112,7 @@ const InstagramReels = () => {
               {/* Etiqueta Instagram Top */}
               <div className="absolute top-4 left-4 z-30 flex items-center gap-2 bg-black/40 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10">
                 <Instagram size={14} className="text-white" />
-                <span className="text-[10px] font-bold text-white tracking-widest uppercase">Reel</span>
+                <span className="text-[10px] font-bold text-white tracking-widest uppercase">{t('reels.reel')}</span>
               </div>
 
               {/* Cover Image */}
@@ -138,7 +140,7 @@ const InstagramReels = () => {
                 </div>
                 
                 <div className="flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] font-bold group-hover:text-gold transition-colors">
-                  Ver
+                  {t('reels.view')}
                   <ExternalLink className="w-3 h-3" />
                 </div>
               </div>
@@ -148,7 +150,7 @@ const InstagramReels = () => {
         
         {/* Mensaje de interacción */}
         <div className={`transition-opacity duration-500 mt-4 text-xs font-light tracking-[0.3em] uppercase text-gold/50 ${isHovered ? 'opacity-100' : 'opacity-0'}`}>
-          Haz clic para abrir en Instagram
+          {t('reels.interaction')}
         </div>
 
       </div>

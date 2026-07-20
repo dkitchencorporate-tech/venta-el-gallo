@@ -23,7 +23,7 @@ const Legal = () => {
             <p className="mb-6">
               En cumplimiento con el deber de información recogido en el artículo 10 de la Ley 34/2002, de 11 de julio, de Servicios de la Sociedad de la Información y del Comercio Electrónico (LSSI), le indicamos que Venta El Gallo opera en este dominio web. 
               <strong>Domicilio:</strong> Camino del Sacromonte 70, Granada, España.
-              <strong>Email:</strong> info@ventaelgallo.com.
+              <strong>Email:</strong> info@cuevaventaelgallo.es.
             </p>
 
             <h3 className="text-xl font-serif text-white mb-4">2. Condiciones de Uso</h3>

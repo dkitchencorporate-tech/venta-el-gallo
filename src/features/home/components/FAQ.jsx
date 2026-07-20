@@ -3,28 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { ChevronDown } from 'lucide-react';
 
-const faqData = [
-  {
-    question: "¿A qué hora comienza el espectáculo de Zambra Gitana?",
-    answer: "Ofrecemos dos pases diarios para garantizar una experiencia íntima. El primer pase comienza a las 19:00 hrs y el segundo a las 21:00 hrs. Recomendamos llegar 15 minutos antes para acomodarse y disfrutar del ambiente de la cueva."
-  },
-  {
-    question: "¿Es necesario reservar la cena junto con el espectáculo?",
-    answer: "No es estrictamente necesario, pero es altamente recomendable. Nuestra gastronomía es parte de la herencia del Sacromonte y complementa perfectamente la velada. Disponemos de un Menú Tradición y un Tapas Premium que pueden disfrutarse antes o durante el espectáculo."
-  },
-  {
-    question: "¿Cómo llego a la cueva Venta El Gallo?",
-    answer: "Nos encontramos en el corazón del Sacromonte, frente al imponente mirador hacia la Alhambra. Puede llegar en taxi hasta la misma puerta (Barranco de los Negros, 5), tomar el microbús C34 desde Plaza Nueva, o subir paseando por el histórico barrio del Albaicín."
-  },
-  {
-    question: "¿Es apto para niños pequeños?",
-    answer: "El flamenco es pasión universal. Los niños son bienvenidos a sentir la fuerza de nuestro arte. No obstante, por respeto a la pureza del sonido acústico de la cueva, recomendamos el primer pase para familias."
-  },
-  {
-    question: "¿Los artistas varían cada noche?",
-    answer: "Nuestra familia es el núcleo central. Las hijas de Juanillo Heredia son el alma de Venta El Gallo, actuando casi todas las noches. Además, contamos con bailaores, cantaores y guitarristas de primer nivel que van rotando para asegurar que cada zambra sea un espectáculo vivo y único."
-  }
-];
+// The faqData will be moved inside the component to use the t() function
 
 const FAQItem = ({ faq, index }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -69,6 +48,14 @@ const FAQItem = ({ faq, index }) => {
 
 const FAQ = () => {
   const { t } = useTranslation();
+  
+  const faqData = [
+    { question: t('faq.q1'), answer: t('faq.a1') },
+    { question: t('faq.q2'), answer: t('faq.a2') },
+    { question: t('faq.q3'), answer: t('faq.a3') },
+    { question: t('faq.q4'), answer: t('faq.a4') },
+    { question: t('faq.q5'), answer: t('faq.a5') }
+  ];
 
   return (
     <section className="relative py-24 md:py-32 bg-deep-black text-white w-full z-10">
@@ -78,12 +65,12 @@ const FAQ = () => {
       <div className="section-container relative z-10 max-w-4xl mx-auto">
         
         <div className="text-center mb-16">
-          <div className="inline-block px-4 py-1 border border-white/20 text-white/60 text-[8px] uppercase tracking-[0.3em] font-black mb-6">Cerrojos Desbloqueados</div>
+          <div className="inline-block px-4 py-1 border border-white/20 text-white/60 text-[8px] uppercase tracking-[0.3em] font-black mb-6">{t('faq.badge')}</div>
           <h2 className="text-4xl md:text-6xl font-serif text-white mb-6">
-            Preguntas <span className="italic text-gold">Frecuentes.</span>
+            {t('faq.title_1')} <span className="italic text-gold">{t('faq.title_2')}</span>
           </h2>
           <p className="text-white/50 font-light max-w-lg mx-auto text-sm md:text-base">
-            Resolvemos tus dudas para que solo tengas que preocuparte de sentir el Sacromonte.
+            {t('faq.subtitle')}
           </p>
         </div>
 

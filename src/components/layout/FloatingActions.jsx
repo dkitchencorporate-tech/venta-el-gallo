@@ -25,7 +25,7 @@ const FloatingActions = () => {
     });
   };
 
-  const whatsappNumber = "34958228476"; 
+  const whatsappNumber = "34606739990"; // Replaced 34958228476
   const whatsappMessage = encodeURIComponent("Hola! Me gustaría solicitar información sobre una reserva en Venta El Gallo.");
   const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
 

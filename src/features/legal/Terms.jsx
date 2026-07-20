@@ -41,7 +41,7 @@ const Terms = () => {
 
             <h3 className="text-xl font-serif text-white mb-4">5. Datos Personales en Reservas</h3>
             <p className="mb-6">
-              La gestión de los datos proporcionados durante la reserva es administrada conjuntamente con la plataforma Regiondo, exclusivamente con el fin de tramitar la compra, emitir las entradas y gestionar el acceso. Para cualquier solicitud de eliminación de datos, diríjase a info@ventaelgallo.com.
+              La gestión de los datos proporcionados durante la reserva es administrada conjuntamente con la plataforma Regiondo, exclusivamente con el fin de tramitar la compra, emitir las entradas y gestionar el acceso. Para cualquier solicitud de eliminación de datos, diríjase a info@cuevaventaelgallo.es.
             </p>
           </div>
         </motion.div>

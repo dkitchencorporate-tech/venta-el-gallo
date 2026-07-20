@@ -1,9 +1,11 @@
 import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Building2, Users, MapPin, Phone, Mail, FileText } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import heroBg from '../../assets/raw/Venta-El-Gallo-15-1.jpg';
 
 const Agencias = () => {
+  const { t } = useTranslation();
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -24,7 +26,7 @@ const Agencias = () => {
           >
             <Building2 size={14} className="text-gold" />
             <span className="text-gold text-[10px] font-black uppercase tracking-[0.3em]">
-              Eventos y Profesionales
+              {t('agencias_page.hero.tag')}
             </span>
           </motion.div>
           
@@ -34,7 +36,7 @@ const Agencias = () => {
             transition={{ delay: 0.1 }}
             className="text-5xl md:text-7xl font-serif text-white mb-6 tracking-tighter shadow-black drop-shadow-2xl"
           >
-            Eventos con <span className="italic text-gold">Alma</span>
+            {t('agencias_page.hero.title_1')}<span className="italic text-gold">{t('agencias_page.hero.title_2')}</span>
           </motion.h1>
           
           <motion.p 
@@ -43,7 +45,7 @@ const Agencias = () => {
             transition={{ delay: 0.2 }}
             className="text-base md:text-xl text-white/70 max-w-2xl mx-auto font-light leading-relaxed"
           >
-            ¿Buscas un lugar con magia para tu próximo evento? En nuestra cueva del Sacromonte, donde el flamenco nace y la historia se respira en cada rincón, creamos momentos únicos que quedan grabados para siempre.
+            {t('agencias_page.hero.desc')}
           </motion.p>
         </div>
       </section>
@@ -59,37 +61,27 @@ const Agencias = () => {
             <div className="flex flex-col md:flex-row items-start gap-12 md:gap-20">
               <div className="flex-1 z-10">
                 <span className="inline-block px-4 py-1 text-sacromonte-red border border-sacromonte-red/30 rounded-full text-[10px] font-black uppercase tracking-[0.4em] mb-6">
-                  Celebraciones Únicas
+                  {t('agencias_page.services.tag')}
                 </span>
                 <h2 className="text-4xl md:text-5xl font-serif text-deep-black mb-6 leading-[1.1] tracking-tight">
-                  ¿Quieres celebrar un evento especial con <span className="italic text-gold">nosotros?</span>
+                  {t('agencias_page.services.title_1')}<span className="italic text-gold">{t('agencias_page.services.title_2')}</span>
                 </h2>
                 <p className="text-gray-700 font-light text-lg mb-8 leading-relaxed">
-                  Celebraciones especiales, cenas de empresa, viajes con amigos o encuentros culturales… Sea cual sea la ocasión, la convertimos en una experiencia inolvidable. Combinamos lo mejor de la gastronomía andaluza con el arte más auténtico del flamenco, en un entorno incomparable con vistas a la Alhambra y el embrujo de Granada.
+                  {t('agencias_page.services.desc')}
                 </p>
                 
-                <h3 className="text-xl font-serif text-sacromonte-red mb-4">Nuestros Servicios para Eventos:</h3>
+                <h3 className="text-xl font-serif text-sacromonte-red mb-4">{t('agencias_page.services.subtitle')}</h3>
                 <ul className="space-y-4 mb-8">
-                  <li className="flex items-center gap-3 text-gray-700">
-                    <MapPin size={18} className="text-gold shrink-0" /> 
-                    <span><strong>Espacios con encanto:</strong> Terraza con vistas, salones en cueva y zonas privadas.</span>
-                  </li>
-                  <li className="flex items-center gap-3 text-gray-700">
-                    <FileText size={18} className="text-gold shrink-0" /> 
-                    <span><strong>Gastronomía personalizada:</strong> Menú o carta adaptada a cada tipo de evento.</span>
-                  </li>
-                  <li className="flex items-center gap-3 text-gray-700">
-                    <Users size={18} className="text-gold shrink-0" /> 
-                    <span><strong>Flamenco en vivo:</strong> Para dar ese toque de emoción y autenticidad.</span>
-                  </li>
-                  <li className="flex items-center gap-3 text-gray-700">
-                    <Building2 size={18} className="text-gold shrink-0" /> 
-                    <span><strong>Organización integral:</strong> Para que tú solo te preocupes de disfrutar.</span>
-                  </li>
+                  {t('agencias_page.services.list', { returnObjects: true })?.map((item, i) => (
+                    <li key={i} className="flex items-center gap-3 text-gray-700">
+                      {[<MapPin key={0} size={18} className="text-gold shrink-0" />, <FileText key={1} size={18} className="text-gold shrink-0" />, <Users key={2} size={18} className="text-gold shrink-0" />, <Building2 key={3} size={18} className="text-gold shrink-0" />][i % 4]}
+                      <span><strong>{item.title}</strong> {item.desc}</span>
+                    </li>
+                  ))}
                 </ul>
 
                 <p className="text-xl font-serif italic text-deep-black mt-8">
-                  Haz que tu evento tenga alma, sabor… y arte.
+                  {t('agencias_page.services.footer')}
                 </p>
               </div>
 
@@ -109,13 +101,13 @@ const Agencias = () => {
               
               <div className="relative z-10 flex flex-col h-full justify-between">
                 <div>
-                  <h3 className="text-2xl md:text-3xl font-serif text-deep-black mb-2">Contacto Directo</h3>
+                  <h3 className="text-2xl md:text-3xl font-serif text-deep-black mb-2">{t('agencias_page.contact.title')}</h3>
                   <p className="text-gray-500 text-sm md:text-base font-light mb-6">
-                    Atención exclusiva para profesionales del sector turístico y corporativo.
+                    {t('agencias_page.contact.desc')}
                   </p>
                   <div className="inline-flex items-center gap-3 bg-[#faf9f6] border border-gray-100 px-6 py-3 rounded-full mb-8 shadow-sm">
                     <span className="text-deep-black font-serif text-xl">Paco</span>
-                    <span className="text-gold text-[10px] font-black uppercase tracking-widest bg-gold/10 px-2 py-0.5 rounded-sm">Operaciones B2B</span>
+                    <span className="text-gold text-[10px] font-black uppercase tracking-widest bg-gold/10 px-2 py-0.5 rounded-sm">{t('agencias_page.contact.paco_tag')}</span>
                   </div>
                 </div>
 
@@ -125,7 +117,7 @@ const Agencias = () => {
                       <Phone size={18} />
                     </div>
                     <div className="flex flex-col">
-                      <span className="text-gray-400 text-[9px] uppercase tracking-widest font-bold">Fijo</span>
+                      <span className="text-gray-400 text-[9px] uppercase tracking-widest font-bold">{t('agencias_page.contact.fijo')}</span>
                       <span className="text-deep-black font-serif text-lg tracking-wider">+34 958 049 461</span>
                     </div>
                   </a>
@@ -135,7 +127,7 @@ const Agencias = () => {
                       <Phone size={18} />
                     </div>
                     <div className="flex flex-col">
-                      <span className="text-gray-400 text-[9px] uppercase tracking-widest font-bold">Móvil / WhatsApp</span>
+                      <span className="text-gray-400 text-[9px] uppercase tracking-widest font-bold">{t('agencias_page.contact.movil')}</span>
                       <span className="text-deep-black font-serif text-lg tracking-wider">+34 606 739 990</span>
                     </div>
                   </a>
@@ -145,7 +137,7 @@ const Agencias = () => {
                       <Mail size={18} />
                     </div>
                     <div className="flex flex-col">
-                      <span className="text-gray-400 text-[9px] uppercase tracking-widest font-bold">Email General</span>
+                      <span className="text-gray-400 text-[9px] uppercase tracking-widest font-bold">{t('agencias_page.contact.email_general')}</span>
                       <span className="text-deep-black font-serif text-lg tracking-wider">info@cuevaventaelgallo.es</span>
                     </div>
                   </a>
@@ -160,9 +152,9 @@ const Agencias = () => {
                   <Users size={24} />
                 </div>
                 <h3 className="text-xl font-serif text-deep-black mb-1">Germán</h3>
-                <span className="inline-block text-sacromonte-red text-[9px] font-black uppercase tracking-widest bg-sacromonte-red/5 px-2 py-0.5 rounded-sm mb-4">Marketing Digital</span>
+                <span className="inline-block text-sacromonte-red text-[9px] font-black uppercase tracking-widest bg-sacromonte-red/5 px-2 py-0.5 rounded-sm mb-4">{t('agencias_page.contact.german_tag')}</span>
                 <p className="text-gray-500 text-xs font-light mb-6 px-4">
-                  Colaboraciones, marketing y alianzas estratégicas.
+                  {t('agencias_page.contact.german_desc')}
                 </p>
                 <a href="tel:+34624050842" className="inline-flex items-center justify-center gap-3 w-full bg-[#faf9f6] hover:bg-white border border-gray-100 hover:border-sacromonte-red/30 py-3 rounded-xl transition-all shadow-sm hover:shadow-md group/btn">
                   <Phone size={14} className="text-sacromonte-red group-hover/btn:scale-110 transition-transform" />
@@ -179,9 +171,9 @@ const Agencias = () => {
       <section className="py-20 bg-white border-t border-gray-100">
         <div className="container mx-auto px-6 max-w-4xl">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-serif text-deep-black mb-4">Solicitud de <span className="italic text-sacromonte-red">Eventos</span></h2>
+            <h2 className="text-3xl md:text-4xl font-serif text-deep-black mb-4">{t('agencias_page.form.title_1')}<span className="italic text-sacromonte-red">{t('agencias_page.form.title_2')}</span></h2>
             <p className="text-gray-600 font-light">
-              Envíanos los detalles de tu evento y prepararemos una propuesta a medida.
+              {t('agencias_page.form.desc')}
             </p>
           </div>
           
@@ -193,20 +185,20 @@ const Agencias = () => {
           >
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
               <div>
-                <label className="block text-[10px] uppercase tracking-widest text-gray-500 font-bold mb-2">Nombre / Agencia</label>
-                <input type="text" className="w-full bg-white border border-gray-200 rounded-xl px-4 py-3 text-deep-black focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold/50 transition-all shadow-sm" placeholder="Tu nombre o empresa" required />
+                <label className="block text-[10px] uppercase tracking-widest text-gray-500 font-bold mb-2">{t('agencias_page.form.name_label')}</label>
+                <input type="text" className="w-full bg-white border border-gray-200 rounded-xl px-4 py-3 text-deep-black focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold/50 transition-all shadow-sm" placeholder={t('agencias_page.form.name_placeholder')} required />
               </div>
               <div>
-                <label className="block text-[10px] uppercase tracking-widest text-gray-500 font-bold mb-2">Email</label>
-                <input type="email" className="w-full bg-white border border-gray-200 rounded-xl px-4 py-3 text-deep-black focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold/50 transition-all shadow-sm" placeholder="correo@ejemplo.com" required />
+                <label className="block text-[10px] uppercase tracking-widest text-gray-500 font-bold mb-2">{t('agencias_page.form.email_label')}</label>
+                <input type="email" className="w-full bg-white border border-gray-200 rounded-xl px-4 py-3 text-deep-black focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold/50 transition-all shadow-sm" placeholder={t('agencias_page.form.email_placeholder')} required />
               </div>
             </div>
             <div className="mb-8">
-              <label className="block text-[10px] uppercase tracking-widest text-gray-500 font-bold mb-2">Detalles del Evento</label>
+              <label className="block text-[10px] uppercase tracking-widest text-gray-500 font-bold mb-2">{t('agencias_page.form.details_label')}</label>
               <textarea 
                 rows="5" 
                 className="w-full bg-white border border-gray-200 rounded-xl px-4 py-3 text-deep-black focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold/50 transition-all shadow-sm resize-none" 
-                placeholder="Indícanos fechas, número de personas, menús deseados y cualquier requerimiento especial..."
+                placeholder={t('agencias_page.form.details_placeholder')}
                 required
               ></textarea>
             </div>
@@ -215,7 +207,7 @@ const Agencias = () => {
                 type="submit" 
                 className="bg-deep-black text-white px-12 py-4 rounded-full font-black text-sm uppercase tracking-[0.2em] hover:bg-gold transition-colors shadow-lg"
               >
-                Organizar Evento
+                {t('agencias_page.form.button')}
               </button>
             </div>
           </form>

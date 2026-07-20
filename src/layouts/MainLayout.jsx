@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import logoGallo from '../assets/raw/logoVentaelGallo.webp';
 import FloatingActions from '../components/layout/FloatingActions';
 import CookieBanner from '../components/common/CookieBanner';
+import LanguageSelector from '../components/common/LanguageSelector';
 import { useBooking } from '../context/BookingContext';
 
 const MainLayout = () => {
@@ -87,6 +88,11 @@ const MainLayout = () => {
         </div>
       </nav>
 
+      {/* Desktop Language Selector */}
+      <div className="hidden lg:block">
+        <LanguageSelector scrolled={scrolled} />
+      </div>
+
       {/* Full Screen Mobile Menu - Premium 10k Overlay */}
       <AnimatePresence>
         {isMenuOpen && (
@@ -102,7 +108,9 @@ const MainLayout = () => {
               <div className="absolute bottom-[20%] right-[-10%] w-[60%] h-[60%] bg-gold/5 rounded-full blur-[120px]"></div>
             </div>
 
-            <div className="flex flex-col items-center gap-12 relative z-10 w-full px-12">
+            <div className="flex flex-col items-center justify-start gap-8 md:gap-12 relative z-10 w-full px-8 pb-12 text-center">
+               <LanguageSelector isMobileMenu={true} />
+               
                {navLinks.map((link, idx) => (
                  <motion.div
                    key={link.key}
@@ -160,7 +168,7 @@ const MainLayout = () => {
                 <span className="text-xl font-serif font-black tracking-widest uppercase text-white">Venta El Gallo</span>
              </Link>
              <p className="text-sm font-light leading-relaxed mb-6">
-               Una cueva milenaria donde el flamenco se vive en su estado más puro. Manteniendo vivo el legado de Juanillo Heredia desde 1996.
+               {t('footer.desc')}
              </p>
              <div className="flex items-center gap-4">
                <a href="https://instagram.com/ventaelgalloficial" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:bg-gold hover:text-deep-black hover:border-gold transition-all duration-300"><Instagram size={18} /></a>
@@ -170,29 +178,29 @@ const MainLayout = () => {
 
            {/* Column 2: Navigation */}
            <div className="flex flex-col">
-             <h4 className="text-xs uppercase font-bold tracking-[0.2em] text-white mb-8">La Experiencia</h4>
+             <h4 className="text-xs uppercase font-bold tracking-[0.2em] text-white mb-8">{t('footer.cols.exp.title')}</h4>
              <ul className="space-y-4">
-               <li><Link to="/historia" className="text-sm font-light hover:text-gold transition-colors">Nuestro Legado</Link></li>
-               <li><Link to="/artistas" className="text-sm font-light hover:text-gold transition-colors">Zambra y Artistas</Link></li>
-               <li><Link to="/restaurante" className="text-sm font-light hover:text-gold transition-colors">Gastronomía</Link></li>
-               <li><Link to="/contacto" className="text-sm font-light hover:text-gold transition-colors">Eventos Exclusivos</Link></li>
+               <li><Link to="/historia" className="text-sm font-light hover:text-gold transition-colors">{t('footer.cols.exp.links.history')}</Link></li>
+               <li><Link to="/artistas" className="text-sm font-light hover:text-gold transition-colors">{t('footer.cols.exp.links.artists')}</Link></li>
+               <li><Link to="/restaurante" className="text-sm font-light hover:text-gold transition-colors">{t('footer.cols.exp.links.restaurant')}</Link></li>
+               <li><Link to="/contacto" className="text-sm font-light hover:text-gold transition-colors">{t('footer.cols.exp.links.contact')}</Link></li>
              </ul>
            </div>
 
            {/* Column 3: Legal */}
            <div className="flex flex-col">
-             <h4 className="text-xs uppercase font-bold tracking-[0.2em] text-white mb-8">Políticas Legales</h4>
+             <h4 className="text-xs uppercase font-bold tracking-[0.2em] text-white mb-8">{t('footer.cols.legal.title')}</h4>
              <ul className="space-y-4">
-               <li><Link to="/aviso-legal" className="text-sm font-light hover:text-gold transition-colors">Aviso Legal</Link></li>
-               <li><Link to="/privacidad" className="text-sm font-light hover:text-gold transition-colors">Política de Privacidad</Link></li>
-               <li><Link to="/alergenos" className="text-sm font-light hover:text-gold transition-colors">Información de Alérgenos</Link></li>
-               <li><Link to="/terminos-reserva" className="text-sm font-light hover:text-gold transition-colors">Términos de Reserva</Link></li>
+               <li><Link to="/aviso-legal" className="text-sm font-light hover:text-gold transition-colors">{t('footer.cols.legal.links.legal')}</Link></li>
+               <li><Link to="/privacidad" className="text-sm font-light hover:text-gold transition-colors">{t('footer.cols.legal.links.privacy')}</Link></li>
+               <li><Link to="/alergenos" className="text-sm font-light hover:text-gold transition-colors">{t('footer.cols.legal.links.allergens')}</Link></li>
+               <li><Link to="/terminos-reserva" className="text-sm font-light hover:text-gold transition-colors">{t('footer.cols.legal.links.terms')}</Link></li>
              </ul>
            </div>
 
            {/* Column 4: Contact */}
            <div className="flex flex-col">
-             <h4 className="text-xs uppercase font-bold tracking-[0.2em] text-white mb-8">Contacto</h4>
+             <h4 className="text-xs uppercase font-bold tracking-[0.2em] text-white mb-8">{t('footer.cols.contact.title')}</h4>
              <ul className="space-y-6">
                <li className="flex items-start gap-4">
                  <a href="https://www.google.com/maps/place/Cueva+Venta+El+Gallo/" target="_blank" rel="noopener noreferrer" className="flex items-start gap-4 group">
@@ -215,10 +223,10 @@ const MainLayout = () => {
 
         <div className="max-w-7xl mx-auto px-8 lg:px-12 flex flex-col items-center">
            <div className="w-full h-px bg-white/5 mb-8"></div>
-           <p className="text-[10px] uppercase tracking-[0.3em] font-bold text-white/30 mb-2">Patrimonio del Sacromonte</p>
-           <p className="text-[10px] uppercase tracking-wider text-white/20 mb-4">© 2026 Cueva Venta El Gallo. Todos los derechos reservados.</p>
+           <p className="text-[10px] uppercase tracking-[0.3em] font-bold text-white/30 mb-2">{t('footer.bottom.patrimony')}</p>
+           <p className="text-[10px] uppercase tracking-wider text-white/20 mb-4">{t('footer.bottom.rights')}</p>
            <p className="text-[10px] uppercase tracking-wider text-white/20">
-             Designed & Developed by <a href="https://hosteleria.architectsys.com/" target="_blank" rel="noopener noreferrer" className="text-gold hover:text-white transition-colors">Architect Sys</a>
+             {t('footer.bottom.designed_by')} <a href="https://hosteleria.architectsys.com/" target="_blank" rel="noopener noreferrer" className="text-gold hover:text-white transition-colors">Architect Sys</a>
            </p>
         </div>
       </footer>

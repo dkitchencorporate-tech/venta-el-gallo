@@ -1,7 +1,9 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 const ArtistsHero = () => {
+  const { t } = useTranslation();
   return (
     <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden bg-deep-black">
       {/* Dynamic Background Gradients to avoid total darkness */}
@@ -15,17 +17,17 @@ const ArtistsHero = () => {
           transition={{ duration: 0.8 }}
         >
           <span className="inline-block px-4 py-1 border border-gold/30 text-gold text-[10px] uppercase tracking-[0.4em] font-black mb-6 rounded-full bg-gold/5 shadow-sm">
-            Pasión y Destreza
+            {t('artists_page.hero.tag')}
           </span>
           
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-serif text-white leading-tight tracking-tight mb-8">
-            Elenco <span className="italic font-light text-sacromonte-red">Artístico</span>
+            {t('artists_page.hero.title_1')}<span className="italic font-light text-sacromonte-red">{t('artists_page.hero.title_2')}</span>
           </h1>
           
           <div className="w-24 h-[1px] bg-gradient-to-r from-transparent via-gold/50 to-transparent mx-auto mb-8"></div>
           
           <p className="text-lg md:text-xl text-gray-400 font-light max-w-2xl mx-auto leading-relaxed">
-            Conoce a los maestros que dan vida a la <span className="text-white font-normal uppercase tracking-wider">Zambra Gitana</span> cada noche. Un linaje de arte puro forjado en las entrañas del Sacromonte.
+            {t('artists_page.hero.desc')}
           </p>
         </motion.div>
       </div>

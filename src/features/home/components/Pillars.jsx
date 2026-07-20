@@ -15,29 +15,29 @@ const Pillars = () => {
 
   const entryPoints = [
     { 
-      title: 'Zambra', 
-      desc: 'El Espectáculo Primitivo', 
+      title: t('pillars.items.zambra.title'), 
+      desc: t('pillars.items.zambra.desc'), 
       img: showImg,
       link: '/artistas',
       num: '01'
     },
     { 
-      title: 'Gastronomía', 
-      desc: 'Cocina de Tradición', 
+      title: t('pillars.items.gastronomy.title'), 
+      desc: t('pillars.items.gastronomy.desc'), 
       img: restaurantImg,
       link: '/restaurante',
       num: '02'
     },
     { 
-      title: 'Eventos', 
-      desc: 'Exclusividad en el Sacromonte', 
+      title: t('pillars.items.events.title'), 
+      desc: t('pillars.items.events.desc'), 
       img: eventsImg,
       link: '/agencias',
       num: '03'
     },
     { 
-      title: 'Vistas', 
-      desc: 'Frente a la Alhambra', 
+      title: t('pillars.items.views.title'), 
+      desc: t('pillars.items.views.desc'), 
       img: locationImg,
       link: '/contacto',
       num: '04'
@@ -85,7 +85,7 @@ const Pillars = () => {
                 to={point.link} 
                 className="btn-gold flex items-center gap-3 text-[9px] uppercase tracking-widest px-6 py-3 shadow-lg transform translate-y-8 opacity-0 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500"
               >
-                Descubrir <ArrowRight size={14} />
+                {t('pillars.cta')} <ArrowRight size={14} />
               </Link>
             </div>
             

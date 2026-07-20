@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react';
 import { MapPin, Clock, Phone, Mail, Navigation } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import heroBg from '../../assets/raw/Venta-El-Gallo-1-1280x961-2.jpg';
 import { motion } from 'framer-motion';
 import { useBooking } from '../../context/BookingContext';
 
 const Booking = () => {
+  const { t } = useTranslation();
   const { openBooking } = useBooking();
 
   useEffect(() => {
@@ -28,7 +30,7 @@ const Booking = () => {
               animate={{ opacity: 1, y: 0 }}
               className="text-4xl md:text-6xl font-serif text-white mb-6"
             >
-              Contacta con <span className="text-gold">Nosotros</span>
+              {t('contact_page.hero.title_1')}<span className="text-gold">{t('contact_page.hero.title_2')}</span>
             </motion.h1>
             <motion.p
               initial={{ opacity: 0 }}
@@ -36,7 +38,7 @@ const Booking = () => {
               transition={{ delay: 0.2 }}
               className="text-gray-400 font-light text-lg max-w-2xl mx-auto"
             >
-              Estamos a tu disposición para atender cualquier consulta o reserva. Habla directamente con nuestro equipo.
+              {t('contact_page.hero.desc')}
             </motion.p>
           </header>
 
@@ -49,28 +51,28 @@ const Booking = () => {
           >
             {/* Phone Button */}
             <a 
-              href="tel:+34958228476"
+              href="tel:+34958049461"
               className="w-full sm:w-1/2 flex items-center justify-center gap-4 bg-white/5 backdrop-blur-md border border-white/20 px-8 py-6 rounded-2xl hover:bg-white/10 hover:border-gold/50 transition-all duration-300 group"
             >
               <div className="w-12 h-12 rounded-full bg-gold/10 flex items-center justify-center text-gold group-hover:scale-110 transition-transform">
                 <Phone size={24} />
               </div>
               <div className="text-left flex-grow">
-                <p className="text-[10px] text-gray-400 uppercase tracking-widest font-black mb-1">Llámanos Directamente</p>
-                <p className="text-xl font-serif text-white group-hover:text-gold transition-colors">+34 958 22 84 76</p>
+                <p className="text-[10px] text-gray-400 uppercase tracking-widest font-black mb-1">{t('contact_page.buttons.call_title')}</p>
+                <p className="text-xl font-serif text-white group-hover:text-gold transition-colors">+34 958 049 461</p>
               </div>
             </a>
 
             {/* WhatsApp Button */}
             <a 
-              href="https://wa.me/34958228476"
+              href="https://wa.me/34606739990"
               target="_blank"
               rel="noopener noreferrer"
               className="w-full sm:w-1/2 flex items-center justify-between gap-4 bg-[#25D366]/10 backdrop-blur-md border border-[#25D366]/30 px-8 py-6 rounded-2xl hover:bg-[#25D366]/20 transition-all duration-300 group"
             >
               <div className="text-left flex-grow">
-                <p className="text-[10px] text-[#25D366] uppercase tracking-widest font-black mb-1">Chat Directo</p>
-                <p className="text-xl font-serif text-white group-hover:text-[#25D366] transition-colors">WhatsApp</p>
+                <p className="text-[10px] text-[#25D366] uppercase tracking-widest font-black mb-1">{t('contact_page.buttons.chat_title')}</p>
+                <p className="text-xl font-serif text-white group-hover:text-[#25D366] transition-colors">+34 606 739 990</p>
               </div>
               {/* TODO: Add specific WhatsApp logo provided by Germán */}
               <div className="w-12 h-12 rounded-full bg-[#25D366] flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition-transform">
@@ -107,7 +109,7 @@ const Booking = () => {
                     className="pointer-events-auto inline-flex items-center gap-2 bg-white text-deep-black px-6 py-3 rounded-full font-bold text-xs uppercase tracking-widest hover:bg-gold hover:text-white transition-colors w-fit shadow-xl"
                   >
                     <Navigation size={16} />
-                    Cómo Llegar
+                    {t('contact_page.map.button')}
                   </a>
                 </div>
               </div>
@@ -117,15 +119,15 @@ const Booking = () => {
                 <div className="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center text-white mb-8">
                   <Mail size={32} />
                 </div>
-                <h3 className="text-3xl font-serif text-white mb-4">Envíanos un correo</h3>
+                <h3 className="text-3xl font-serif text-white mb-4">{t('contact_page.email.title')}</h3>
                 <p className="text-gray-400 font-light mb-8">
-                  Para consultas generales, eventos o solicitudes especiales, no dudes en escribirnos. Te responderemos a la mayor brevedad posible.
+                  {t('contact_page.email.desc')}
                 </p>
                 <a 
-                  href="mailto:reservas@cuevaventaelgallo.es"
+                  href="mailto:info@cuevaventaelgallo.es"
                   className="inline-flex items-center justify-center bg-gold text-deep-black px-8 py-4 rounded-full font-black text-[10px] uppercase tracking-[0.2em] hover:bg-white transition-colors"
                 >
-                  Enviar Email
+                  {t('contact_page.email.button')}
                 </a>
               </div>
 
@@ -134,14 +136,14 @@ const Booking = () => {
             {/* Reservation Button Section */}
             <div className="mt-4 bg-deep-black/60 rounded-2xl p-8 border border-white/5 flex flex-col sm:flex-row items-center justify-between gap-6 backdrop-blur-md">
               <div>
-                <h3 className="text-2xl font-serif text-white mb-2">¿Listo para vivir la Zambra?</h3>
-                <p className="text-gray-400 font-light text-sm">Asegura tu mesa y no te quedes sin disfrutar del mejor flamenco.</p>
+                <h3 className="text-2xl font-serif text-white mb-2">{t('contact_page.cta.title')}</h3>
+                <p className="text-gray-400 font-light text-sm">{t('contact_page.cta.desc')}</p>
               </div>
               <button 
-                onClick={(e) => { e.preventDefault(); openBooking('contact_page'); }}
+                onClick={(e) => { e.preventDefault(); openBooking({ from: 'contact_page' }); }}
                 className="shrink-0 w-full sm:w-auto inline-flex items-center justify-center bg-sacromonte-red text-white px-10 py-5 rounded-full font-black text-xs uppercase tracking-[0.2em] hover:bg-gold hover:text-deep-black transition-all duration-300 shadow-xl hover:shadow-gold/20"
               >
-                Hacer Reserva Ahora
+                {t('contact_page.cta.button')}
               </button>
             </div>
           </div>

@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, MapPin } from 'lucide-react';
 import heroBg from '../../../assets/raw/Cueva-Venta-El-Gallo-6-Julio-2-1280x914-2.jpg';
 import { useBooking } from '../../../context/BookingContext';
 
@@ -40,16 +40,16 @@ const Hero = () => {
         >
           <div className="flex items-center gap-4 mb-6">
             <div className="w-16 h-px bg-gold drop-shadow-[0_0_10px_rgba(212,175,55,0.8)]"></div>
-            <span className="text-[10px] uppercase tracking-wide-5 text-gold font-bold drop-shadow-md">Patrimonio Vivo - Sacromonte, Granada</span>
+            <span className="text-[10px] uppercase tracking-wide-5 text-gold font-bold drop-shadow-md">{t('hero.badge')}</span>
           </div>
           
           <h1 className="text-6xl md:text-7xl lg:text-[8rem] xl:text-[9rem] mb-6 leading-[0.85] tracking-tighter font-serif text-white drop-shadow-2xl">
-            Donde la roca <br />
-            <span className="italic text-sacromonte-red font-light">se hace quejío.</span>
+            {t('hero.title_1')} <br />
+            <span className="italic text-sacromonte-red font-light">{t('hero.title_2')}</span>
           </h1>
           
           <p className="text-lg md:text-xl text-white/90 font-light max-w-2xl mb-10 leading-relaxed drop-shadow-md">
-            Una cueva milenaria donde el flamenco no se actúa, se vive. Siente el latido de la zambra en el origen del Sacromonte.
+            {t('hero.subtitle')}
           </p>
           
           <div className="flex flex-col sm:flex-row gap-8 items-start sm:items-center">
@@ -57,12 +57,20 @@ const Hero = () => {
               onClick={() => openBooking({from: 'hero'})}
               className="btn-primary flex items-center gap-4 hover:bg-gold hover:text-white transition-colors duration-500 shadow-xl"
             >
-               Reservar <ArrowRight size={16} />
+               {t('hero.cta')} <ArrowRight size={16} />
             </button>
-            <div className="flex flex-col border-l border-white/30 pl-6">
-              <span className="text-[9px] uppercase tracking-[0.3em] text-white/60 mb-2">Coordenadas de Origen</span>
-              <span className="text-[13px] font-mono text-gold tracking-tighter drop-shadow-sm">37.1818° N, 3.5855° W</span>
-            </div>
+            <a 
+              href="https://share.google/orfW0MLIF6oV3R4YL"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex flex-col border-l border-white/30 pl-6 cursor-pointer hover:border-gold transition-colors duration-300"
+            >
+              <span className="text-[9px] uppercase tracking-[0.3em] text-white/60 mb-2 group-hover:text-gold/80 transition-colors">{t('hero.location')}</span>
+              <span className="flex items-center gap-2 text-[12px] font-serif text-white tracking-wider drop-shadow-sm group-hover:text-gold transition-colors">
+                <MapPin size={14} className="text-gold group-hover:scale-110 transition-transform" />
+                {t('hero.map')}
+              </span>
+            </a>
           </div>
         </motion.div>
       </div>

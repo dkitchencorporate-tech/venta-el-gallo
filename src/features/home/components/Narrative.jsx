@@ -22,29 +22,29 @@ const Narrative = () => {
           {/* Narrative Content (High Density, 1:1 Scale) */}
           <div className="flex-1 order-2 lg:order-1 relative z-10">
             <div className="inline-block px-4 py-2 border border-gold/40 text-gold-700 bg-gold/5 text-[8px] uppercase tracking-widest font-black mb-8 rounded-sm shadow-sm">
-              El Origen de la Zambra
+              {t('narrative.badge')}
             </div>
             <h2 className="text-4xl md:text-6xl font-serif text-deep-black mb-10 leading-[1.1] tracking-tight">
-              Una acústica <br/> 
-              <span className="italic text-sacromonte-red">tallada a mano.</span>
+              {t('narrative.heading_1')} <br/> 
+              <span className="italic text-sacromonte-red">{t('narrative.heading_2')}</span>
             </h2>
             <p className="text-base md:text-lg text-gray-700 font-light leading-relaxed mb-10 max-w-lg drop-shadow-sm">
-              Desde 1996, nuestras paredes de cal vibran con la pura verdad del flamenco. Un escenario íntimo donde la soleá y la seguiriya te alcanzan a centímetros de distancia, fundiendo al espectador con el artista.
+              {t('narrative.p1')}
             </p>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 pt-8 pb-10 border-t border-gray-300">
               <div>
-                <h4 className="text-[9px] font-black uppercase tracking-[0.2em] mb-3 text-deep-black">Geología Acústica</h4>
-                <p className="text-xs text-gray-600 font-light leading-relaxed">El eco reverbera con una fidelidad perfecta, amplificando el zapateo sin distorsión alguna.</p>
+                <h4 className="text-[9px] font-black uppercase tracking-[0.2em] mb-3 text-deep-black">{t('narrative.feature_1_title')}</h4>
+                <p className="text-xs text-gray-600 font-light leading-relaxed">{t('narrative.feature_1_desc')}</p>
               </div>
               <div>
-                <h4 className="text-[9px] font-black uppercase tracking-[0.2em] mb-3 text-deep-black">Aforo Exclusivo</h4>
-                <p className="text-xs text-gray-600 font-light leading-relaxed">No hay barreras. El calor del baile y la fuerza del cante se sienten directamente en el alma.</p>
+                <h4 className="text-[9px] font-black uppercase tracking-[0.2em] mb-3 text-deep-black">{t('narrative.feature_2_title')}</h4>
+                <p className="text-xs text-gray-600 font-light leading-relaxed">{t('narrative.feature_2_desc')}</p>
               </div>
             </div>
 
             <Link to="/artistas" className="inline-flex items-center gap-4 text-[10px] md:text-xs font-bold uppercase tracking-widest text-white bg-deep-black px-8 py-4 shadow-xl hover:bg-gold hover:text-white transition-all duration-300 group rounded-full">
-               Descubrir el Escenario
+               {t('narrative.link')}
                <ArrowRight size={16} className="transform group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
@@ -68,8 +68,8 @@ const Narrative = () => {
               <div className="absolute -bottom-1 -left-1 bg-white/95 backdrop-blur-xl p-8 shadow-[20px_-20px_40px_rgba(0,0,0,0.05)] rounded-tr-[50px] border-r border-t border-gray-100 max-w-[240px] transform transition-transform duration-500 z-20">
                 <p className="text-5xl font-serif text-sacromonte-red font-bold mb-2 leading-none">1996</p>
                 <div className="w-10 h-px bg-gold mb-3"></div>
-                <p className="uppercase tracking-[0.3em] text-[8px] font-black text-deep-black">Fundación de la Cueva</p>
-                <p className="text-[10px] text-gray-500 font-light mt-2">Patrimonio del Sacromonte</p>
+                <p className="uppercase tracking-[0.3em] text-[8px] font-black text-deep-black">{t('narrative.card_title')}</p>
+                <p className="text-[10px] text-gray-500 font-light mt-2">{t('narrative.card_subtitle')}</p>
               </div>
             </motion.div>
           </div>

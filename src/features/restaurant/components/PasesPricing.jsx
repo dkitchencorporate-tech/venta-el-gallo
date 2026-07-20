@@ -1,39 +1,43 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import { useBooking } from '../../../context/BookingContext';
 import ctaBg from '../../../assets/raw/Cueva-Venta-El-Gallo-6-Julio-2-1280x914-2.jpg';
 
-const passes = [
-  {
-    id: 'consumicion',
-    title: 'Espectáculo + Consumición',
-    price: '25€',
-    subtitle: 'La esencia pura del cante y el baile.',
-    features: ['Acceso al espectáculo flamenco (1 hora)', 'Una bebida a elegir (vino, cerveza, refresco)', 'Asientos en zona estándar'],
-    children: 'Niños 6-11 años: 20€ | Niños 3-5 años: 10€',
-    highlighted: false,
-    delay: 0
-  },
-  {
-    id: 'cena',
-    title: 'Espectáculo + Cena',
-    price: '55€',
-    subtitle: 'La experiencia inmersiva definitiva.',
-    features: ['Acceso premium al espectáculo', 'Menú Especial Venta El Gallo (3 tiempos)', 'Bebidas ilimitadas durante la cena'],
-    children: 'Niños 6-11 años: 32€ (Menú Infantil)',
-    highlighted: true, // The core product
-    delay: 0.15
-  }
-];
+// Passes moved inside component
 
 const PasesPricing = () => {
+  const { t } = useTranslation();
   const { openBooking } = useBooking();
+
+  const passes = [
+    {
+      id: 'consumicion',
+      title: t('restaurant_page.pricing.passes.consumicion.title'),
+      price: '25€',
+      subtitle: t('restaurant_page.pricing.passes.consumicion.subtitle'),
+      features: t('restaurant_page.pricing.passes.consumicion.features', { returnObjects: true }),
+      children: t('restaurant_page.pricing.passes.consumicion.children'),
+      highlighted: false,
+      delay: 0
+    },
+    {
+      id: 'cena',
+      title: t('restaurant_page.pricing.passes.cena.title'),
+      price: '55€',
+      subtitle: t('restaurant_page.pricing.passes.cena.subtitle'),
+      features: t('restaurant_page.pricing.passes.cena.features', { returnObjects: true }),
+      children: t('restaurant_page.pricing.passes.cena.children'),
+      highlighted: true, // The core product
+      delay: 0.15
+    }
+  ];
 
   return (
     <section className="relative z-20 -mt-10 md:-mt-16 lg:-mt-20 px-4 md:px-6 mb-16 lg:mb-20">
       <div className="container mx-auto">
         <div className="text-center mb-8 hidden md:block">
-          <h2 className="text-xl lg:text-2xl font-serif text-white opacity-90 tracking-widest uppercase">Elige la opción que más te guste</h2>
+          <h2 className="text-xl lg:text-2xl font-serif text-white opacity-90 tracking-widest uppercase">{t('restaurant_page.pricing.title')}</h2>
         </div>
         
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-4xl mx-auto items-start">
@@ -51,7 +55,7 @@ const PasesPricing = () => {
             >
               {pass.highlighted && (
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-gold text-white text-[8px] lg:text-[9px] uppercase font-black tracking-widest py-1.5 px-4 rounded-full shadow-lg border border-white/20 whitespace-nowrap">
-                  Más Recomendado
+                  {t('restaurant_page.pricing.recommended')}
                 </div>
               )}
               
@@ -60,7 +64,7 @@ const PasesPricing = () => {
                 <p className="text-gray-500 font-light text-[11px] lg:text-xs mb-3">{pass.subtitle}</p>
                 <div className="flex items-center justify-center items-baseline gap-1.5 text-deep-black">
                   <span className="text-4xl lg:text-5xl font-light tracking-tighter">{pass.price}</span>
-                  <span className="text-gray-400 font-medium text-[10px] lg:text-xs">/ pers.</span>
+                  <span className="text-gray-400 font-medium text-[10px] lg:text-xs">{t('restaurant_page.pricing.per_person')}</span>
                 </div>
               </div>
               
@@ -84,7 +88,7 @@ const PasesPricing = () => {
                   ? 'bg-deep-black text-gold border-deep-black hover:bg-gold hover:text-deep-black hover:border-gold shadow-md' 
                   : 'bg-white text-deep-black border-gray-300 hover:border-deep-black hover:bg-deep-black hover:text-white'}`}
               >
-                Reservar
+                {t('restaurant_page.pricing.btn_book')}
               </button>
             </motion.div>
           ))}
@@ -101,10 +105,10 @@ const PasesPricing = () => {
             <div className="max-w-xl text-left text-white">
               <div className="w-12 h-px bg-gold mb-6"></div>
               <h3 className="text-3xl md:text-4xl lg:text-5xl font-serif mb-4 tracking-tighter">
-                Vive la <span className="italic text-gold">Zambra Gitana.</span>
+                {t('restaurant_page.pricing.cta_title_1')}<span className="italic text-gold">{t('restaurant_page.pricing.cta_title_2')}</span>
               </h3>
               <p className="text-white/70 font-light text-sm md:text-base leading-relaxed">
-                Disfruta de nuestra gastronomía tradicional y siente el eco del Sacromonte en primera fila. Asegura tu plaza en nuestra cueva centenaria.
+                {t('restaurant_page.pricing.cta_subtitle')}
               </p>
             </div>
             
@@ -113,7 +117,7 @@ const PasesPricing = () => {
                 onClick={() => openBooking({ pack: 'direct' })}
                 className="w-full md:w-auto btn-gold flex items-center justify-center gap-4 text-[10px] md:text-xs px-10 py-4 shadow-[0_0_40px_rgba(212,175,55,0.3)] hover:shadow-[0_0_60px_rgba(212,175,55,0.5)] transition-all"
               >
-                <span className="font-bold tracking-widest uppercase">Reservar Ahora</span>
+                <span className="font-bold tracking-widest uppercase">{t('restaurant_page.pricing.cta_button')}</span>
               </button>
             </div>
           </div>

@@ -1,0 +1,743 @@
+{
+  "nav": {
+    "home": "Home",
+    "history": "The Legacy",
+    "artists": "Artists",
+    "restaurant": "Restaurant",
+    "b2b": "Agencies & Professionals",
+    "blog": "Blog",
+    "contact": "Contact"
+  },
+  "hero": {
+    "badge": "Living Heritage - Sacromonte, Granada",
+    "title_1": "Where the rock",
+    "title_2": "becomes a cry.",
+    "subtitle": "A legendary cave where flamenco is not acted, it is lived. Feel the heartbeat of the zambra at the origin of Sacromonte.",
+    "cta": "Book Now",
+    "location": "Original Location",
+    "map": "View on Google Maps"
+  },
+  "legacy": {
+    "badge": "Rhythm in the Blood",
+    "title": "The Legacy Continues",
+    "subtitle": "Daughters of the founder, principal dancers, and guardians of authenticity.",
+    "founder_name": "Juanillo Heredia",
+    "founder_role": "Visionary Founder",
+    "heading_1": "A dynasty of",
+    "heading_2": "art and passion.",
+    "p1": "Founded by the legendary Juanillo Heredia, Cueva Venta El Gallo is more than a tablao; it is a home. Today, his three daughters are the direct heirs of that unbreakable lineage.",
+    "p2": "They not only manage this origin, but they also deploy their power on stage every night, ensuring that the strength and technique maintain the prestigious standard set by their father.",
+    "link": "Discover our history"
+  },
+  "narrative": {
+    "badge": "The Origin of Zambra",
+    "heading_1": "An acoustic",
+    "heading_2": "carved by hand.",
+    "p1": "Since 1996, our whitewashed walls have vibrated with the pure truth of flamenco. An intimate stage where the soleá and the seguiriya reach you just inches away, fusing the spectator with the artist.",
+    "feature_1_title": "Acoustic Geology",
+    "feature_1_desc": "The echo reverberates with perfect fidelity, amplifying the footwork without any distortion.",
+    "feature_2_title": "Exclusive Capacity",
+    "feature_2_desc": "There are no barriers. The heat of the dance and the strength of the singing are felt directly in the soul.",
+    "link": "Discover the Stage",
+    "card_title": "Foundation of the Cave",
+    "card_subtitle": "Sacromonte Heritage"
+  },
+  "pillars": {
+    "items": {
+      "zambra": {
+        "title": "Zambra",
+        "desc": "The Primitive Show"
+      },
+      "gastronomy": {
+        "title": "Gastronomy",
+        "desc": "Traditional Cuisine"
+      },
+      "events": {
+        "title": "Events",
+        "desc": "Exclusivity in Sacromonte"
+      },
+      "views": {
+        "title": "Views",
+        "desc": "Facing the Alhambra"
+      }
+    },
+    "cta": "Discover"
+  },
+  "faq": {
+    "badge": "Unlocked Doors",
+    "title_1": "Frequently Asked ",
+    "title_2": "Questions.",
+    "subtitle": "We answer your questions so you only have to worry about feeling the Sacromonte.",
+    "q1": "What time does the Zambra Gitana show start?",
+    "a1": "We offer two daily shows to guarantee an intimate experience. The first show starts at 19:00 hrs and the second at 21:00 hrs. We recommend arriving 15 minutes early to get settled and enjoy the atmosphere of the cave.",
+    "q2": "Do I need to book dinner along with the show?",
+    "a2": "It is not strictly necessary, but highly recommended. Our gastronomy is part of the Sacromonte heritage and perfectly complements the evening. We have a Tradition Menu and a Premium Tapas menu that can be enjoyed before or during the show.",
+    "q3": "How do I get to Cueva Venta El Gallo?",
+    "a3": "We are located in the heart of Sacromonte, facing the impressive viewpoint of the Alhambra. You can arrive by taxi right to the door (Barranco de los Negros, 5), take the C34 minibus from Plaza Nueva, or walk up through the historic Albaicín neighborhood.",
+    "q4": "Is it suitable for small children?",
+    "a4": "Flamenco is universal passion. Children are welcome to feel the strength of our art. However, out of respect for the purity of the cave's acoustic sound, we recommend the first show for families.",
+    "q5": "Do the artists change every night?",
+    "a5": "Our family is the core. Juanillo Heredia's daughters are the soul of Venta El Gallo, performing almost every night. We also have top-tier dancers, singers, and guitarists who rotate to ensure each zambra is a live and unique show."
+  },
+  "reviews": {
+    "title_1": "The echo of the ",
+    "title_2": "public.",
+    "subtitle": "It is not us who certify the quality of our Zambra. It is the heartbeats of those who have experienced it from within.",
+    "verified": "Verified",
+    "social_title": "Follow our visual footprint.",
+    "social_subtitle": "We document the daily magic and life in the cave. Join the Sacromonte community.",
+    "community": "Community",
+    "trends": "Trends",
+    "follow_us": "Follow us on",
+    "fake": {
+      "r1": {
+        "date": "2 weeks ago",
+        "text": "The most authentic experience we had in Granada. Being a meter away from the stage while they dance and sing gives you goosebumps. The tasting menu was impeccable."
+      },
+      "r2": {
+        "date": "1 month ago",
+        "text": "Pure raw emotion. The acoustics of the cave combined with the passionate performance left us speechless. The daughters of Juanillo truly honor his legacy. A must-do."
+      },
+      "r3": {
+        "date": "2 months ago",
+        "text": "Magical. No microphones, just the cajón, the guitar, the singing, and the heels. You breathe art and professionalism. You can tell that for them the stage is not work, it is their life."
+      },
+      "r4": {
+        "date": "3 months ago",
+        "text": "I've been to several tablaos in Andalusia and none has transmitted the same intimacy as Venta El Gallo. The cave is spectacular and the staff treatment is exquisite."
+      }
+    }
+  },
+  "reels": {
+    "title_1": "Magic in ",
+    "title_2": "motion.",
+    "subtitle": "Real atmosphere, no filters. This is how a night at Venta El Gallo is experienced.",
+    "reel": "Reel",
+    "view": "View",
+    "interaction": "Click to open on Instagram"
+  },
+  "history_page": {
+    "badge": "Our Blood",
+    "title": "The Legacy",
+    "subtitle": "A century carving the rock so that flamenco resonates in its purest form. Meet the guardians of Sacromonte.",
+    "cta_title_1": "Become part ",
+    "cta_title_2": "of our history.",
+    "cta_subtitle": "The cave awaits you. Come and feel the weight of the legacy live with our gastronomy and the original Zambra Gitana.",
+    "cta_button": "Book Now",
+    "timeline": {
+      "badge": "Our Map of Time",
+      "title_1": "Stone, sweat and ",
+      "title_2": "intact tradition.",
+      "events": {
+        "e1": {
+          "year": "1996",
+          "title": "The Origin in the Rock",
+          "desc": "Juanillo Heredia acquires the cave in the mythical ravine of Los Negros. What began by excavating the rock would soon become a sanctuary of pure singing and dancing, cementing our legend."
+        },
+        "e2": {
+          "year": "1970s",
+          "title": "The Origin of the Zambra",
+          "desc": "We define our format of 'Zambra Gitana'. Word of mouth, sweat, and passion attract personalities from all over the world. The natural acoustics of lime and rock are revealed as our greatest treasure."
+        },
+        "e3": {
+          "year": "2001",
+          "title": "Prestigious Award",
+          "desc": "Venta El Gallo receives the Tourism Prestige Award of Granada. An official recognition that validates decades of uninterrupted dedication to the preservation of flamenco art in its most visceral state."
+        },
+        "e4": {
+          "year": "Legacy",
+          "title": "The Blood Continues",
+          "desc": "Today, the direct heiresses watch over the fire. They not only guard the origin, but also impose their respect on stage every night, merging uncompromising tradition with the highest gastronomy."
+        }
+      }
+    }
+  },
+  "restaurant_page": {
+    "hero": {
+      "badge": "Flavors of Sacromonte",
+      "title_1": "Centenary ",
+      "title_2": "Gastronomy",
+      "subtitle_1": "Enjoy a flamenco show full of feeling, purity, and color while you taste our ",
+      "subtitle_bold": "traditional Granadan cuisine",
+      "subtitle_2": "."
+    },
+    "pricing": {
+      "title": "Choose the option you like best",
+      "recommended": "Most Recommended",
+      "per_person": "/ pers.",
+      "btn_book": "Book Now",
+      "passes": {
+        "consumicion": {
+          "title": "Show + Drink",
+          "subtitle": "The pure essence of singing and dancing.",
+          "features": [
+            "Access to the flamenco show (1 hour)",
+            "One drink to choose (wine, beer, soft drink)",
+            "Standard zone seating"
+          ],
+          "children": "Children 6-11 years: 20€ | Children 3-5 years: 10€"
+        },
+        "cena": {
+          "title": "Show + Dinner",
+          "subtitle": "The ultimate immersive experience.",
+          "features": [
+            "Premium access to the show",
+            "Special Venta El Gallo Menu (3 courses)",
+            "Unlimited drinks during dinner"
+          ],
+          "children": "Children 6-11 years: 32€ (Kids Menu)"
+        }
+      },
+      "cta_title_1": "Experience the ",
+      "cta_title_2": "Zambra Gitana.",
+      "cta_subtitle": "Enjoy our traditional gastronomy and feel the echo of Sacromonte in the front row. Secure your spot in our centenary cave.",
+      "cta_button": "Book Now"
+    },
+    "interactive_menu": {
+      "header": {
+        "restaurant": "Flamenco Restaurant",
+        "menu": "SET MENU",
+        "carta": "A LA CARTE"
+      },
+      "sections": {
+        "entrante": "STARTER",
+        "entrantes": "STARTERS",
+        "primer_plato": "FIRST COURSE",
+        "invierno": "Winter Season",
+        "verano": "Summer Season",
+        "principal": "MAIN COURSE",
+        "pescados": "FISH",
+        "carnes": "MEAT",
+        "postres": "HOMEMADE DESSERTS",
+        "bodega": "CELLAR & DRINKS",
+        "bebidas_incluidas": "DRINKS INCLUDED"
+      },
+      "drinks": {
+        "t1": "1 welcome show drink",
+        "t2": "(sangria or beer)",
+        "t3": "2 drinks from the menu",
+        "sangria": "Sangria",
+        "cerveza": "Beer",
+        "agua": "Water",
+        "agua_desc": "Sparkling or still",
+        "zumo": "Juice",
+        "zumo_desc": "Peach, pineapple, orange",
+        "refrescos": "Soft Drinks",
+        "refrescos_desc": "Mint and ginger",
+        "vino": "Wine",
+        "vino_desc": "White or red"
+      },
+      "modal": {
+        "hacer_reserva": "Book Now"
+      },
+      "section": {
+        "title_1": "Our ",
+        "title_2": "Gastronomy",
+        "desc": "Our gastronomic offer is designed to complement the flamenco art. Choose your ideal menu or enjoy our full à la carte selection.",
+        "allergens": "Allergen Information",
+        "cards": {
+          "menu_title": "Set Menus",
+          "menu_desc": "Discover our special tasting menus included in the show passes.",
+          "menu_link": "View Menu",
+          "carta_title": "A La Carte",
+          "carta_desc": "Explore our full selection of traditional dishes and tapas.",
+          "carta_link": "View A La Carte"
+        }
+      },
+      "menuData": {
+        "entrantes": [
+          {
+            "title": "Cold meats board",
+            "desc": "Cheese, ham, chorizo, etc"
+          }
+        ],
+        "primerPlato": [
+          {
+            "title": "Sacromonte Omelet",
+            "desc": "With lamb brains"
+          },
+          {
+            "title": "Gallo Salad",
+            "desc": "Mixed salad with egg"
+          },
+          {
+            "title": "Broad beans with ham and egg",
+            "desc": ""
+          }
+        ],
+        "invierno": [
+          {
+            "title": "Onion and cheese soup",
+            "desc": "With toasted bread"
+          },
+          {
+            "title": "Seafood soup",
+            "desc": "With toasted bread"
+          },
+          {
+            "title": "Picadillo soup",
+            "desc": "With chicken, ham and egg"
+          }
+        ],
+        "verano": [
+          {
+            "title": "Salmorejo",
+            "desc": "Tomato soup with bread, ham and egg"
+          },
+          {
+            "title": "Gazpacho",
+            "desc": "Tomato and cucumber soup"
+          },
+          {
+            "title": "Melon with ham",
+            "desc": ""
+          },
+          {
+            "title": "Ajoblanco",
+            "desc": "Cold almond soup"
+          }
+        ],
+        "principal": [
+          {
+            "title": "Fried cod with tomato",
+            "desc": ""
+          },
+          {
+            "title": "Hake in green sauce",
+            "desc": "With poor man's potatoes"
+          },
+          {
+            "title": "Pork loin in Mozarabic sauce",
+            "desc": "With poor man's potatoes"
+          },
+          {
+            "title": "Beef in gardener sauce",
+            "desc": "With poor man's potatoes"
+          },
+          {
+            "title": "Garlic chicken",
+            "desc": "With poor man's potatoes"
+          }
+        ],
+        "postres": [
+          "Vanilla custard",
+          "Chocolate cake",
+          "Rice pudding",
+          "Ice cream",
+          "Cheesecake"
+        ]
+      },
+      "cartaData": {
+        "entrantes": [
+          {
+            "title": "Gallo Salad",
+            "desc": "Mixed salad with egg",
+            "price": "14€"
+          },
+          {
+            "title": "Pepper Salad",
+            "desc": "With egg",
+            "price": "11€"
+          },
+          {
+            "title": "Prawn and avocado salad",
+            "desc": "",
+            "price": "16.5€"
+          },
+          {
+            "title": "Seasoned tomato",
+            "desc": "",
+            "price": "10€"
+          },
+          {
+            "title": "Iberian ham board",
+            "desc": "",
+            "price": "20€"
+          },
+          {
+            "title": "Cured cheese board",
+            "desc": "",
+            "price": "20€"
+          },
+          {
+            "title": "Iberian cold meats board",
+            "desc": "",
+            "price": "20€"
+          },
+          {
+            "title": "Sacromonte Omelet",
+            "desc": "",
+            "price": "12€"
+          },
+          {
+            "title": "Asparagus Omelet",
+            "desc": "",
+            "price": "11€"
+          },
+          {
+            "title": "Aubergines with cane honey",
+            "desc": "",
+            "price": "10€"
+          },
+          {
+            "title": "Vegetable Wok",
+            "desc": "",
+            "price": "14€"
+          },
+          {
+            "title": "Garlic prawns",
+            "desc": "",
+            "price": "16€"
+          },
+          {
+            "title": "Chicken croquettes",
+            "desc": "",
+            "price": "14€"
+          },
+          {
+            "title": "Assorted Iberian croquettes",
+            "desc": "",
+            "price": "14€"
+          },
+          {
+            "title": "Broad beans with ham and egg",
+            "desc": "",
+            "price": "14€"
+          }
+        ],
+        "invierno": [
+          {
+            "title": "Onion soup",
+            "desc": "With toasted bread and cheese",
+            "price": "8€"
+          },
+          {
+            "title": "Seafood soup",
+            "desc": "With toasted bread",
+            "price": "8€"
+          },
+          {
+            "title": "Picadillo soup",
+            "desc": "With chicken, ham and egg",
+            "price": "8€"
+          }
+        ],
+        "verano": [
+          {
+            "title": "Salmorejo",
+            "desc": "Tomato soup with bread, ham and egg",
+            "price": "9€"
+          },
+          {
+            "title": "Gazpacho",
+            "desc": "Tomato and cucumber soup",
+            "price": "9€"
+          },
+          {
+            "title": "Melon with ham",
+            "desc": "",
+            "price": "9€"
+          }
+        ],
+        "pescados": [
+          {
+            "title": "Fried cod with tomato",
+            "desc": "",
+            "price": "17€"
+          },
+          {
+            "title": "Hake in green sauce",
+            "desc": "With poor man's potatoes",
+            "price": "16.5€"
+          },
+          {
+            "title": "Grilled bream",
+            "desc": "With poor man's potatoes",
+            "price": "18€"
+          }
+        ],
+        "carnes": [
+          {
+            "title": "Pork tenderloin",
+            "desc": "With poor man's potatoes",
+            "price": "18€"
+          },
+          {
+            "title": "Pork loin in Mozarabic sauce",
+            "desc": "With poor man's potatoes",
+            "price": "16.5€"
+          },
+          {
+            "title": "Beef in gardener sauce",
+            "desc": "With poor man's potatoes",
+            "price": "17€"
+          },
+          {
+            "title": "Garlic chicken",
+            "desc": "With poor man's potatoes",
+            "price": "15€"
+          },
+          {
+            "title": "Beef entrecôte",
+            "desc": "With poor man's potatoes",
+            "price": "24€"
+          },
+          {
+            "title": "Lamb chops",
+            "desc": "With poor man's potatoes",
+            "price": "19€"
+          }
+        ],
+        "postres": [
+          {
+            "title": "Vanilla custard",
+            "price": "3.5€"
+          },
+          {
+            "title": "Chocolate cake",
+            "price": "5€"
+          },
+          {
+            "title": "Rice pudding",
+            "price": "3.5€"
+          },
+          {
+            "title": "Ice cream",
+            "price": "3.5€"
+          },
+          {
+            "title": "Cheesecake",
+            "price": "5€"
+          }
+        ],
+        "bebidas1": [
+          {
+            "title": "Sangria",
+            "price": "3.5€"
+          },
+          {
+            "title": "Sangria pitcher",
+            "price": "16€"
+          },
+          {
+            "title": "Draft beer",
+            "price": "3€"
+          },
+          {
+            "title": "Beer pitcher",
+            "price": "15€"
+          },
+          {
+            "title": "Small water",
+            "desc": "Sparkling or still",
+            "price": "1.5€"
+          },
+          {
+            "title": "Large water bottle",
+            "desc": "(750ml)",
+            "price": "3€"
+          },
+          {
+            "title": "Soft drinks or juices",
+            "price": "3€"
+          }
+        ],
+        "bebidas2": [
+          {
+            "title": "House wine bottle (red or white)",
+            "price": "18€"
+          },
+          {
+            "title": "White, red or rosé wine glass",
+            "price": "3.5€"
+          },
+          {
+            "title": "Rioja red wine bottle",
+            "price": "22€"
+          },
+          {
+            "title": "Protos red wine bottle",
+            "price": "22€"
+          }
+        ]
+      }
+    }
+  },
+  "artists_page": {
+    "hero": {
+      "tag": "Passion and Skill",
+      "title_1": "Artistic ",
+      "title_2": "Cast",
+      "desc": "Meet the masters who bring the Gypsy Zambra to life every night. A lineage of pure art forged in the depths of Sacromonte."
+    },
+    "cta": {
+      "tag": "Exclusive Booking",
+      "title_1": "Feel the ",
+      "title_2": "Zambra",
+      "title_3": " on your Skin.",
+      "desc_1": "Spots for our zambra are ",
+      "desc_2": "strictly limited",
+      "desc_3": ". Don't miss the opportunity to experience true flamenco art from the front row.",
+      "button": "Book Now"
+    },
+    "footer": "\"Flamenco at Venta El Gallo is not rehearsed, it is inherited.\"",
+    "artists": [
+      {
+        "name": "Jara Heredia",
+        "role": "ARTISTIC DIRECTION",
+        "description": "Jara Heredia began her artistic career with teachers such as Angustillas Ruiz \"la mona\" Manolete, Eva Garrido \"la Yerbabuena\", Antonio Canales, Farruquito, Manuela Carrasco... forming part of Mario Maya's scenic school. She has performed on several occasions for H.M. King Juan Carlos and in Los Angeles at Antonio Banderas' house, at the International Festival of Music and Dance of Granada, Lorca Poetry Prize Festival in New York 2004, USA Festival 2010, Carthage International Festival."
+      },
+      {
+        "name": "Antonia Heredia",
+        "role": "Dancer",
+        "description": "Antonia Heredia began her artistic career with dancer Angustias Ruiz and her sister Jara Heredia. She later began to train professionally with teachers such as Mario Maya, Eduardo Serrano «guiri», Belén Maya, Rafaela Carrasco, Manuel Liñán... She started performing in the flamenco tablaos of Granada at the age of 12. She performed at the music and dance festivals of Granada. She has performed with artists such as Juan Moneo «El tortas» at the Almuñécar festival, Pepe Habichuela and Josemi Carmona on a tour throughout India and the Mont de Marsan Festival with Pepe Luis Carmona in numerous festivals. She participated with Antonio Canales in the corral del carbón in several music videos of the stature of «Manzanita, Remedios Amaya, Antonio Carmona, Pepe Luis Carmona...»"
+      },
+      {
+        "name": "Dinastía Heredia",
+        "role": "Founder's Daughters",
+        "description": "The feminine soul of Venta El Gallo. Juan Heredia's daughters represent the historical continuity and unwavering commitment to pure art that their father initiated."
+      },
+      {
+        "name": "Antonio Heredia «El Chonico»",
+        "role": "Master Guitarist",
+        "description": "An absolute benchmark of the Granada touch. His guitar is the untamed heartbeat of the cave, combining refined technique with the ancestral echo of the Sacromonte neighborhood."
+      },
+      {
+        "name": "Miguel Ángel Cortés",
+        "role": "Concert Guitarist",
+        "description": "Internationally recognized virtuosity and sensitivity. Awarded the Bordón Minero, he is one of the most influential guitarists of his generation in the flamenco scene."
+      },
+      {
+        "name": "Paco Fernández",
+        "role": "Dancer",
+        "description": "Strength and charisma on the tablao. Following in the footsteps of great masters, Paco prints a visceral energy that makes the foundations of the Zambra vibrate in every performance."
+      },
+      {
+        "name": "Coral Fernández",
+        "role": "Dancer",
+        "description": "Elegance and refined technique. Trained in the best schools of flamencology, her dance is an ode to Granada aesthetics, full of temperament and absolute precision."
+      },
+      {
+        "name": "Raimundo Benítez",
+        "role": "Dancer and Choreographer",
+        "description": "Master of movement. His trajectory in international companies allows him to bring an interpretive depth that elevates dance to new heights of expression."
+      },
+      {
+        "name": "Antonio Heredia",
+        "role": "Singer",
+        "description": "Antonio Heredia is a Granada singer with deep flamenco roots, born into a family of artists where singing was always a way of life. From a young age he showed an innate talent, soaking up traditional songs and developing a powerful and expressive voice. At 19 he began his professional career in the tablaos of Granada, standing out for his versatility and ability to move the public.\n\nHe has worked with great figures of flamenco, such as Los Farruco and Belén López, and has participated in festivals both in Spain and internationally. In 2021 he released the album Hasta La Eternidad, available on digital platforms, and has been part of shows alongside artists such as Sergio Gómez \"El Colorao\" and Alicia Morales. His singing, full of feeling and authenticity, fuses tradition with a personal style that has consolidated him as one of the most respected voices in current flamenco."
+      }
+    ]
+  },
+  "agencias_page": {
+    "hero": {
+      "tag": "Events and Professionals",
+      "title_1": "Events with ",
+      "title_2": "Soul",
+      "desc": "Looking for a magical place for your next event? In our Sacromonte cave, where flamenco is born and history is breathed in every corner, we create unique moments that are etched forever."
+    },
+    "services": {
+      "tag": "Unique Celebrations",
+      "title_1": "Do you want to celebrate a special event with ",
+      "title_2": "us?",
+      "desc": "Special celebrations, company dinners, trips with friends or cultural meetings... Whatever the occasion, we turn it into an unforgettable experience. We combine the best of Andalusian gastronomy with the most authentic flamenco art, in an incomparable setting with views of the Alhambra and the charm of Granada.",
+      "subtitle": "Our Services for Events:",
+      "list": [
+        {
+          "title": "Charming spaces:",
+          "desc": "Terrace with views, cave lounges and private areas."
+        },
+        {
+          "title": "Personalized gastronomy:",
+          "desc": "Menu or à la carte adapted to each type of event."
+        },
+        {
+          "title": "Live flamenco:",
+          "desc": "To give that touch of emotion and authenticity."
+        },
+        {
+          "title": "Comprehensive organization:",
+          "desc": "So that you only worry about enjoying."
+        }
+      ],
+      "footer": "Make your event have soul, flavor... and art."
+    },
+    "contact": {
+      "title": "Direct Contact",
+      "desc": "Exclusive attention for professionals in the tourism and corporate sector.",
+      "paco_tag": "B2B Operations",
+      "fijo": "Landline",
+      "movil": "Mobile / WhatsApp",
+      "email_general": "General Email",
+      "german_tag": "Digital Marketing",
+      "german_desc": "Collaborations, marketing and strategic alliances."
+    },
+    "form": {
+      "title_1": "Event ",
+      "title_2": "Request",
+      "desc": "Send us the details of your event and we will prepare a tailor-made proposal.",
+      "name_label": "Name / Agency",
+      "name_placeholder": "Your name or company",
+      "email_label": "Email",
+      "email_placeholder": "email@example.com",
+      "details_label": "Event Details",
+      "details_placeholder": "Indicate dates, number of people, desired menus and any special requirements...",
+      "button": "Organize Event"
+    }
+  },
+  "contact_page": {
+    "hero": {
+      "title_1": "Contact ",
+      "title_2": "Us",
+      "desc": "We are at your disposal to answer any questions or reservations. Speak directly with our team."
+    },
+    "buttons": {
+      "call_title": "Call Us Directly",
+      "chat_title": "Direct Chat"
+    },
+    "map": {
+      "button": "How to Get There"
+    },
+    "email": {
+      "title": "Send us an email",
+      "desc": "For general inquiries, events or special requests, do not hesitate to write to us. We will reply as soon as possible.",
+      "button": "Send Email"
+    },
+    "cta": {
+      "title": "Ready to experience the Zambra?",
+      "desc": "Secure your table and do not miss out on enjoying the best flamenco.",
+      "button": "Book Now"
+    }
+  },
+  "footer": {
+    "desc": "A millennial cave where flamenco is lived in its purest state. Keeping Juanillo Heredia's legacy alive since 1996.",
+    "cols": {
+      "exp": {
+        "title": "The Experience",
+        "links": {
+          "history": "Our Legacy",
+          "artists": "Zambra and Artists",
+          "restaurant": "Gastronomy",
+          "contact": "Exclusive Events"
+        }
+      },
+      "legal": {
+        "title": "Legal Policies",
+        "links": {
+          "legal": "Legal Notice",
+          "privacy": "Privacy Policy",
+          "allergens": "Allergens Information",
+          "terms": "Reservation Terms"
+        }
+      },
+      "contact": {
+        "title": "Contact"
+      }
+    },
+    "bottom": {
+      "patrimony": "Sacromonte Heritage",
+      "rights": "© 2026 Cueva Venta El Gallo. All rights reserved.",
+      "designed_by": "Designed & Developed by "
+    }
+  }
+}

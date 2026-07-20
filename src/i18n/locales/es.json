@@ -1,0 +1,743 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "history": "El Legado",
+    "artists": "Artistas",
+    "restaurant": "Restaurante",
+    "b2b": "Agencias y Profesionales",
+    "blog": "Blog",
+    "contact": "Contacto"
+  },
+  "hero": {
+    "badge": "Patrimonio Vivo - Sacromonte, Granada",
+    "title_1": "Donde la roca",
+    "title_2": "se hace quejío.",
+    "subtitle": "Una cueva milenaria donde el flamenco no se actúa, se vive. Siente el latido de la zambra en el origen del Sacromonte.",
+    "cta": "Reservar",
+    "location": "Ubicación Original",
+    "map": "Ver en Google Maps"
+  },
+  "legacy": {
+    "badge": "El Ritmo en la Sangre",
+    "title": "El Legado Continúa",
+    "subtitle": "Hijas del fundador, bailarinas principales y guardianas de la autenticidad.",
+    "founder_name": "Juanillo Heredia",
+    "founder_role": "Fundador Visionario",
+    "heading_1": "Una dinastía de",
+    "heading_2": "arte y pasión.",
+    "p1": "Fundada por el legendario Juanillo Heredia, la Cueva Venta El Gallo es más que un tablao; es una casa. Hoy, sus tres hijas son las herederas directas de ese linaje inquebrantable.",
+    "p2": "No solo dirigen este origen, sino que despliegan su poderío en el escenario cada noche, asegurando que la fuerza y la técnica mantengan el prestigioso estándar que estableció su padre.",
+    "link": "Conoce nuestra historia"
+  },
+  "narrative": {
+    "badge": "El Origen de la Zambra",
+    "heading_1": "Una acústica",
+    "heading_2": "tallada a mano.",
+    "p1": "Desde 1996, nuestras paredes de cal vibran con la pura verdad del flamenco. Un escenario íntimo donde la soleá y la seguiriya te alcanzan a centímetros de distancia, fundiendo al espectador con el artista.",
+    "feature_1_title": "Geología Acústica",
+    "feature_1_desc": "El eco reverbera con una fidelidad perfecta, amplificando el zapateo sin distorsión alguna.",
+    "feature_2_title": "Aforo Exclusivo",
+    "feature_2_desc": "No hay barreras. El calor del baile y la fuerza del cante se sienten directamente en el alma.",
+    "link": "Descubrir el Escenario",
+    "card_title": "Fundación de la Cueva",
+    "card_subtitle": "Patrimonio del Sacromonte"
+  },
+  "pillars": {
+    "items": {
+      "zambra": {
+        "title": "Zambra",
+        "desc": "El Espectáculo Primitivo"
+      },
+      "gastronomy": {
+        "title": "Gastronomía",
+        "desc": "Cocina de Tradición"
+      },
+      "events": {
+        "title": "Eventos",
+        "desc": "Exclusividad en el Sacromonte"
+      },
+      "views": {
+        "title": "Vistas",
+        "desc": "Frente a la Alhambra"
+      }
+    },
+    "cta": "Descubrir"
+  },
+  "faq": {
+    "badge": "Cerrojos Desbloqueados",
+    "title_1": "Preguntas ",
+    "title_2": "Frecuentes.",
+    "subtitle": "Resolvemos tus dudas para que solo tengas que preocuparte de sentir el Sacromonte.",
+    "q1": "¿A qué hora comienza el espectáculo de Zambra Gitana?",
+    "a1": "Ofrecemos dos pases diarios para garantizar una experiencia íntima. El primer pase comienza a las 19:00 hrs y el segundo a las 21:00 hrs. Recomendamos llegar 15 minutos antes para acomodarse y disfrutar del ambiente de la cueva.",
+    "q2": "¿Es necesario reservar la cena junto con el espectáculo?",
+    "a2": "No es estrictamente necesario, pero es altamente recomendable. Nuestra gastronomía es parte de la herencia del Sacromonte y complementa perfectamente la velada. Disponemos de un Menú Tradición y un Tapas Premium que pueden disfrutarse antes o durante el espectáculo.",
+    "q3": "¿Cómo llego a la cueva Venta El Gallo?",
+    "a3": "Nos encontramos en el corazón del Sacromonte, frente al imponente mirador hacia la Alhambra. Puede llegar en taxi hasta la misma puerta (Barranco de los Negros, 5), tomar el microbús C34 desde Plaza Nueva, o subir paseando por el histórico barrio del Albaicín.",
+    "q4": "¿Es apto para niños pequeños?",
+    "a4": "El flamenco es pasión universal. Los niños son bienvenidos a sentir la fuerza de nuestro arte. No obstante, por respeto a la pureza del sonido acústico de la cueva, recomendamos el primer pase para familias.",
+    "q5": "¿Los artistas varían cada noche?",
+    "a5": "Nuestra familia es el núcleo central. Las hijas de Juanillo Heredia son el alma de Venta El Gallo, actuando casi todas las noches. Además, contamos con bailaores, cantaores y guitarristas de primer nivel que van rotando para asegurar que cada zambra sea un espectáculo vivo y único."
+  },
+  "reviews": {
+    "title_1": "El eco del ",
+    "title_2": "público.",
+    "subtitle": "No somos nosotros quienes certificamos la calidad de nuestra Zambra. Son los latidos de aquellos que la han vivido desde dentro.",
+    "verified": "Verificada",
+    "social_title": "Sigue nuestra huella visual.",
+    "social_subtitle": "Documentamos la magia diaria y la vida en la cueva. Únete a la comunidad del Sacromonte.",
+    "community": "Comunidad",
+    "trends": "Tendencias",
+    "follow_us": "Síguenos en",
+    "fake": {
+      "r1": {
+        "date": "Hace 2 semanas",
+        "text": "La experiencia más auténtica que vivimos en Granada. Estar a un metro del escenario mientras bailan y cantan te pone los vellos de punta. El menú degustación fue impecable."
+      },
+      "r2": {
+        "date": "Hace 1 mes",
+        "text": "Pure raw emotion. The acoustics of the cave combined with the passionate performance left us speechless. The daughters of Juanillo truly honor his legacy. A must-do."
+      },
+      "r3": {
+        "date": "Hace 2 meses",
+        "text": "Mágico. Sin micrófonos, solo el cajón, la guitarra, el cante y los tacones. Se respira arte y profesionalidad. Se nota que para ellos el escenario no es trabajo, es su vida."
+      },
+      "r4": {
+        "date": "Hace 3 meses",
+        "text": "He ido a varios tablaos en Andalucía y ninguno me ha transmitido la misma intimidad que Venta El Gallo. La cueva es espectacular y el trato del personal exquisito."
+      }
+    }
+  },
+  "reels": {
+    "title_1": "La magia en ",
+    "title_2": "movimiento.",
+    "subtitle": "Atmósfera real, sin filtros. Así se vive una noche en la Venta El Gallo.",
+    "reel": "Reel",
+    "view": "Ver",
+    "interaction": "Haz clic para abrir en Instagram"
+  },
+  "history_page": {
+    "badge": "Nuestra Sangre",
+    "title": "El Legado",
+    "subtitle": "Un siglo tallando la roca para que el flamenco resuene en su forma más pura. Conoce a los guardianes del Sacromonte.",
+    "cta_title_1": "Pasa a formar parte ",
+    "cta_title_2": "de nuestra historia.",
+    "cta_subtitle": "La cueva te espera. Ven a sentir el peso del legado en directo con nuestra gastronomía y la Zambra Gitana original.",
+    "cta_button": "Reservar",
+    "timeline": {
+      "badge": "Nuestro Mapa del Tiempo",
+      "title_1": "Piedra, sudor y ",
+      "title_2": "tradición intacta.",
+      "events": {
+        "e1": {
+          "year": "1996",
+          "title": "El Origen en la Roca",
+          "desc": "Juanillo Heredia adquiere la cueva en el mítico barranco de los Negros. Lo que comenzó excavando la roca, pronto se convertiría en un santuario del cante y el baile puro, cimentando nuestra leyenda."
+        },
+        "e2": {
+          "year": "1970s",
+          "title": "El Origen de la Zambra",
+          "desc": "Definimos nuestro formato de 'Zambra Gitana'. El boca a boca, el sudor y la pasión atraen a personalidades de todo el mundo. La acústica natural de la cal y la roca se revela como nuestro mayor tesoro."
+        },
+        "e3": {
+          "year": "2001",
+          "title": "Galardón de Prestigio",
+          "desc": "Venta El Gallo recibe el Premio al Prestigio Turístico de Granada. Un reconocimiento oficial que valida décadas de dedicación ininterrumpida a la preservación del arte flamenco en su estado más visceral."
+        },
+        "e4": {
+          "year": "Legado",
+          "title": "La Sangre Continúa",
+          "desc": "Hoy, las herederas directas velan por el fuego. No solo custodian el origen, sino que imponen su respeto sobre el escenario cada noche, fundiendo la tradición intransigente con la más alta gastronomía."
+        }
+      }
+    }
+  },
+  "restaurant_page": {
+    "hero": {
+      "badge": "Sabores del Sacromonte",
+      "title_1": "Gastronomía ",
+      "title_2": "Centenaria",
+      "subtitle_1": "Disfruta de un espectáculo de flamenco lleno de sentimiento, pureza y colorido mientras degustas nuestra ",
+      "subtitle_bold": "cocina tradicional granadina",
+      "subtitle_2": "."
+    },
+    "pricing": {
+      "title": "Elige la opción que más te guste",
+      "recommended": "Más Recomendado",
+      "per_person": "/ pers.",
+      "btn_book": "Reservar",
+      "passes": {
+        "consumicion": {
+          "title": "Espectáculo + Consumición",
+          "subtitle": "La esencia pura del cante y el baile.",
+          "features": [
+            "Acceso al espectáculo flamenco (1 hora)",
+            "Una bebida a elegir (vino, cerveza, refresco)",
+            "Asientos en zona estándar"
+          ],
+          "children": "Niños 6-11 años: 20€ | Niños 3-5 años: 10€"
+        },
+        "cena": {
+          "title": "Espectáculo + Cena",
+          "subtitle": "La experiencia inmersiva definitiva.",
+          "features": [
+            "Acceso premium al espectáculo",
+            "Menú Especial Venta El Gallo (3 tiempos)",
+            "Bebidas ilimitadas durante la cena"
+          ],
+          "children": "Niños 6-11 años: 32€ (Menú Infantil)"
+        }
+      },
+      "cta_title_1": "Vive la ",
+      "cta_title_2": "Zambra Gitana.",
+      "cta_subtitle": "Disfruta de nuestra gastronomía tradicional y siente el eco del Sacromonte en primera fila. Asegura tu plaza en nuestra cueva centenaria.",
+      "cta_button": "Reservar Ahora"
+    },
+    "interactive_menu": {
+      "header": {
+        "restaurant": "Restaurante flamenco",
+        "menu": "MENÚ",
+        "carta": "CARTA"
+      },
+      "sections": {
+        "entrante": "ENTRANTE",
+        "entrantes": "ENTRANTES",
+        "primer_plato": "PRIMER PLATO",
+        "invierno": "Temporada de invierno",
+        "verano": "Temporada de verano",
+        "principal": "PRINCIPAL",
+        "pescados": "PESCADOS",
+        "carnes": "CARNES",
+        "postres": "POSTRES CASEROS",
+        "bodega": "BODEGA Y BEBIDAS",
+        "bebidas_incluidas": "BEBIDAS INCLUIDAS"
+      },
+      "drinks": {
+        "t1": "1 bebida de bienvenida espectáculo",
+        "t2": "(sangría o cerveza)",
+        "t3": "2 bebidas del menú",
+        "sangria": "Sangría",
+        "cerveza": "Cerveza",
+        "agua": "Agua",
+        "agua_desc": "Con o sin gas",
+        "zumo": "Zumo",
+        "zumo_desc": "Melocotón, piña, naranja",
+        "refrescos": "Refrescos",
+        "refrescos_desc": "Menta y jengibre",
+        "vino": "Vino",
+        "vino_desc": "Blanco o tinto"
+      },
+      "modal": {
+        "hacer_reserva": "Hacer Reserva"
+      },
+      "section": {
+        "title_1": "Nuestra ",
+        "title_2": "Gastronomía",
+        "desc": "Nuestra propuesta gastronómica está diseñada para complementar el arte flamenco. Elige tu menú ideal o disfruta de nuestra carta completa.",
+        "allergens": "Información de Alérgenos",
+        "cards": {
+          "menu_title": "Nuestros Menús",
+          "menu_desc": "Descubre nuestros menús degustación especiales incluidos en los pases.",
+          "menu_link": "Ver Menú",
+          "carta_title": "Carta del Restaurante",
+          "carta_desc": "Explora nuestra selección completa de platos tradicionales y tapas.",
+          "carta_link": "Ver Carta"
+        }
+      },
+      "menuData": {
+        "entrantes": [
+          {
+            "title": "Tabla de embutido",
+            "desc": "Queso, jamón, chorizo, etc"
+          }
+        ],
+        "primerPlato": [
+          {
+            "title": "Tortilla sacromonte",
+            "desc": "Con sesos de cordero"
+          },
+          {
+            "title": "Ensalada Gallo",
+            "desc": "Ensalada mixta con huevo"
+          },
+          {
+            "title": "Habas con jamón y huevo",
+            "desc": ""
+          }
+        ],
+        "invierno": [
+          {
+            "title": "Sopa de cebolla y queso",
+            "desc": "Con pan tostado"
+          },
+          {
+            "title": "Sopa de marisco",
+            "desc": "Con pan tostado"
+          },
+          {
+            "title": "Sopa de picadillo",
+            "desc": "Con pollo, jamón y huevo"
+          }
+        ],
+        "verano": [
+          {
+            "title": "Salmorejo",
+            "desc": "Sopa de tomate con pan, jamón y huevo"
+          },
+          {
+            "title": "Gazpacho",
+            "desc": "Sopa de tomate y pepino"
+          },
+          {
+            "title": "Melón con jamón",
+            "desc": ""
+          },
+          {
+            "title": "Ajoblanco",
+            "desc": ""
+          }
+        ],
+        "principal": [
+          {
+            "title": "Bacalao frito con tomate",
+            "desc": ""
+          },
+          {
+            "title": "Merluza en salsa verde",
+            "desc": "Con patatas a lo pobre"
+          },
+          {
+            "title": "Lomo de cerdo en salsa mozárabe",
+            "desc": "Con patatas a lo pobre"
+          },
+          {
+            "title": "Ternera en salsa jardinera",
+            "desc": "Con patatas a lo pobre"
+          },
+          {
+            "title": "Pollo al ajillo",
+            "desc": "Con patatas a lo pobre"
+          }
+        ],
+        "postres": [
+          "Natillas de vainilla",
+          "Tarta de chocolate",
+          "Arroz con leche",
+          "Helado",
+          "Tarta de queso"
+        ]
+      },
+      "cartaData": {
+        "entrantes": [
+          {
+            "title": "Ensalada Gallo",
+            "desc": "Ensalada mixta con huevo",
+            "price": "14€"
+          },
+          {
+            "title": "Ensalada de pimientos",
+            "desc": "Con huevo",
+            "price": "11€"
+          },
+          {
+            "title": "Ensalada de gambas y aguacate",
+            "desc": "",
+            "price": "16.5€"
+          },
+          {
+            "title": "Tomate aliñao",
+            "desc": "",
+            "price": "10€"
+          },
+          {
+            "title": "Tabla de jamón ibérico",
+            "desc": "",
+            "price": "20€"
+          },
+          {
+            "title": "Tabla de queso curado",
+            "desc": "",
+            "price": "20€"
+          },
+          {
+            "title": "Tabla de ibéricos",
+            "desc": "",
+            "price": "20€"
+          },
+          {
+            "title": "Tortilla de Sacromonte",
+            "desc": "",
+            "price": "12€"
+          },
+          {
+            "title": "Tortilla de espárragos",
+            "desc": "",
+            "price": "11€"
+          },
+          {
+            "title": "Berenjenas con miel de caña",
+            "desc": "",
+            "price": "10€"
+          },
+          {
+            "title": "Wok de verduras",
+            "desc": "",
+            "price": "14€"
+          },
+          {
+            "title": "Gambas al ajillo",
+            "desc": "",
+            "price": "16€"
+          },
+          {
+            "title": "Croquetas de pollo",
+            "desc": "",
+            "price": "14€"
+          },
+          {
+            "title": "Surtido de croquetas de ibéricos",
+            "desc": "",
+            "price": "14€"
+          },
+          {
+            "title": "Habas con jamón y huevo",
+            "desc": "",
+            "price": "14€"
+          }
+        ],
+        "invierno": [
+          {
+            "title": "Sopa de cebolla",
+            "desc": "Con pan tostado y queso",
+            "price": "8€"
+          },
+          {
+            "title": "Sopa de marisco",
+            "desc": "Con pan tostado",
+            "price": "8€"
+          },
+          {
+            "title": "Sopa de picadillo",
+            "desc": "Con pollo, jamón y huevo",
+            "price": "8€"
+          }
+        ],
+        "verano": [
+          {
+            "title": "Salmorejo",
+            "desc": "Sopa de tomate con pan, jamón y huevo",
+            "price": "9€"
+          },
+          {
+            "title": "Gazpacho",
+            "desc": "Sopa de tomate y pepino",
+            "price": "9€"
+          },
+          {
+            "title": "Melón con jamón",
+            "desc": "",
+            "price": "9€"
+          }
+        ],
+        "pescados": [
+          {
+            "title": "Bacalao frito con tomate",
+            "desc": "",
+            "price": "17€"
+          },
+          {
+            "title": "Merluza en salsa verde",
+            "desc": "Con patatas a lo pobre",
+            "price": "16.5€"
+          },
+          {
+            "title": "Dorada a la plancha",
+            "desc": "Con patatas a lo pobre",
+            "price": "18€"
+          }
+        ],
+        "carnes": [
+          {
+            "title": "Solomillo de cerdo",
+            "desc": "Con patatas a lo pobre",
+            "price": "18€"
+          },
+          {
+            "title": "Lomo de cerdo en salsa mozárabe",
+            "desc": "Con patatas a lo pobre",
+            "price": "16.5€"
+          },
+          {
+            "title": "Ternera en salsa jardinera",
+            "desc": "Con patatas a lo pobre",
+            "price": "17€"
+          },
+          {
+            "title": "Pollo al ajillo",
+            "desc": "Con patatas a lo pobre",
+            "price": "15€"
+          },
+          {
+            "title": "Entrecot de ternera",
+            "desc": "Con patatas a lo pobre",
+            "price": "24€"
+          },
+          {
+            "title": "Chuletillas de cordero",
+            "desc": "Con patatas a lo pobre",
+            "price": "19€"
+          }
+        ],
+        "postres": [
+          {
+            "title": "Natillas de vainilla",
+            "price": "3.5€"
+          },
+          {
+            "title": "Tarta de chocolate",
+            "price": "5€"
+          },
+          {
+            "title": "Arroz con leche",
+            "price": "3.5€"
+          },
+          {
+            "title": "Helado",
+            "price": "3.5€"
+          },
+          {
+            "title": "Tarta de queso",
+            "price": "5€"
+          }
+        ],
+        "bebidas1": [
+          {
+            "title": "Sangría",
+            "price": "3.5€"
+          },
+          {
+            "title": "Jarra de sangría",
+            "price": "16€"
+          },
+          {
+            "title": "Cerveza barril",
+            "price": "3€"
+          },
+          {
+            "title": "Jarra de cerveza",
+            "price": "15€"
+          },
+          {
+            "title": "Agua pequeña",
+            "desc": "Con o sin gas",
+            "price": "1.5€"
+          },
+          {
+            "title": "Botella de agua grande",
+            "desc": "(750ml)",
+            "price": "3€"
+          },
+          {
+            "title": "Refrescos o zumos",
+            "price": "3€"
+          }
+        ],
+        "bebidas2": [
+          {
+            "title": "Botella de vino tinto o blanco de la casa",
+            "price": "18€"
+          },
+          {
+            "title": "Vino blanco, tinto o rosado",
+            "price": "3.5€"
+          },
+          {
+            "title": "Botella de vino tinto Rioja",
+            "price": "22€"
+          },
+          {
+            "title": "Botella de vino tinto Protos",
+            "price": "22€"
+          }
+        ]
+      }
+    }
+  },
+  "artists_page": {
+    "hero": {
+      "tag": "Pasión y Destreza",
+      "title_1": "Elenco ",
+      "title_2": "Artístico",
+      "desc": "Conoce a los maestros que dan vida a la Zambra Gitana cada noche. Un linaje de arte puro forjado en las entrañas del Sacromonte."
+    },
+    "cta": {
+      "tag": "Reserva Exclusiva",
+      "title_1": "Siente la ",
+      "title_2": "Zambra",
+      "title_3": " en tu Piel.",
+      "desc_1": "Las plazas para nuestra zambra son ",
+      "desc_2": "estrictamente limitadas",
+      "desc_3": ". No pierdas la oportunidad de vivir el verdadero arte flamendo desde la primera fila.",
+      "button": "Reservar"
+    },
+    "footer": "\"El flamenco en la Venta El Gallo no se ensaya, se hereda.\"",
+    "artists": [
+      {
+        "name": "Jara Heredia",
+        "role": "DIRECCIÓN ARTÍSTICA",
+        "description": "Jara Heredia comenzó su carrera artística con profesores como Angustillas Ruiz “la mona” Manolete, Eva Garrido “la Yerbabuena”, Antonio Canales, Farruquito, Manuela Carrasco…… formando parte de la escuela escénica de Mario Maya. Actúa en varias ocasiones para S. M el rey D. Juan Carlos y en los Ángeles en casa de Antonio Banderas, Festival internacional de música y danza de Granada, festival del premio Lorca de poesía en Nueva York 2004, festival USA 2010, festival internacional de Carthage."
+      },
+      {
+        "name": "Antonia Heredia",
+        "role": "Bailaora",
+        "description": "Antonia Heredia comenzó su carrera artística con la bailaora Angustias Ruiz y con su hermana Jara Heredia. Más tarde comienza a formarse profesionalmente con profesores como Mario Maya, Eduardo Serrano «guiri», Belén Maya, Rafaela Carrasco, Manuel Liñán… Comienza a actuar en los tablaos flamencos de Granada a los 12 años. Actuó en los festivales de música y danza de Granada. Ha actuado con artistas como Juan Moneo «El tortas» en el festival de Almuñécar, Pepe Habichuela y Josemi Carmona en una gira por toda India y Festival de Mont de Marsan con Pepe Luis Carmona en numerosos festivales. Participa con Antonio Canales en el corral del carbón en varios videoclips de la talla de «Manzanita, Remedios Amaya, Antonio Carmona, Pepe Luis Carmona…»"
+      },
+      {
+        "name": "Dinastía Heredia",
+        "role": "Hijas del Fundador",
+        "description": "El alma femenina de la Venta El Gallo. Las hijas de Juan Heredia representan la continuidad histórica y el compromiso inquebrantable con el arte puro que su padre inició."
+      },
+      {
+        "name": "Antonio Heredia «El Chonico»",
+        "role": "Maestro Guitarrista",
+        "description": "Referente absoluto del toque granadino. Su guitarra es el latido indómito de la cueva, combinando una técnica depurada con el eco ancestral del barrio del Sacromonte."
+      },
+      {
+        "name": "Miguel Ángel Cortés",
+        "role": "Guitarra Concertista",
+        "description": "Virtuosismo y sensibilidad reconocidos internacionalmente. Premiado con el Bordón Minero, es uno de los guitarristas más influyentes de su generación en el panorama flamenco."
+      },
+      {
+        "name": "Paco Fernández",
+        "role": "Bailaor",
+        "description": "Fuerza y carisma en el tablao. Siguiendo los pasos de grandes maestros, Paco imprime una energía visceral que hace vibrar los cimientos de la Zambra en cada actuación."
+      },
+      {
+        "name": "Coral Fernández",
+        "role": "Bailaora",
+        "description": "Elegancia y técnica depurada. Formada en las mejores escuelas de flamencología, su baile es una oda a la estética granadina, llena de temperamento y precisión absoluta."
+      },
+      {
+        "name": "Raimundo Benítez",
+        "role": "Bailaor y Coreógrafo",
+        "description": "Maestro del movimiento. Su trayectoria en compañías internacionales le permite aportar una profundidad interpretativa que eleva el baile hacia nuevas cotas de expresión."
+      },
+      {
+        "name": "Antonio Heredia",
+        "role": "Cantaor",
+        "description": "Antonio Heredia es un cantaor granadino con raíces flamencas profundas, nacido en una familia de artistas donde el cante siempre fue una forma de vida. Desde joven mostró un talento innato, empapándose de los cantes tradicionales y desarrollando una voz poderosa y expresiva. A los 19 años inició su carrera profesional en los tablaos de Granada, destacando por su versatilidad y su capacidad para emocionar al público.\n\nHa trabajado con grandes figuras del flamenco, como Los Farruco y Belén López, y ha participado en festivales tanto en España como a nivel internacional. En 2021 lanzó el álbum Hasta La Eternidad, disponible en plataformas digitales, y ha formado parte de espectáculos junto a artistas como Sergio Gómez \"El Colorao\" y Alicia Morales. Su cante, lleno de sentimiento y autenticidad, fusiona la tradición con un estilo personal que lo ha consolidado como una de las voces más respetadas del flamenco actual."
+      }
+    ]
+  },
+  "agencias_page": {
+    "hero": {
+      "tag": "Eventos y Profesionales",
+      "title_1": "Eventos con ",
+      "title_2": "Alma",
+      "desc": "¿Buscas un lugar con magia para tu próximo evento? En nuestra cueva del Sacromonte, donde el flamenco nace y la historia se respira en cada rincón, creamos momentos únicos que quedan grabados para siempre."
+    },
+    "services": {
+      "tag": "Celebraciones Únicas",
+      "title_1": "¿Quieres celebrar un evento especial con ",
+      "title_2": "nosotros?",
+      "desc": "Celebraciones especiales, cenas de empresa, viajes con amigos o encuentros culturales… Sea cual sea la ocasión, la convertimos en una experiencia inolvidable. Combinamos lo mejor de la gastronomía andaluza con el arte más auténtico del flamenco, en un entorno incomparable con vistas a la Alhambra y el embrujo de Granada.",
+      "subtitle": "Nuestros Servicios para Eventos:",
+      "list": [
+        {
+          "title": "Espacios con encanto:",
+          "desc": "Terraza con vistas, salones en cueva y zonas privadas."
+        },
+        {
+          "title": "Gastronomía personalizada:",
+          "desc": "Menú o carta adaptada a cada tipo de evento."
+        },
+        {
+          "title": "Flamenco en vivo:",
+          "desc": "Para dar ese toque de emoción y autenticidad."
+        },
+        {
+          "title": "Organización integral:",
+          "desc": "Para que tú solo te preocupes de disfrutar."
+        }
+      ],
+      "footer": "Haz que tu evento tenga alma, sabor… y arte."
+    },
+    "contact": {
+      "title": "Contacto Directo",
+      "desc": "Atención exclusiva para profesionales del sector turístico y corporativo.",
+      "paco_tag": "Operaciones B2B",
+      "fijo": "Fijo",
+      "movil": "Móvil / WhatsApp",
+      "email_general": "Email General",
+      "german_tag": "Marketing Digital",
+      "german_desc": "Colaboraciones, marketing y alianzas estratégicas."
+    },
+    "form": {
+      "title_1": "Solicitud de ",
+      "title_2": "Eventos",
+      "desc": "Envíanos los detalles de tu evento y prepararemos una propuesta a medida.",
+      "name_label": "Nombre / Agencia",
+      "name_placeholder": "Tu nombre o empresa",
+      "email_label": "Email",
+      "email_placeholder": "correo@ejemplo.com",
+      "details_label": "Detalles del Evento",
+      "details_placeholder": "Indícanos fechas, número de personas, menús deseados y cualquier requerimiento especial...",
+      "button": "Organizar Evento"
+    }
+  },
+  "contact_page": {
+    "hero": {
+      "title_1": "Contacta con ",
+      "title_2": "Nosotros",
+      "desc": "Estamos a tu disposición para atender cualquier consulta o reserva. Habla directamente con nuestro equipo."
+    },
+    "buttons": {
+      "call_title": "Llámanos Directamente",
+      "chat_title": "Chat Directo"
+    },
+    "map": {
+      "button": "Cómo Llegar"
+    },
+    "email": {
+      "title": "Envíanos un correo",
+      "desc": "Para consultas generales, eventos o solicitudes especiales, no dudes en escribirnos. Te responderemos a la mayor brevedad posible.",
+      "button": "Enviar Email"
+    },
+    "cta": {
+      "title": "¿Listo para vivir la Zambra?",
+      "desc": "Asegura tu mesa y no te quedes sin disfrutar del mejor flamenco.",
+      "button": "Hacer Reserva Ahora"
+    }
+  },
+  "footer": {
+    "desc": "Una cueva milenaria donde el flamenco se vive en su estado más puro. Manteniendo vivo el legado de Juanillo Heredia desde 1996.",
+    "cols": {
+      "exp": {
+        "title": "La Experiencia",
+        "links": {
+          "history": "Nuestro Legado",
+          "artists": "Zambra y Artistas",
+          "restaurant": "Gastronomía",
+          "contact": "Eventos Exclusivos"
+        }
+      },
+      "legal": {
+        "title": "Políticas Legales",
+        "links": {
+          "legal": "Aviso Legal",
+          "privacy": "Política de Privacidad",
+          "allergens": "Información de Alérgenos",
+          "terms": "Términos de Reserva"
+        }
+      },
+      "contact": {
+        "title": "Contacto"
+      }
+    },
+    "bottom": {
+      "patrimony": "Patrimonio del Sacromonte",
+      "rights": "© 2026 Cueva Venta El Gallo. Todos los derechos reservados.",
+      "designed_by": "Designed & Developed by "
+    }
+  }
+}

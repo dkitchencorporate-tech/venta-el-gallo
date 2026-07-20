@@ -1,8 +1,11 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import terraceImg from '../../../assets/raw/Restaurante-Venta-El-Gallo-Alhambra-de-Granada-1-1.jpg';
 
 const RestaurantHero = () => {
+  const { t } = useTranslation();
+
   return (
     <section className="relative pt-32 pb-24 md:pt-48 md:pb-40 overflow-hidden bg-deep-black border-b border-gold/10">
       {/* Dynamic Background */}
@@ -26,17 +29,17 @@ const RestaurantHero = () => {
            className="max-w-4xl mx-auto"
         >
           <span className="inline-block px-5 py-2 border border-gold/50 text-gold text-[10px] md:text-sm uppercase tracking-[0.4em] font-black mb-8 rounded-full bg-gold/5 shadow-[0_0_20px_rgba(212,175,55,0.1)] backdrop-blur-md">
-            Sabores del Sacromonte
+            {t('restaurant_page.hero.badge')}
           </span>
           
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif text-white leading-[1.1] tracking-tight mb-8 drop-shadow-2xl">
-            Gastronomía <br className="hidden md:block" /> <span className="italic font-light text-sacromonte-red pr-4">Centenaria</span>
+            {t('restaurant_page.hero.title_1')} <br className="hidden md:block" /> <span className="italic font-light text-sacromonte-red pr-4">{t('restaurant_page.hero.title_2')}</span>
           </h1>
           
           <div className="w-32 h-[1px] bg-gradient-to-r from-transparent via-gold to-transparent mx-auto mb-10"></div>
           
           <p className="text-lg md:text-2xl text-gray-300 font-light leading-relaxed max-w-3xl mx-auto">
-            Disfruta de un espectáculo de flamenco lleno de sentimiento, pureza y colorido mientras degustas nuestra <strong className="font-medium text-white">cocina tradicional granadina</strong>.
+            {t('restaurant_page.hero.subtitle_1')}<strong className="font-medium text-white">{t('restaurant_page.hero.subtitle_bold')}</strong>{t('restaurant_page.hero.subtitle_2')}
           </p>
         </motion.div>
       </div>

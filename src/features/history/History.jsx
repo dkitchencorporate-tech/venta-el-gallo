@@ -1,13 +1,14 @@
 import React from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import Timeline from './components/Timeline';
 import heroBg from '../../assets/raw/Cueva-Venta-El-Gallo-6-Julio-2-1280x914-2.jpg';
 import ctaBg from '../../assets/raw/Restaurante-Venta-El-Gallo-Alhambra-de-Granada-1-1.jpg';
 import { useBooking } from '../../context/BookingContext';
 
 const History = () => {
+  const { t } = useTranslation();
   const { scrollYProgress } = useScroll();
   const yBg = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
   const { openBooking } = useBooking();
@@ -31,13 +32,13 @@ const History = () => {
         >
           <div className="w-px h-16 bg-gold drop-shadow-md mb-6"></div>
           <div className="inline-block px-4 py-1 border border-white/20 text-[10px] uppercase tracking-[0.3em] font-black mb-6 text-white/80">
-            Nuestra Sangre
+            {t('history_page.badge')}
           </div>
           <h1 className="text-4xl md:text-5xl lg:text-7xl font-serif font-black tracking-tighter leading-none mb-6 drop-shadow-2xl mix-blend-screen text-white">
-            El Legado
+            {t('history_page.title')}
           </h1>
           <p className="text-lg md:text-2xl text-white/90 font-light max-w-2xl drop-shadow-sm px-4">
-            Un siglo tallando la roca para que el flamenco resuene en su forma más pura. Conoce a los guardianes del Sacromonte.
+            {t('history_page.subtitle')}
           </p>
         </motion.div>
       </section>
@@ -61,15 +62,15 @@ const History = () => {
         >
           <div className="w-px h-24 bg-gradient-to-b from-transparent to-sacromonte-red mb-10"></div>
           <h2 className="text-5xl md:text-7xl font-serif text-white mb-6 tracking-tighter shadow-black drop-shadow-2xl">
-            Pasa a formar parte <br className="hidden md:block"/>
-            <span className="italic text-sacromonte-red">de nuestra historia.</span>
+            {t('history_page.cta_title_1')}<br className="hidden md:block"/>
+            <span className="italic text-sacromonte-red">{t('history_page.cta_title_2')}</span>
           </h2>
           <p className="text-base md:text-lg text-white/50 max-w-xl mb-12 font-light">
-            La cueva te espera. Ven a sentir el peso del legado en directo con nuestra gastronomía y la Zambra Gitana original.
+            {t('history_page.cta_subtitle')}
           </p>
           
           <button onClick={() => openBooking({from: 'history'})} className="btn-primary flex items-center gap-4 bg-sacromonte-red border-none text-white px-10 py-5 text-sm md:text-base tracking-[0.2em] font-black uppercase transition-all duration-500 shadow-[0_0_40px_rgba(153,27,27,0.4)] hover:shadow-[0_0_80px_rgba(212,175,55,0.6)] hover:bg-gold hover:text-deep-black transform hover:-translate-y-1">
-             Reservar <ArrowRight size={20} />
+             {t('history_page.cta_button')} <ArrowRight size={20} />
           </button>
         </motion.div>
       </section>

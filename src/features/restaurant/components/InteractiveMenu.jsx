@@ -6,116 +6,24 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { useBooking } from '../../../context/BookingContext';
 
-// Data from PDF
-const menuData = {
-  entrantes: [
-    { title: "Tabla de embutido", desc: "Queso, jamón, chorizo, etc" }
-  ],
-  primerPlato: [
-    { title: "Tortilla sacromonte", desc: "Con sesos de cordero" },
-    { title: "Ensalada Gallo", desc: "Ensalada mixta con huevo" },
-    { title: "Habas con jamón y huevo", desc: "" }
-  ],
-  invierno: [
-    { title: "Sopa de cebolla y queso", desc: "Con pan tostado" },
-    { title: "Sopa de marisco", desc: "Con pan tostado" },
-    { title: "Sopa de picadillo", desc: "Con pollo, jamón y huevo" }
-  ],
-  verano: [
-    { title: "Salmorejo", desc: "Sopa de tomate con pan, jamón y huevo" },
-    { title: "Gazpacho", desc: "Sopa de tomate y pepino" },
-    { title: "Melón con jamón", desc: "" },
-    { title: "Ajoblanco", desc: "" }
-  ],
-  principal: [
-    { title: "Bacalao frito con tomate", desc: "" },
-    { title: "Merluza en salsa verde", desc: "Con patatas a lo pobre" },
-    { title: "Lomo de cerdo en salsa mozárabe", desc: "Con patatas a lo pobre" },
-    { title: "Ternera en salsa jardinera", desc: "Con patatas a lo pobre" },
-    { title: "Pollo al ajillo", desc: "Con patatas a lo pobre" }
-  ],
-  postres: [
-    "Natillas de vainilla", "Tarta de chocolate", "Arroz con leche", "Helado", "Tarta de queso"
-  ]
-};
+// Data from JSON
 
-const cartaData = {
-  entrantes: [
-    { title: "Ensalada Gallo", desc: "Ensalada mixta con huevo", price: "14€" },
-    { title: "Ensalada de pimientos", desc: "Con huevo", price: "11€" },
-    { title: "Ensalada de gambas y aguacate", desc: "", price: "16.5€" },
-    { title: "Tomate aliñao", desc: "", price: "10€" },
-    { title: "Tabla de jamón ibérico", desc: "", price: "20€" },
-    { title: "Tabla de queso curado", desc: "", price: "20€" },
-    { title: "Tabla de ibéricos", desc: "", price: "20€" },
-    { title: "Tortilla de Sacromonte", desc: "", price: "12€" },
-    { title: "Tortilla de espárragos", desc: "", price: "11€" },
-    { title: "Berenjenas con miel de caña", desc: "", price: "10€" },
-    { title: "Wok de verduras", desc: "", price: "14€" },
-    { title: "Gambas al ajillo", desc: "", price: "16€" },
-    { title: "Croquetas de pollo", desc: "", price: "14€" },
-    { title: "Surtido de croquetas de ibéricos", desc: "", price: "14€" },
-    { title: "Habas con jamón y huevo", desc: "", price: "14€" }
-  ],
-  invierno: [
-    { title: "Sopa de cebolla", desc: "Con pan tostado y queso", price: "8€" },
-    { title: "Sopa de marisco", desc: "Con pan tostado", price: "8€" },
-    { title: "Sopa de picadillo", desc: "Con pollo, jamón y huevo", price: "8€" }
-  ],
-  verano: [
-    { title: "Salmorejo", desc: "Sopa de tomate con pan, jamón y huevo", price: "9€" },
-    { title: "Gazpacho", desc: "Sopa de tomate y pepino", price: "9€" },
-    { title: "Melón con jamón", desc: "", price: "9€" }
-  ],
-  pescados: [
-    { title: "Bacalao frito con tomate", desc: "", price: "17€" },
-    { title: "Merluza en salsa verde", desc: "Con patatas a lo pobre", price: "16.5€" },
-    { title: "Dorada a la plancha", desc: "Con patatas a lo pobre", price: "18€" }
-  ],
-  carnes: [
-    { title: "Solomillo de cerdo", desc: "Con patatas a lo pobre", price: "18€" },
-    { title: "Lomo de cerdo en salsa mozárabe", desc: "Con patatas a lo pobre", price: "16.5€" },
-    { title: "Ternera en salsa jardinera", desc: "Con patatas a lo pobre", price: "17€" },
-    { title: "Pollo al ajillo", desc: "Con patatas a lo pobre", price: "15€" },
-    { title: "Entrecot de ternera", desc: "Con patatas a lo pobre", price: "24€" },
-    { title: "Chuletillas de cordero", desc: "Con patatas a lo pobre", price: "19€" }
-  ],
-  postres: [
-    { title: "Natillas de vainilla", price: "3.5€" },
-    { title: "Tarta de chocolate", price: "5€" },
-    { title: "Arroz con leche", price: "3.5€" },
-    { title: "Helado", price: "3.5€" },
-    { title: "Tarta de queso", price: "5€" }
-  ],
-  bebidas1: [
-    { title: "Sangría", price: "3.5€" },
-    { title: "Jarra de sangría", price: "16€" },
-    { title: "Cerveza barril", price: "3€" },
-    { title: "Jarra de cerveza", price: "15€" },
-    { title: "Agua pequeña", desc: "Con o sin gas", price: "1.5€" },
-    { title: "Botella de agua grande", desc: "(750ml)", price: "3€" },
-    { title: "Refrescos o zumos", price: "3€" },
-  ],
-  bebidas2: [
-    { title: "Botella de vino tinto o blanco de la casa", price: "18€" },
-    { title: "Vino blanco, tinto o rosado", price: "3.5€" },
-    { title: "Botella de vino tinto Rioja", price: "22€" },
-    { title: "Botella de vino tinto Protos", price: "22€" }
-  ]
-};
-
-const MenuHeader = ({ type }) => (
+const MenuHeader = ({ type }) => {
+  const { t } = useTranslation();
+  return (
   <div className="text-center mb-6 md:mb-10 pt-2 md:pt-4">
     <div className="inline-flex flex-col items-center max-w-full px-4">
       <h2 className="font-serif italic text-sacromonte-red text-xl md:text-3xl mb-1">Venta el Gallo</h2>
-      <p className="text-gray-500 font-serif text-[10px] md:text-sm tracking-[0.2em] uppercase mb-4 text-center">Restaurante flamenco</p>
+      <p className="text-gray-500 font-serif text-[10px] md:text-sm tracking-[0.2em] uppercase mb-4 text-center">{t('restaurant_page.interactive_menu.header.restaurant')}</p>
       <div className="w-10 h-px bg-gold mb-4 md:mb-6"></div>
       <h1 className="font-serif text-3xl md:text-6xl tracking-[0.15em] text-deep-black uppercase">
-        {type === 'menu' ? 'MENÚ' : 'CARTA'}
+        {type === 'menu' ? t('restaurant_page.interactive_menu.header.menu') : t('restaurant_page.interactive_menu.header.carta')}
       </h1>
     </div>
   </div>
-);
+  );
+};
+// Data from JSON
 
 const SectionTitle = ({ title, sub = false }) => (
   <div className="flex items-center justify-center gap-2 md:gap-4 mb-5 md:mb-8 mt-4">
@@ -155,14 +63,17 @@ const MenuItem = ({ title, desc, price }) => {
   );
 };
 
-const MenuLayout = () => (
+const MenuLayout = () => {
+  const { t } = useTranslation();
+  const menuData = t('restaurant_page.interactive_menu.menuData', { returnObjects: true });
+  return (
   <div className="w-full bg-[#fcfbf9] min-h-full p-2 sm:p-6 md:p-10 overflow-y-auto relative bg-[url('https://www.transparenttextures.com/patterns/cream-paper.png')] pb-24">
     <div className="max-w-3xl mx-auto bg-white rounded-[2rem] shadow-[0_0_40px_rgba(0,0,0,0.03)] border border-gray-100 p-5 sm:p-8 md:p-12 mb-6 flex flex-col gap-8 md:gap-10">
       <MenuHeader type="menu" />
       
       {/* 1. ENTRANTE */}
       <div className="w-full">
-        <SectionTitle title="ENTRANTE" />
+        <SectionTitle title={t('restaurant_page.interactive_menu.sections.entrante')} />
         <div className="max-w-xl mx-auto mt-4">
           {menuData.entrantes.map((item, i) => <MenuItem key={i} {...item} />)}
         </div>
@@ -170,7 +81,7 @@ const MenuLayout = () => (
 
       {/* 2. PRIMER PLATO */}
       <div className="w-full">
-        <SectionTitle title="PRIMER PLATO" />
+        <SectionTitle title={t('restaurant_page.interactive_menu.sections.primer_plato')} />
         <div className="max-w-xl mx-auto mb-8 mt-4">
           {menuData.primerPlato.map((item, i) => <MenuItem key={i} {...item} />)}
         </div>
@@ -181,7 +92,7 @@ const MenuLayout = () => (
             <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#faf9f6] px-3">
               <span className="text-gold text-xl">❅</span>
             </div>
-            <SectionTitle title="Temporada de invierno" sub={true} />
+            <SectionTitle title={t('restaurant_page.interactive_menu.sections.invierno')} sub={true} />
             <div className="mt-4">
               {menuData.invierno.map((item, i) => <MenuItem key={i} {...item} />)}
             </div>
@@ -190,7 +101,7 @@ const MenuLayout = () => (
             <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#faf9f6] px-3">
               <span className="text-gold text-xl">☼</span>
             </div>
-            <SectionTitle title="Temporada de verano" sub={true} />
+            <SectionTitle title={t('restaurant_page.interactive_menu.sections.verano')} sub={true} />
             <div className="mt-4">
               {menuData.verano.map((item, i) => <MenuItem key={i} {...item} />)}
             </div>
@@ -200,7 +111,7 @@ const MenuLayout = () => (
 
       {/* 3. PRINCIPAL */}
       <div className="w-full">
-        <SectionTitle title="PRINCIPAL" />
+        <SectionTitle title={t('restaurant_page.interactive_menu.sections.principal')} />
         <div className="max-w-xl mx-auto mt-4">
           {menuData.principal.map((item, i) => <MenuItem key={i} {...item} />)}
         </div>
@@ -208,7 +119,7 @@ const MenuLayout = () => (
       
       {/* 4. POSTRES CASEROS */}
       <div className="w-full">
-        <SectionTitle title="POSTRES CASEROS" />
+        <SectionTitle title={t('restaurant_page.interactive_menu.sections.postres')} />
         <div className="flex flex-wrap justify-center gap-3 md:gap-4 mt-6 max-w-2xl mx-auto">
           {menuData.postres.map((item, i) => (
             <span key={i} className="font-serif text-deep-black text-sm md:text-base border border-gold/30 px-5 py-2 rounded-full bg-[#faf9f6] shadow-sm text-center hover:border-gold hover:bg-gold/5 transition-colors">{item}</span>
@@ -224,16 +135,16 @@ const MenuLayout = () => (
         <div className="relative z-10">
           <div className="flex items-center justify-center gap-3 mb-6">
             <div className="h-px bg-gold/40 w-8 md:w-16"></div>
-            <h3 className="font-serif text-gold text-lg md:text-2xl tracking-[0.2em] uppercase text-center font-bold">BEBIDAS INCLUIDAS</h3>
+            <h3 className="font-serif text-gold text-lg md:text-2xl tracking-[0.2em] uppercase text-center font-bold">{t('restaurant_page.interactive_menu.sections.bebidas_incluidas')}</h3>
             <div className="h-px bg-gold/40 w-8 md:w-16"></div>
           </div>
           
           <div className="bg-white/5 border border-white/10 rounded-2xl p-5 md:p-6 mb-8 text-center backdrop-blur-sm">
             <p className="font-serif text-white text-base md:text-xl tracking-wide mb-2">
-              1 bebida de bienvenida espectáculo
+              {t('restaurant_page.interactive_menu.drinks.t1')}
             </p>
             <p className="font-serif text-gold/80 italic text-sm md:text-base mb-3">
-              (sangría o cerveza)
+              {t('restaurant_page.interactive_menu.drinks.t2')}
             </p>
             <div className="flex items-center justify-center gap-3">
               <div className="h-px bg-white/20 w-6"></div>
@@ -241,37 +152,37 @@ const MenuLayout = () => (
               <div className="h-px bg-white/20 w-6"></div>
             </div>
             <p className="font-serif text-white text-base md:text-lg tracking-wide mt-3">
-              2 bebidas del menú
+              {t('restaurant_page.interactive_menu.drinks.t3')}
             </p>
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-3 gap-y-8 gap-x-6 text-center max-w-3xl mx-auto">
             <div className="flex flex-col items-center">
-              <h4 className="font-serif text-white text-base md:text-xl tracking-wider mb-1">Sangría</h4>
+              <h4 className="font-serif text-white text-base md:text-xl tracking-wider mb-1">{t('restaurant_page.interactive_menu.drinks.sangria')}</h4>
               <div className="w-6 h-px bg-gold/30 mt-1"></div>
             </div>
             <div className="flex flex-col items-center">
-              <h4 className="font-serif text-white text-base md:text-xl tracking-wider mb-1">Cerveza</h4>
+              <h4 className="font-serif text-white text-base md:text-xl tracking-wider mb-1">{t('restaurant_page.interactive_menu.drinks.cerveza')}</h4>
               <div className="w-6 h-px bg-gold/30 mt-1"></div>
             </div>
             <div className="flex flex-col items-center">
-              <h4 className="font-serif text-white text-base md:text-xl tracking-wider mb-1">Agua</h4>
-              <span className="text-[9px] md:text-[10px] text-white/50 font-sans mt-1 uppercase tracking-[0.2em]">Con o sin gas</span>
+              <h4 className="font-serif text-white text-base md:text-xl tracking-wider mb-1">{t('restaurant_page.interactive_menu.drinks.agua')}</h4>
+              <span className="text-[9px] md:text-[10px] text-white/50 font-sans mt-1 uppercase tracking-[0.2em]">{t('restaurant_page.interactive_menu.drinks.agua_desc')}</span>
               <div className="w-6 h-px bg-gold/30 mt-2"></div>
             </div>
             <div className="flex flex-col items-center">
-              <h4 className="font-serif text-white text-base md:text-xl tracking-wider mb-1">Zumo</h4>
-              <span className="text-[9px] md:text-[10px] text-white/50 font-sans mt-1 uppercase tracking-[0.2em]">Melocotón, piña, naranja</span>
+              <h4 className="font-serif text-white text-base md:text-xl tracking-wider mb-1">{t('restaurant_page.interactive_menu.drinks.zumo')}</h4>
+              <span className="text-[9px] md:text-[10px] text-white/50 font-sans mt-1 uppercase tracking-[0.2em]">{t('restaurant_page.interactive_menu.drinks.zumo_desc')}</span>
               <div className="w-6 h-px bg-gold/30 mt-2"></div>
             </div>
             <div className="flex flex-col items-center">
-              <h4 className="font-serif text-white text-base md:text-xl tracking-wider mb-1">Refrescos</h4>
-              <span className="text-[9px] md:text-[10px] text-white/50 font-sans mt-1 uppercase tracking-[0.2em]">Menta y jengibre</span>
+              <h4 className="font-serif text-white text-base md:text-xl tracking-wider mb-1">{t('restaurant_page.interactive_menu.drinks.refrescos')}</h4>
+              <span className="text-[9px] md:text-[10px] text-white/50 font-sans mt-1 uppercase tracking-[0.2em]">{t('restaurant_page.interactive_menu.drinks.refrescos_desc')}</span>
               <div className="w-6 h-px bg-gold/30 mt-2"></div>
             </div>
             <div className="flex flex-col items-center">
-              <h4 className="font-serif text-white text-base md:text-xl tracking-wider mb-1">Vino</h4>
-              <span className="text-[9px] md:text-[10px] text-white/50 font-sans mt-1 uppercase tracking-[0.2em]">Blanco o tinto</span>
+              <h4 className="font-serif text-white text-base md:text-xl tracking-wider mb-1">{t('restaurant_page.interactive_menu.drinks.vino')}</h4>
+              <span className="text-[9px] md:text-[10px] text-white/50 font-sans mt-1 uppercase tracking-[0.2em]">{t('restaurant_page.interactive_menu.drinks.vino_desc')}</span>
               <div className="w-6 h-px bg-gold/30 mt-2"></div>
             </div>
           </div>
@@ -279,16 +190,20 @@ const MenuLayout = () => (
       </div>
     </div>
   </div>
-);
+  );
+};
 
-const CartaLayout = () => (
+const CartaLayout = () => {
+  const { t } = useTranslation();
+  const cartaData = t('restaurant_page.interactive_menu.cartaData', { returnObjects: true });
+  return (
   <div className="w-full bg-[#fcfbf9] min-h-full p-2 sm:p-6 md:p-10 overflow-y-auto relative bg-[url('https://www.transparenttextures.com/patterns/cream-paper.png')] pb-24">
     <div className="max-w-3xl mx-auto bg-white rounded-[2rem] shadow-[0_0_40px_rgba(0,0,0,0.03)] border border-gray-100 p-5 sm:p-8 md:p-12 mb-6 flex flex-col gap-8 md:gap-10">
       <MenuHeader type="carta" />
       
       {/* 1. ENTRANTES */}
       <div className="w-full">
-        <SectionTitle title="ENTRANTES" />
+        <SectionTitle title={t('restaurant_page.interactive_menu.sections.entrantes')} />
         <div className="max-w-xl mx-auto mb-8 mt-4">
           {cartaData.entrantes.map((item, i) => <MenuItem key={i} {...item} />)}
         </div>
@@ -299,7 +214,7 @@ const CartaLayout = () => (
             <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#faf9f6] px-3">
               <span className="text-gold text-xl">❅</span>
             </div>
-            <SectionTitle title="Temporada de invierno" sub={true} />
+            <SectionTitle title={t('restaurant_page.interactive_menu.sections.invierno')} sub={true} />
             <div className="mt-4">
               {cartaData.invierno.map((item, i) => <MenuItem key={i} {...item} />)}
             </div>
@@ -308,7 +223,7 @@ const CartaLayout = () => (
             <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#faf9f6] px-3">
               <span className="text-gold text-xl">☼</span>
             </div>
-            <SectionTitle title="Temporada de verano" sub={true} />
+            <SectionTitle title={t('restaurant_page.interactive_menu.sections.verano')} sub={true} />
             <div className="mt-4">
               {cartaData.verano.map((item, i) => <MenuItem key={i} {...item} />)}
             </div>
@@ -318,7 +233,7 @@ const CartaLayout = () => (
 
       {/* 2. PESCADOS */}
       <div className="w-full">
-        <SectionTitle title="PESCADOS" />
+        <SectionTitle title={t('restaurant_page.interactive_menu.sections.pescados')} />
         <div className="max-w-xl mx-auto mt-4">
           {cartaData.pescados.map((item, i) => <MenuItem key={i} {...item} />)}
         </div>
@@ -326,7 +241,7 @@ const CartaLayout = () => (
 
       {/* 3. CARNES */}
       <div className="w-full">
-        <SectionTitle title="CARNES" />
+        <SectionTitle title={t('restaurant_page.interactive_menu.sections.carnes')} />
         <div className="max-w-xl mx-auto mt-4">
           {cartaData.carnes.map((item, i) => <MenuItem key={i} {...item} />)}
         </div>
@@ -334,7 +249,7 @@ const CartaLayout = () => (
 
       {/* 4. POSTRES CASEROS */}
       <div className="w-full">
-        <SectionTitle title="POSTRES CASEROS" />
+        <SectionTitle title={t('restaurant_page.interactive_menu.sections.postres')} />
         <div className="max-w-xl mx-auto mt-4">
           {cartaData.postres.map((item, i) => <MenuItem key={i} {...item} />)}
         </div>
@@ -342,7 +257,7 @@ const CartaLayout = () => (
 
       {/* 5. BODEGA Y BEBIDAS */}
       <div className="w-full mt-4 pt-8 border-t-[2px] border-gold/30">
-        <SectionTitle title="BODEGA Y BEBIDAS" />
+        <SectionTitle title={t('restaurant_page.interactive_menu.sections.bodega')} />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-8 mt-8 max-w-3xl mx-auto">
           <div className="min-w-0">
             {cartaData.bebidas1.map((item, i) => <MenuItem key={i} {...item} />)}
@@ -354,7 +269,8 @@ const CartaLayout = () => (
       </div>
     </div>
   </div>
-);
+  );
+};
 
 const ModalPortal = ({ activeModal, onClose, onReserve }) => {
   const modalContent = (
@@ -395,7 +311,7 @@ const ModalPortal = ({ activeModal, onClose, onReserve }) => {
               }}
               className="bg-gold text-deep-black hover:bg-deep-black hover:text-white px-8 sm:px-12 md:px-24 py-3 md:py-4 rounded-full font-black text-sm md:text-base uppercase tracking-[0.2em] shadow-xl hover:-translate-y-1 transition-all duration-300 w-full sm:w-auto text-center"
             >
-              Hacer Reserva
+              {i18next.t('restaurant_page.interactive_menu.modal.hacer_reserva')}
             </button>
         </div>
       </motion.div>
@@ -405,11 +321,12 @@ const ModalPortal = ({ activeModal, onClose, onReserve }) => {
   return createPortal(modalContent, document.body);
 };
 
+import i18next from 'i18next';
+
 
 const InteractiveMenu = () => {
-  const { i18n } = useTranslation();
+  const { t } = useTranslation();
   const [activeModal, setActiveModal] = useState(null); 
-  const lang = i18n.language || 'es';
   const { openBooking } = useBooking();
 
   useEffect(() => {
@@ -424,13 +341,13 @@ const InteractiveMenu = () => {
   const cards = [
     {
       id: 'menu',
-      title: lang === 'en' ? 'Set Menus' : lang === 'fr' ? 'Menus' : 'Nuestros Menús',
-      subtitle: lang === 'en' ? 'Discover our special tasting menus included in the show passes.' : lang === 'fr' ? 'Découvrez nos menus dégustation spéciaux.' : 'Descubre nuestros menús degustación especiales incluidos en los pases.',
+      title: t('restaurant_page.interactive_menu.section.cards.menu_title'),
+      subtitle: t('restaurant_page.interactive_menu.section.cards.menu_desc'),
     },
     {
       id: 'carta',
-      title: lang === 'en' ? 'A La Carte' : lang === 'fr' ? 'À La Carte' : 'Carta del Restaurante',
-      subtitle: lang === 'en' ? 'Explore our full selection of traditional dishes and tapas.' : lang === 'fr' ? 'Explorez notre sélection complète de plats traditionnels.' : 'Explora nuestra selección completa de platos tradicionales y tapas.',
+      title: t('restaurant_page.interactive_menu.section.cards.carta_title'),
+      subtitle: t('restaurant_page.interactive_menu.section.cards.carta_desc'),
     }
   ];
 
@@ -438,7 +355,7 @@ const InteractiveMenu = () => {
     setActiveModal(null);
     // Añadimos un pequeño retraso para que el modal del menú se cierre antes de abrir el de reservas
     setTimeout(() => {
-      openBooking('menu_modal');
+      openBooking({ from: 'menu_modal' });
     }, 150);
   };
 
@@ -447,17 +364,16 @@ const InteractiveMenu = () => {
       <div className="container mx-auto px-6 max-w-5xl">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-serif text-deep-black mb-6">
-            Nuestra <span className="text-gold italic">Gastronomía</span>
+            {t('restaurant_page.interactive_menu.section.title_1')}<span className="text-gold italic">{t('restaurant_page.interactive_menu.section.title_2')}</span>
           </h2>
           <p className="text-gray-600 font-light text-lg max-w-2xl mx-auto mb-8">
-            Nuestra propuesta gastronómica está diseñada para complementar el arte flamenco. 
-            Elige tu menú ideal o disfruta de nuestra carta completa.
+            {t('restaurant_page.interactive_menu.section.desc')}
           </p>
           <Link 
             to="/alergenos" 
             className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-sacromonte-red hover:text-gold transition-colors font-bold"
           >
-            <Info size={14} /> Información de Alérgenos
+            <Info size={14} /> {t('restaurant_page.interactive_menu.section.allergens')}
           </Link>
         </div>
 
@@ -477,7 +393,7 @@ const InteractiveMenu = () => {
               <h3 className="text-2xl font-serif text-deep-black mb-4">{card.title}</h3>
               <p className="text-gray-600 font-light mb-8">{card.subtitle}</p>
               <span className="text-[10px] uppercase tracking-[0.2em] font-black text-gold border-b border-transparent group-hover:border-gold transition-colors">
-                {card.id === 'menu' ? 'Ver Menú' : 'Ver Carta'}
+                {card.id === 'menu' ? t('restaurant_page.interactive_menu.section.cards.menu_link') : t('restaurant_page.interactive_menu.section.cards.carta_link')}
               </span>
             </motion.div>
           ))}

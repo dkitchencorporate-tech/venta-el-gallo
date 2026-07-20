@@ -15,11 +15,35 @@ import Legal from './features/legal/Legal';
 import Terms from './features/legal/Terms';
 import { BookingProvider } from './context/BookingContext';
 
-const ScrollToTop = () => {
+const RouteTracker = () => {
   const { pathname } = useLocation();
 
   useEffect(() => {
+    // Scroll to top
     window.scrollTo(0, 0);
+
+    // Update Document Title
+    const baseTitle = "Venta El Gallo";
+    const routes = {
+      '/': `Flamenco en el Sacromonte | ${baseTitle}`,
+      '/historia': `Nuestro Legado | ${baseTitle}`,
+      '/artistas': `Artistas | ${baseTitle}`,
+      '/restaurante': `Restaurante | ${baseTitle}`,
+      '/alergenos': `Alérgenos | ${baseTitle}`,
+      '/privacidad': `Política de Privacidad | ${baseTitle}`,
+      '/aviso-legal': `Aviso Legal | ${baseTitle}`,
+      '/terminos-reserva': `Términos de Reserva | ${baseTitle}`,
+      '/agencias': `Agencias y Profesionales | ${baseTitle}`,
+      '/blog': `Blog del Sacromonte | ${baseTitle}`,
+      '/contacto': `Contacto y Reservas | ${baseTitle}`,
+    };
+
+    // For blog posts
+    if (pathname.startsWith('/blog/')) {
+      document.title = `Artículo | ${baseTitle}`;
+    } else {
+      document.title = routes[pathname] || baseTitle;
+    }
   }, [pathname]);
 
   return null;
@@ -29,7 +53,7 @@ function App() {
   return (
     <BookingProvider>
       <Router>
-        <ScrollToTop />
+        <RouteTracker />
         <Routes>
           <Route path="/" element={<MainLayout />}>
             <Route index element={<Home />} />
