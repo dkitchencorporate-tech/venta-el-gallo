@@ -11,7 +11,8 @@ import ShareModal from '../components/ShareModal';
 import { useBooking } from '../context/BookingContext';
 
 const MainLayout = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const [activeLang, setActiveLang] = useState(() => i18n.language?.split('-')[0] || 'es');
   const location = useLocation();
   const { openBooking } = useBooking();
   const [scrolled, setScrolled] = useState(false);
@@ -80,6 +81,23 @@ const MainLayout = () => {
             {t('hero.cta') || 'Reservar'}
           </button>
           
+          {/* Mobile: inline language selector in navbar */}
+          <div className="lg:hidden flex items-center gap-0.5 ml-auto mr-2">
+            {['es','en','fr'].map((code) => (
+              <button
+                key={code}
+                onClick={() => { i18n.changeLanguage(code); setActiveLang(code); localStorage.setItem('i18nextLng', code); }}
+                className={`text-[9px] uppercase tracking-widest font-bold px-2 py-1 rounded-full transition-all duration-300 ${
+                  activeLang === code
+                    ? 'text-gold border border-gold/50 bg-gold/10'
+                    : 'text-white/50 border border-transparent hover:text-white'
+                }`}
+              >
+                {code.toUpperCase()}
+              </button>
+            ))}
+          </div>
+
           <button 
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             className="lg:hidden flex flex-col items-center gap-1 group relative z-50 p-2"
@@ -91,8 +109,8 @@ const MainLayout = () => {
         </div>
       </nav>
 
-      {/* Global Language Selector (Floating) - always visible unless mobile menu is open (it has its own) */}
-      <div className={`relative z-50 ${isMenuOpen ? 'hidden lg:block' : 'block'}`}>
+      {/* Global Language Selector (Floating) - Desktop only */}
+      <div className="hidden lg:block relative z-50">
         <LanguageSelector scrolled={scrolled} />
       </div>
 
