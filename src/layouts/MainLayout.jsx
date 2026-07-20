@@ -104,22 +104,42 @@ const MainLayout = () => {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 1.1 }}
             transition={{ type: "spring", damping: 25, stiffness: 200 }}
-            className="fixed inset-0 z-[45] bg-deep-black/95 backdrop-blur-3xl flex flex-col items-center justify-center lg:hidden"
+            className="fixed inset-0 z-[55] bg-deep-black/97 backdrop-blur-3xl flex flex-col items-center lg:hidden overflow-y-auto"
           >
+            {/* Decorative glows */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
               <div className="absolute top-[20%] left-[-10%] w-[60%] h-[60%] bg-sacromonte-red/10 rounded-full blur-[120px]"></div>
               <div className="absolute bottom-[20%] right-[-10%] w-[60%] h-[60%] bg-gold/5 rounded-full blur-[120px]"></div>
             </div>
 
-            <div className="flex flex-col items-center justify-start gap-8 md:gap-12 relative z-10 w-full px-8 pt-28 pb-12 text-center">
-               <LanguageSelector isMobileMenu={true} />
-               
+            {/* Header row inside overlay: Logo + Close button */}
+            <div className="relative z-10 w-full flex items-center justify-between px-6 py-5 border-b border-white/5">
+              <div className="flex items-center gap-3">
+                <img src={logoGallo} alt="Venta El Gallo" className="w-10 h-10 object-contain opacity-90" />
+                <span className="text-sm font-serif font-black tracking-widest uppercase text-white">Venta El Gallo</span>
+              </div>
+              <button
+                onClick={() => setIsMenuOpen(false)}
+                className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-sacromonte-red hover:border-sacromonte-red transition-all duration-300"
+                aria-label="Cerrar menú"
+              >
+                <X size={18} />
+              </button>
+            </div>
+
+            {/* Language selector - now fully visible, below header */}
+            <div className="relative z-10 w-full flex justify-center py-4 border-b border-white/5">
+              <LanguageSelector isMobileMenu={true} />
+            </div>
+
+            {/* Nav links */}
+            <div className="flex flex-col items-center gap-8 md:gap-10 relative z-10 w-full px-8 py-10 text-center">
                {navLinks.map((link, idx) => (
                  <motion.div
                    key={link.key}
                    initial={{ opacity: 0, y: 30 }}
                    animate={{ opacity: 1, y: 0 }}
-                   transition={{ delay: 0.1 + idx * 0.1 }}
+                   transition={{ delay: 0.05 + idx * 0.08 }}
                  >
                    <Link 
                      to={`/${link.path}`} 
@@ -135,7 +155,7 @@ const MainLayout = () => {
                  initial={{ opacity: 0, y: 30 }}
                  animate={{ opacity: 1, y: 0 }}
                  transition={{ delay: 0.5 }}
-                 className="mt-8"
+                 className="mt-4"
                >
                  <button 
                    onClick={() => { setIsMenuOpen(false); openBooking({from: 'mobile_menu'}); }}
