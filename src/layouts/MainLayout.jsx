@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Menu, Instagram, Facebook, MapPin, Phone, Mail, X } from 'lucide-react';
+import { Menu, Instagram, Facebook, MapPin, Phone, Mail, X, Share2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import logoGallo from '../assets/raw/logoVentaelGallo.webp';
 import FloatingActions from '../components/layout/FloatingActions';
 import CookieBanner from '../components/common/CookieBanner';
 import LanguageSelector from '../components/common/LanguageSelector';
+import ShareModal from '../components/ShareModal';
 import { useBooking } from '../context/BookingContext';
 
 const MainLayout = () => {
@@ -15,6 +16,8 @@ const MainLayout = () => {
   const { openBooking } = useBooking();
   const [scrolled, setScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isShareOpen, setIsShareOpen] = useState(false);
+  const shareUrl = 'https://dkitchencorporate-tech.github.io/venta-el-gallo/#/';
 
   useEffect(() => {
     const handleScroll = () => {
@@ -154,6 +157,7 @@ const MainLayout = () => {
       {/* Global Actions (WhatsApp/ScrollTop) */}
       <FloatingActions />
       <CookieBanner />
+      <ShareModal isOpen={isShareOpen} onClose={() => setIsShareOpen(false)} shareUrl={shareUrl} />
 
       {/* Footer - High End Professional */}
       <footer className="bg-gradient-to-b from-deep-black to-[#0a0a0a] pt-24 pb-12 text-white/70 relative overflow-hidden border-t border-white/5">
@@ -173,6 +177,7 @@ const MainLayout = () => {
              <div className="flex items-center gap-4">
                <a href="https://instagram.com/ventaelgalloficial" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:bg-gold hover:text-deep-black hover:border-gold transition-all duration-300"><Instagram size={18} /></a>
                <a href="https://www.facebook.com/ventaelgalloficial" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:bg-gold hover:text-deep-black hover:border-gold transition-all duration-300"><Facebook size={18} /></a>
+               <button onClick={() => setIsShareOpen(true)} title="Compartir" className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:bg-gold hover:text-deep-black hover:border-gold transition-all duration-300"><Share2 size={18} /></button>
              </div>
            </div>
 
