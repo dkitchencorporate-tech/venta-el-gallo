@@ -3,6 +3,15 @@
 @tailwind utilities;
 
 @layer base {
+  * {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    /* Prevent text blur during animations */
+    backface-visibility: hidden;
+    transform: translateZ(0);
+  }
+
   body {
     @apply bg-metallic-white text-deep-black font-sans antialiased;
   }
