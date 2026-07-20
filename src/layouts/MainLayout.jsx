@@ -91,8 +91,8 @@ const MainLayout = () => {
         </div>
       </nav>
 
-      {/* Global Language Selector (Floating) */}
-      <div className="block relative z-50">
+      {/* Global Language Selector (Floating) - Desktop only, mobile uses in-menu selector */}
+      <div className="hidden lg:block relative z-50">
         <LanguageSelector scrolled={scrolled} />
       </div>
 
