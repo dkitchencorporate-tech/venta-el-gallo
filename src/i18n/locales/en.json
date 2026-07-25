@@ -183,7 +183,7 @@
           "features": [
             "Premium access to the show",
             "Special Venta El Gallo Menu (3 courses)",
-            "Unlimited drinks during dinner"
+            "1 Welcome drink + 2 drinks to choose during dinner"
           ],
           "children": "Children 6-11 years: 32€ (Kids Menu)"
         }
@@ -213,9 +213,9 @@
         "bebidas_incluidas": "DRINKS INCLUDED"
       },
       "drinks": {
-        "t1": "1 welcome show drink",
+        "t1": "1 Welcome drink for the show",
         "t2": "(sangria or beer)",
-        "t3": "2 drinks from the menu",
+        "t3": "2 drinks to choose during dinner",
         "sangria": "Sangria",
         "cerveza": "Beer",
         "agua": "Water",

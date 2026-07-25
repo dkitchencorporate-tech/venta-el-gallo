@@ -95,8 +95,8 @@ const Agencias = () => {
         <div className="container mx-auto px-6">
           <div className="max-w-6xl mx-auto flex flex-col lg:flex-row gap-8">
             
-            {/* Paco Contact Block - Principal */}
-            <div className="relative bg-white border border-gold/10 shadow-xl shadow-gold/5 rounded-3xl p-8 md:p-12 overflow-hidden flex-1 group">
+            {/* Francisco Contact Block - Principal */}
+            <div className="relative bg-white border border-gold/10 shadow-xl shadow-gold/5 rounded-3xl p-8 md:p-12 overflow-hidden max-w-2xl mx-auto w-full group">
               <div className="absolute top-0 right-0 w-64 h-64 bg-gold/5 rounded-full blur-[80px]"></div>
               
               <div className="relative z-10 flex flex-col h-full justify-between">
@@ -106,60 +106,42 @@ const Agencias = () => {
                     {t('agencias_page.contact.desc')}
                   </p>
                   <div className="inline-flex items-center gap-3 bg-[#faf9f6] border border-gray-100 px-6 py-3 rounded-full mb-8 shadow-sm">
-                    <span className="text-deep-black font-serif text-xl">Paco</span>
+                    <span className="text-deep-black font-serif text-xl">Francisco</span>
                     <span className="text-gold text-[10px] font-black uppercase tracking-widest bg-gold/10 px-2 py-0.5 rounded-sm">{t('agencias_page.contact.paco_tag')}</span>
                   </div>
                 </div>
 
-                <div className="flex flex-col gap-4">
-                  <a href="tel:+34958049461" className="flex items-center gap-6 bg-[#faf9f6] hover:bg-white border border-gray-100 hover:border-gold/30 p-4 rounded-2xl transition-all shadow-sm hover:shadow-md group/btn">
-                    <div className="w-10 h-10 rounded-full bg-gold/10 flex items-center justify-center text-gold group-hover/btn:scale-110 transition-transform">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <a href="tel:+34640147985" className="flex items-center gap-4 bg-[#faf9f6] hover:bg-white border border-gray-100 hover:border-gold/30 p-4 rounded-2xl transition-all shadow-sm hover:shadow-md group/btn">
+                    <div className="w-10 h-10 rounded-full bg-gold/10 flex items-center justify-center text-gold group-hover/btn:scale-110 transition-transform shrink-0">
                       <Phone size={18} />
                     </div>
                     <div className="flex flex-col">
                       <span className="text-gray-400 text-[9px] uppercase tracking-widest font-bold">{t('agencias_page.contact.fijo')}</span>
-                      <span className="text-deep-black font-serif text-lg tracking-wider">+34 958 049 461</span>
+                      <span className="text-deep-black font-serif text-base tracking-wider">+34 640 14 79 85</span>
                     </div>
                   </a>
 
-                  <a href="tel:+34606739990" className="flex items-center gap-6 bg-[#faf9f6] hover:bg-white border border-gray-100 hover:border-gold/30 p-4 rounded-2xl transition-all shadow-sm hover:shadow-md group/btn">
-                    <div className="w-10 h-10 rounded-full bg-gold/10 flex items-center justify-center text-gold group-hover/btn:scale-110 transition-transform">
+                  <a href="tel:+34858950315" className="flex items-center gap-4 bg-[#faf9f6] hover:bg-white border border-gray-100 hover:border-gold/30 p-4 rounded-2xl transition-all shadow-sm hover:shadow-md group/btn">
+                    <div className="w-10 h-10 rounded-full bg-gold/10 flex items-center justify-center text-gold group-hover/btn:scale-110 transition-transform shrink-0">
                       <Phone size={18} />
                     </div>
                     <div className="flex flex-col">
                       <span className="text-gray-400 text-[9px] uppercase tracking-widest font-bold">{t('agencias_page.contact.movil')}</span>
-                      <span className="text-deep-black font-serif text-lg tracking-wider">+34 606 739 990</span>
+                      <span className="text-deep-black font-serif text-base tracking-wider">+34 858 95 03 15</span>
                     </div>
                   </a>
 
-                  <a href="mailto:info@cuevaventaelgallo.es" className="flex items-center gap-6 bg-[#faf9f6] hover:bg-white border border-gray-100 hover:border-gold/30 p-4 rounded-2xl transition-all shadow-sm hover:shadow-md group/btn">
-                    <div className="w-10 h-10 rounded-full bg-gold/10 flex items-center justify-center text-gold group-hover/btn:scale-110 transition-transform">
+                  <a href="mailto:reservas@cuevaventaelgallo.es" className="md:col-span-2 flex items-center gap-4 bg-[#faf9f6] hover:bg-white border border-gray-100 hover:border-gold/30 p-4 rounded-2xl transition-all shadow-sm hover:shadow-md group/btn">
+                    <div className="w-10 h-10 rounded-full bg-gold/10 flex items-center justify-center text-gold group-hover/btn:scale-110 transition-transform shrink-0">
                       <Mail size={18} />
                     </div>
                     <div className="flex flex-col">
                       <span className="text-gray-400 text-[9px] uppercase tracking-widest font-bold">{t('agencias_page.contact.email_general')}</span>
-                      <span className="text-deep-black font-serif text-lg tracking-wider">info@cuevaventaelgallo.es</span>
+                      <span className="text-deep-black font-serif text-base tracking-wider">reservas@cuevaventaelgallo.es</span>
                     </div>
                   </a>
                 </div>
-              </div>
-            </div>
-
-            {/* Germán Contact Block - Secundario */}
-            <div className="relative bg-white border border-gray-100 shadow-lg rounded-3xl p-8 overflow-hidden lg:w-1/3 flex flex-col justify-center">
-              <div className="relative z-10 text-center">
-                <div className="w-16 h-16 rounded-full bg-sacromonte-red/5 flex items-center justify-center text-sacromonte-red mx-auto mb-4">
-                  <Users size={24} />
-                </div>
-                <h3 className="text-xl font-serif text-deep-black mb-1">Germán</h3>
-                <span className="inline-block text-sacromonte-red text-[9px] font-black uppercase tracking-widest bg-sacromonte-red/5 px-2 py-0.5 rounded-sm mb-4">{t('agencias_page.contact.german_tag')}</span>
-                <p className="text-gray-500 text-xs font-light mb-6 px-4">
-                  {t('agencias_page.contact.german_desc')}
-                </p>
-                <a href="tel:+34624050842" className="inline-flex items-center justify-center gap-3 w-full bg-[#faf9f6] hover:bg-white border border-gray-100 hover:border-sacromonte-red/30 py-3 rounded-xl transition-all shadow-sm hover:shadow-md group/btn">
-                  <Phone size={14} className="text-sacromonte-red group-hover/btn:scale-110 transition-transform" />
-                  <span className="text-deep-black font-serif tracking-wider">+34 624 050 842</span>
-                </a>
               </div>
             </div>
 
@@ -178,7 +160,7 @@ const Agencias = () => {
           </div>
           
           <form 
-            action="mailto:info@cuevaventaelgallo.es" 
+            action="mailto:reservas@cuevaventaelgallo.es" 
             method="POST" 
             encType="text/plain"
             className="bg-[#faf9f6] border border-gray-200 rounded-3xl p-8 md:p-12 shadow-sm"

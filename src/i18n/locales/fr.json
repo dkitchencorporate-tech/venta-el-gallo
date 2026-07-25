@@ -183,7 +183,7 @@
           "features": [
             "Accès premium au spectacle",
             "Menu Spécial Venta El Gallo (3 services)",
-            "Boissons illimitées pendant le dîner"
+            "1 verre de Bienvenue + 2 boissons au choix pendant le dîner"
           ],
           "children": "Enfants 6-11 ans : 32€ (Menu Enfant)"
         }
@@ -213,9 +213,9 @@
         "bebidas_incluidas": "BOISSONS INCLUSES"
       },
       "drinks": {
-        "t1": "1 boisson de bienvenue",
+        "t1": "1 verre de Bienvenue pour le spectacle",
         "t2": "(sangria ou bière)",
-        "t3": "2 boissons du menu",
+        "t3": "2 boissons au choix pendant le dîner",
         "sangria": "Sangria",
         "cerveza": "Bière",
         "agua": "Eau",

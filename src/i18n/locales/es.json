@@ -183,7 +183,7 @@
           "features": [
             "Acceso premium al espectáculo",
             "Menú Especial Venta El Gallo (3 tiempos)",
-            "Bebidas ilimitadas durante la cena"
+            "1 copa de Bienvenida + 2 bebidas a elegir durante la cena"
           ],
           "children": "Niños 6-11 años: 32€ (Menú Infantil)"
         }
@@ -213,9 +213,9 @@
         "bebidas_incluidas": "BEBIDAS INCLUIDAS"
       },
       "drinks": {
-        "t1": "1 bebida de bienvenida espectáculo",
+        "t1": "1 copa de Bienvenida espectáculo",
         "t2": "(sangría o cerveza)",
-        "t3": "2 bebidas del menú",
+        "t3": "2 bebidas a elegir durante la cena",
         "sangria": "Sangría",
         "cerveza": "Cerveza",
         "agua": "Agua",

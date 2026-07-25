@@ -263,13 +263,18 @@ const MainLayout = () => {
                    <span className="text-sm font-light leading-relaxed group-hover:text-gold transition-colors">Barranco de los Negros, 5<br/> 18010 Sacromonte, Granada</span>
                  </a>
                </li>
-               <li className="flex items-center gap-4">
-                 <Phone size={18} className="text-gold shrink-0" />
-                 <span className="text-sm font-light">+34 958 22 84 76</span>
+               <li className="flex flex-col gap-1.5">
+                 <div className="flex items-center gap-4">
+                   <Phone size={18} className="text-gold shrink-0" />
+                   <a href="tel:+34640147985" className="text-sm font-light hover:text-gold transition-colors">+34 640 14 79 85</a>
+                 </div>
+                 <div className="flex items-center gap-4 pl-8">
+                   <a href="tel:+34858950315" className="text-sm font-light hover:text-gold transition-colors">+34 858 95 03 15</a>
+                 </div>
                </li>
                <li className="flex items-center gap-4">
                  <Mail size={18} className="text-gold shrink-0" />
-                 <span className="text-sm font-light">info@ventaelgallo.com</span>
+                 <a href="mailto:info@cuevaventaelgallo.es" className="text-sm font-light hover:text-gold transition-colors">info@cuevaventaelgallo.es</a>
                </li>
              </ul>
            </div>
