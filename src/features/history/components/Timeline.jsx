@@ -203,7 +203,9 @@ const Timeline = () => {
       year: t('history_page.timeline.events.e4.year'), 
       title: t('history_page.timeline.events.e4.title'), 
       desc: t('history_page.timeline.events.e4.desc'),
-      img: laSangreImg,
+      images: [
+        { src: laSangreImg, fit: "object-contain p-1" }
+      ],
       isCircle: false,
       filter: "contrast-100",
       align: "right"
