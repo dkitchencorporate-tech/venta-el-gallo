@@ -61,7 +61,7 @@ const InstagramReels = () => {
   }, []);
 
   return (
-    <section className="py-24 bg-[#050505] overflow-hidden relative">
+    <section className="py-20 md:py-24 bg-[#050505] overflow-hidden relative rounded-[32px] md:rounded-[48px] border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.6)] my-6 mx-2 md:mx-6">
       <div className="section-container relative z-20 text-center mb-16">
         <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif text-white mb-6 tracking-tighter">
           {t('reels.title_1')}<span className="italic text-sacromonte-red">{t('reels.title_2')}</span>
