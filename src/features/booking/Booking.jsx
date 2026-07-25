@@ -103,7 +103,7 @@ const Booking = () => {
                 {/* Overlay Button */}
                 <div className="absolute inset-0 bg-gradient-to-t from-deep-black/70 via-transparent to-transparent pointer-events-none z-10 flex flex-col justify-end p-6">
                   <a 
-                    href="https://maps.app.goo.gl/EENmvH26tV34ZXDHA" 
+                    href="https://maps.app.goo.gl/bqhxdVnUyf8Zvud2A" 
                     target="_blank" 
                     rel="noopener noreferrer"
                     className="pointer-events-auto inline-flex items-center gap-2 bg-white text-deep-black px-6 py-3 rounded-full font-bold text-xs uppercase tracking-widest hover:bg-gold hover:text-white transition-colors w-fit shadow-xl"

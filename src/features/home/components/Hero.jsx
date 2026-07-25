@@ -60,7 +60,7 @@ const Hero = () => {
                {t('hero.cta')} <ArrowRight size={16} />
             </button>
             <a 
-              href="https://share.google/orfW0MLIF6oV3R4YL"
+              href="https://maps.app.goo.gl/bqhxdVnUyf8Zvud2A"
               target="_blank"
               rel="noopener noreferrer"
               className="group flex flex-col border-l border-white/30 pl-6 cursor-pointer hover:border-gold transition-colors duration-300"

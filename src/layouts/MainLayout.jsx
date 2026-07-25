@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import logoGallo from '../assets/raw/logoVentaelGallo.webp';
 import FloatingActions from '../components/layout/FloatingActions';
 import CookieBanner from '../components/common/CookieBanner';
-import LanguageSelector from '../components/common/LanguageSelector';
+import LanguageSelector, { languages } from '../components/common/LanguageSelector';
 import ShareModal from '../components/ShareModal';
 import { useBooking } from '../context/BookingContext';
 
@@ -99,21 +99,25 @@ const MainLayout = () => {
             <div className={`w-6 h-px bg-white transition-all duration-300 ${isMenuOpen ? '-rotate-45 -translate-y-[1px]' : ''}`}></div>
           </button>
         </div>
-        {/* Mobile second row: Language selector, below logo/hamburger, inside fixed nav */}
-        <div className={`lg:hidden flex items-center justify-center gap-2 px-4 pb-2 pointer-events-auto ${isMenuOpen ? 'hidden' : ''}`}>
-          {['es','en','fr'].map((code) => (
-            <button
-              key={code}
-              onClick={() => { i18n.changeLanguage(code); setActiveLang(code); localStorage.setItem('i18nextLng', code); }}
-              className={`text-[10px] uppercase tracking-[0.2em] font-bold px-3 py-1 rounded-full transition-all duration-300 ${
-                activeLang === code
-                  ? 'text-deep-black bg-gold'
-                  : 'text-white/50 border border-white/20 hover:text-white hover:border-white/50'
-              }`}
-            >
-              {code.toUpperCase()}
-            </button>
-          ))}
+        {/* Mobile second row: Language selector with flags, below logo/hamburger, inside fixed nav */}
+        <div className={`lg:hidden flex items-center justify-center gap-2 px-4 pb-2.5 pointer-events-auto ${isMenuOpen ? 'hidden' : ''}`}>
+          {languages.map((lang) => {
+            const FlagComponent = lang.Flag;
+            return (
+              <button
+                key={lang.code}
+                onClick={() => { i18n.changeLanguage(lang.code); setActiveLang(lang.code); localStorage.setItem('i18nextLng', lang.code); }}
+                className={`flex items-center gap-1.5 text-[10px] uppercase tracking-[0.15em] font-bold px-3 py-1 rounded-full transition-all duration-300 ${
+                  activeLang === lang.code
+                    ? 'text-deep-black bg-gold shadow-[0_0_10px_rgba(212,175,55,0.5)]'
+                    : 'text-white/70 border border-white/20 bg-deep-black/60 backdrop-blur-md hover:text-white hover:border-white/50'
+                }`}
+              >
+                <FlagComponent className="w-3.5 h-2.5" />
+                <span>{lang.label}</span>
+              </button>
+            );
+          })}
         </div>
       </nav>
 
@@ -254,7 +258,7 @@ const MainLayout = () => {
              <h4 className="text-xs uppercase font-bold tracking-[0.2em] text-white mb-8">{t('footer.cols.contact.title')}</h4>
              <ul className="space-y-6">
                <li className="flex items-start gap-4">
-                 <a href="https://www.google.com/maps/place/Cueva+Venta+El+Gallo/" target="_blank" rel="noopener noreferrer" className="flex items-start gap-4 group">
+                 <a href="https://maps.app.goo.gl/bqhxdVnUyf8Zvud2A" target="_blank" rel="noopener noreferrer" className="flex items-start gap-4 group">
                    <MapPin size={18} className="text-gold shrink-0 mt-1 group-hover:scale-110 transition-transform" />
                    <span className="text-sm font-light leading-relaxed group-hover:text-gold transition-colors">Barranco de los Negros, 5<br/> 18010 Sacromonte, Granada</span>
                  </a>

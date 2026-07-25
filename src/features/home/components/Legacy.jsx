@@ -3,7 +3,7 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import daughtersImg from '../../../assets/raw/Venta-El-Gallo-15-1.jpg';
-import juanilloImg from '../../../assets/raw/Juanillo-Heredia.webp';
+import juanilloImg from '../../../assets/raw/juanillo-solo.jpeg';
 
 const Legacy = () => {
   const { t } = useTranslation();
@@ -46,10 +46,10 @@ const Legacy = () => {
                transition={{ duration: 1 }}
                viewport={{ once: true, margin: "-100px" }}
             >
-              <div className="flex items-center gap-6 mb-10">
-                <img src={juanilloImg} alt="Juanillo Heredia" className="w-16 h-16 rounded-full grayscale border border-gray-300 shadow-xl object-cover" />
+              <div className="flex items-center gap-5 mb-8">
+                <img src={juanilloImg} alt="Juanillo Heredia" className="w-20 h-20 md:w-24 md:h-24 rounded-full border-2 border-gold/40 shadow-xl object-cover object-top filter contrast-[1.05] saturate-[1.1] transition-transform duration-300 hover:scale-105 shrink-0" />
                 <div>
-                   <h4 className="font-serif text-xl">{t('legacy.founder_name')}</h4>
+                   <h4 className="font-serif text-xl md:text-2xl text-deep-black">{t('legacy.founder_name')}</h4>
                    <p className="text-[9px] uppercase font-bold tracking-widest text-sacromonte-red/80">{t('legacy.founder_role')}</p>
                 </div>
               </div>

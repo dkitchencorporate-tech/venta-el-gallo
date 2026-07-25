@@ -7,7 +7,7 @@ import BiographyModal from './components/BiographyModal';
 import { useBooking } from '../../context/BookingContext';
 
 // Real Asset Imports
-import daughtersGroupImg from '../../assets/raw/Venta-El-Gallo-15-1.jpg';
+import dinastiaHerediaImg from '../../assets/raw/Dinastia-Heredia.jpeg';
 import antoniaImg from '../../assets/raw/antonia-ready.jpg';
 import jaraImg from '../../assets/raw/jara-heredia-portrait.jpg';
 import chonicoImg from '../../assets/raw/Antonio-el-Chonico-guitarra-Venta-el-Gallo.jpg';
@@ -21,7 +21,7 @@ import antonioCantaorImg from '../../assets/raw/antonio-heredia-cantaor.jpg';
 const imageMap = {
   "Jara Heredia": jaraImg,
   "Antonia Heredia": antoniaImg,
-  "Dinastía Heredia": daughtersGroupImg,
+  "Dinastía Heredia": dinastiaHerediaImg,
   "Antonio Heredia «El Chonico»": chonicoImg,
   "Miguel Ángel Cortés": miguelImg,
   "Paco Fernández": pacoImg,
@@ -61,6 +61,7 @@ const Artists = () => {
                name={artist.name} 
                role={artist.role} 
                imageUrl={artist.imageUrl}
+               objectFit={artist.name === "Dinastía Heredia" ? "object-contain scale-100 py-2" : "object-cover"}
                description={artist.description}
                onOpenBiography={() => setSelectedIdx(idx)}
              />

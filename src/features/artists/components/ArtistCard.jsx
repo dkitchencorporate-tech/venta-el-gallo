@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 
-const ArtistCard = ({ name, role, imageUrl, description, onOpenBiography }) => {
+const ArtistCard = ({ name, role, imageUrl, description, onOpenBiography, objectFit = "object-cover" }) => {
   const { t } = useTranslation();
   return (
     <motion.div 
@@ -24,13 +24,21 @@ const ArtistCard = ({ name, role, imageUrl, description, onOpenBiography }) => {
         className="relative w-full aspect-[4/5] rounded-3xl overflow-hidden shadow-[0_25px_60px_rgba(0,0,0,0.12)] bg-deep-black group-hover:shadow-[0_45px_100px_rgba(0,0,0,0.4)] transition-all duration-700 perspective-[1000px] mb-8 cursor-pointer"
         onClick={onOpenBiography}
       >
-        <div className="w-full h-full overflow-hidden">
+        <div className="w-full h-full overflow-hidden flex items-center justify-center relative bg-deep-black">
           {imageUrl ? (
-            <img 
-              src={imageUrl} 
-              alt={name} 
-              className="w-full h-full object-cover grayscale-[20%] group-hover:grayscale-0 group-hover:scale-110 transition-all duration-[1500ms]" 
-            />
+            <>
+              {/* Ambient Blurred Background to fill container seamlessly */}
+              <img 
+                src={imageUrl} 
+                alt="" 
+                className="absolute inset-0 w-full h-full object-cover blur-2xl scale-125 opacity-60 pointer-events-none" 
+              />
+              <img 
+                src={imageUrl} 
+                alt={name} 
+                className={`relative z-10 w-full h-full ${objectFit} grayscale-[20%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-[1500ms]`} 
+              />
+            </>
           ) : (
             <div className="w-full h-full bg-gray-900 flex items-center justify-center italic text-gray-500 text-xs">
               {t('artist_card.sample')}
