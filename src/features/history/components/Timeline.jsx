@@ -1,19 +1,68 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 import juanilloImg from '../../../assets/raw/juanillo-solo.jpeg';
 import zambraImg from '../../../assets/raw/Venta-El-Gallo-1-1280x961-2.jpg';
-import exteriorImg from '../../../assets/raw/Cueva-Venta-El-Gallo-6-Julio-7-1.jpg';
-import daughtersImg from '../../../assets/raw/Venta-El-Gallo-15-1.jpg';
-
-// Events array moved into the component
+import galardonImg from '../../../assets/raw/Galardon-de-prestigio.jpeg';
+import pasilloCuevaImg from '../../../assets/raw/Pasillo-cueva.jpeg';
+import cuevaImg from '../../../assets/raw/Cueva-interior.jpeg';
+import laSangreImg from '../../../assets/raw/La-sangre.jpeg';
 
 const MuseumCard = ({ event, index }) => {
   const isImageLeft = event.align === 'left';
+  const images = event.images || (event.img ? [event.img] : []);
+  const [currentImgIdx, setCurrentImgIdx] = useState(0);
+  const cardRef = useRef(null);
+  const [isInView, setIsInView] = useState(false);
+
+  // Viewport Observer: activate timer ONLY when user is looking at this card
+  useEffect(() => {
+    if (images.length <= 1) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsInView(entry.isIntersecting);
+      },
+      { threshold: 0.3 }
+    );
+
+    if (cardRef.current) {
+      observer.observe(cardRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [images.length]);
+
+  // Auto-play timer: advances every 4s only when card is visible
+  useEffect(() => {
+    if (!isInView || images.length <= 1) return;
+
+    const timer = setInterval(() => {
+      setCurrentImgIdx((prev) => (prev + 1) % images.length);
+    }, 4000);
+
+    return () => clearInterval(timer);
+  }, [isInView, images.length, currentImgIdx]);
+
+  const nextImg = (e) => {
+    e.stopPropagation();
+    setCurrentImgIdx((prev) => (prev + 1) % images.length);
+  };
+
+  const prevImg = (e) => {
+    e.stopPropagation();
+    setCurrentImgIdx((prev) => (prev - 1 + images.length) % images.length);
+  };
+
+  const currentItem = images[currentImgIdx];
+  const activeSrc = typeof currentItem === 'string' ? currentItem : currentItem.src;
+  const activeFit = typeof currentItem === 'string' ? 'object-cover' : (currentItem.fit || 'object-cover');
+  const isContain = activeFit.includes('object-contain');
 
   return (
-    <div className={`relative flex flex-col md:flex-row items-center justify-between w-full max-w-5xl mx-auto mb-20 md:mb-32 group`}>
+    <div ref={cardRef} className={`relative flex flex-col md:flex-row items-center justify-between w-full max-w-5xl mx-auto mb-20 md:mb-32 group`}>
        
        {/* Central Subtle Track for Desktop */}
        <div className="hidden md:block absolute left-1/2 top-0 bottom-[-8rem] w-[1px] bg-gradient-to-b from-gray-200 via-gray-300 to-transparent transform -translate-x-1/2 z-0"></div>
@@ -29,7 +78,7 @@ const MuseumCard = ({ event, index }) => {
           />
        </div>
 
-       {/* Subdued Elegant Image */}
+       {/* Subdued Elegant Image / Carousel */}
        <div className={`w-full md:w-1/2 flex justify-center items-center relative z-10 ${isImageLeft ? 'md:order-1' : 'md:order-2'}`}>
           <motion.div 
             initial={{ opacity: 0, y: 30 }}
@@ -42,12 +91,46 @@ const MuseumCard = ({ event, index }) => {
                 : 'w-[85%] md:w-80 h-[400px] md:h-96 rounded-2xl'
             }`}
           >
-            <div className={`w-full h-full overflow-hidden ${event.isCircle ? 'rounded-full' : 'rounded-2xl'}`}>
+            <div className={`w-full h-full relative overflow-hidden flex items-center justify-center bg-deep-black ${event.isCircle ? 'rounded-full' : 'rounded-2xl'}`}>
+              {isContain && (
+                <img 
+                  src={activeSrc} 
+                  alt="" 
+                  className="absolute inset-0 w-full h-full object-cover blur-xl scale-125 opacity-60 pointer-events-none" 
+                />
+              )}
               <img 
-                src={event.img} 
+                src={activeSrc} 
                 alt={event.title} 
-                className={`w-full h-full object-cover transition-transform duration-[1500ms] ease-out group-hover:scale-105 ${event.filter} ${event.objectPosition || 'object-center'}`} 
+                className={`relative z-10 w-full h-full ${activeFit} transition-all duration-700 ease-out group-hover:scale-105 ${event.filter} ${event.objectPosition || 'object-center'}`} 
               />
+              {images.length > 1 && (
+                <>
+                  <button 
+                    onClick={prevImg}
+                    className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-deep-black/60 backdrop-blur-md text-white flex items-center justify-center border border-white/20 hover:bg-gold hover:border-gold transition-all duration-300 z-20 shadow-lg"
+                    aria-label="Anterior"
+                  >
+                    <ChevronLeft size={16} />
+                  </button>
+                  <button 
+                    onClick={nextImg}
+                    className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-deep-black/60 backdrop-blur-md text-white flex items-center justify-center border border-white/20 hover:bg-gold hover:border-gold transition-all duration-300 z-20 shadow-lg"
+                    aria-label="Siguiente"
+                  >
+                    <ChevronRight size={16} />
+                  </button>
+                  <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-1.5 z-20">
+                    {images.map((_, i) => (
+                      <button
+                        key={i}
+                        onClick={(e) => { e.stopPropagation(); setCurrentImgIdx(i); }}
+                        className={`h-1.5 rounded-full transition-all duration-300 ${i === currentImgIdx ? 'w-5 bg-gold' : 'w-1.5 bg-white/50'}`}
+                      />
+                    ))}
+                  </div>
+                </>
+              )}
             </div>
           </motion.div>
        </div>
@@ -107,7 +190,11 @@ const Timeline = () => {
       year: t('history_page.timeline.events.e3.year'), 
       title: t('history_page.timeline.events.e3.title'), 
       desc: t('history_page.timeline.events.e3.desc'),
-      img: exteriorImg,
+      images: [
+        { src: galardonImg, fit: "object-contain p-2" },
+        { src: pasilloCuevaImg, fit: "object-cover" },
+        { src: cuevaImg, fit: "object-cover" }
+      ],
       isCircle: false,
       filter: "contrast-[1.05]",
       align: "left"
@@ -116,7 +203,7 @@ const Timeline = () => {
       year: t('history_page.timeline.events.e4.year'), 
       title: t('history_page.timeline.events.e4.title'), 
       desc: t('history_page.timeline.events.e4.desc'),
-      img: daughtersImg,
+      img: laSangreImg,
       isCircle: false,
       filter: "contrast-100",
       align: "right"
