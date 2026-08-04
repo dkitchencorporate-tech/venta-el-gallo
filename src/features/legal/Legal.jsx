@@ -22,8 +22,11 @@ const Legal = () => {
             <h3 className="text-xl font-serif text-white mb-4">1. Datos Identificativos</h3>
             <p className="mb-6">
               En cumplimiento con el deber de información recogido en el artículo 10 de la Ley 34/2002, de 11 de julio, de Servicios de la Sociedad de la Información y del Comercio Electrónico (LSSI), le indicamos que Venta El Gallo opera en este dominio web. 
-              <strong>Domicilio:</strong> Camino del Sacromonte 70, Granada, España.
-              <strong>Email:</strong> info@cuevaventaelgallo.es.
+              <br /><br />
+              <strong>Domicilio Oficial:</strong> Barranco de los Negros, 5, Sacromonte, 18010 Granada, España.<br />
+              <strong>Teléfonos Oficiales:</strong> +34 640 14 79 85 / +34 858 95 03 15<br />
+              <strong>Email Reservas & Agencias:</strong> reservas@cuevaventaelgallo.es<br />
+              <strong>Email Información General:</strong> info@cuevaventaelgallo.es
             </p>
 
             <h3 className="text-xl font-serif text-white mb-4">2. Condiciones de Uso</h3>

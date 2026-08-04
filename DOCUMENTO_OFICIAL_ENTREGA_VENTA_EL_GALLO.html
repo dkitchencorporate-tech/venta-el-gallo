@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informe Técnico de Entrega - Architect.Sys</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-main: #fbf9f5;
+            --bg-card: #ffffff;
+            --brand-orange: #FF4500;
+            --brand-gold: #B8862A;
+            --text-main: #111111;
+            --text-muted: #555555;
+            --border-color: #eae6df;
+            --surface-light: #F9F7F2;
+        }
+
+        @page {
+            size: A4 portrait;
+            margin: 0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            line-height: 1.5;
+            font-size: 13.5px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Cada contenedor representa una página A4 física de 210mm x 297mm */
+        .page {
+            width: 210mm;
+            height: 297mm;
+            padding: 15mm 18mm 14mm 18mm;
+            margin: 20px auto;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 30px rgba(184, 134, 42, 0.08), 0 0 1px rgba(0, 0, 0, 0.05);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            page-break-after: always;
+            break-after: page;
+            page-break-inside: avoid;
+            break-inside: avoid;
+        }
+
+        /* HEADER INSTITUCIONAL */
+        header {
+            border-bottom: 2px solid var(--brand-gold);
+            padding-bottom: 10px;
+            margin-bottom: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .brand-logo {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--text-main);
+            letter-spacing: -0.5px;
+            line-height: 1.1;
+        }
+
+        .brand-logo span {
+            color: var(--brand-orange);
+        }
+
+        .brand-subtitle {
+            font-size: 0.78rem;
+            color: var(--brand-gold);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 700;
+            margin-top: 2px;
+        }
+
+        .document-meta {
+            text-align: right;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            line-height: 1.45;
+        }
+
+        .document-meta strong {
+            color: var(--text-main);
+            font-size: 0.88rem;
+        }
+
+        /* BADGES Y TÍTULOS */
+        .status-badge {
+            display: inline-block;
+            background-color: #FFFDF0;
+            color: var(--brand-gold);
+            border: 1px solid var(--brand-gold);
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+
+        h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.3rem;
+            margin-bottom: 8px;
+            color: var(--text-main);
+            font-weight: 800;
+            line-height: 1.3;
+        }
+
+        .intro-box {
+            background-color: var(--surface-light);
+            border-left: 4px solid var(--brand-orange);
+            padding: 12px 15px;
+            border-radius: 0 6px 6px 0;
+            margin-bottom: 16px;
+            font-size: 0.86rem;
+            color: var(--text-main);
+            line-height: 1.55;
+        }
+
+        h2.section-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.96rem;
+            font-weight: 800;
+            color: var(--text-main);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 5px;
+            margin: 14px 0 12px 0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* TARJETAS DE CAMBIOS */
+        .change-item {
+            background: var(--surface-light);
+            border: 1px solid var(--border-color);
+            border-left: 4px solid var(--brand-gold);
+            border-radius: 6px;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+        }
+
+        .change-item.done {
+            border-left-color: #2E7D32;
+        }
+
+        .change-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4px;
+        }
+
+        .change-title {
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .tag-status {
+            font-size: 0.66rem;
+            font-weight: 700;
+            padding: 2px 7px;
+            border-radius: 10px;
+            background: #E8F5E9;
+            color: #2E7D32;
+            text-transform: uppercase;
+        }
+
+        .change-desc {
+            font-size: 0.83rem;
+            color: var(--text-muted);
+            line-height: 1.48;
+        }
+
+        /* CAJAS TÉCNICAS Y RECOMENDACIONES */
+        .tech-box {
+            background: #FFFDF8;
+            border: 1px solid var(--border-color);
+            border-left: 4px solid var(--brand-gold);
+            border-radius: 8px;
+            padding: 16px 18px;
+            margin-bottom: 14px;
+        }
+
+        .tech-box h3 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.95rem;
+            color: var(--text-main);
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .tech-box p {
+            font-size: 0.83rem;
+            color: var(--text-muted);
+            line-height: 1.55;
+            margin-bottom: 10px;
+        }
+
+        .option-card {
+            background: #ffffff;
+            border: 1px solid #E5DFD3;
+            border-radius: 6px;
+            padding: 12px 14px;
+            margin-top: 10px;
+        }
+
+        .option-card h4 {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--brand-orange);
+            margin-bottom: 4px;
+        }
+
+        .option-card p {
+            font-size: 0.81rem;
+            color: var(--text-muted);
+            margin-bottom: 0;
+            line-height: 1.48;
+        }
+
+        /* DESTACADO FASE 2 REGALO */
+        .bonus-box {
+            background: linear-gradient(135deg, #FFFDF5, var(--surface-light));
+            border: 2px solid var(--brand-gold);
+            border-radius: 8px;
+            padding: 16px 20px;
+            margin: 14px 0;
+        }
+
+        .bonus-box h3 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.98rem;
+            color: var(--brand-gold);
+            font-weight: 800;
+            margin-bottom: 6px;
+        }
+
+        .bonus-box p {
+            font-size: 0.84rem;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+
+        .bonus-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .bonus-card {
+            background: #fff;
+            border: 1px solid var(--border-color);
+            padding: 10px 12px;
+            border-radius: 6px;
+        }
+
+        .bonus-card h4 {
+            font-size: 0.84rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 3px;
+        }
+
+        .bonus-card p {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            margin-bottom: 0;
+            line-height: 1.4;
+        }
+
+        /* PASOS DE CIERRE */
+        .steps-box {
+            background: #FAFAFA;
+            border: 1px solid #E0E0E0;
+            border-radius: 8px;
+            padding: 16px 20px;
+            margin-top: 10px;
+        }
+
+        .steps-list {
+            list-style: none;
+            margin-top: 8px;
+        }
+
+        .steps-list li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 8px;
+            font-size: 0.83rem;
+            color: var(--text-muted);
+        }
+
+        .steps-list li::before {
+            content: '▪';
+            position: absolute;
+            left: 4px;
+            top: -1px;
+            color: var(--brand-orange);
+            font-size: 0.95rem;
+        }
+
+        .small-print {
+            font-size: 0.75rem;
+            color: #777;
+            border-top: 1px solid var(--border-color);
+            padding-top: 10px;
+            margin-top: 14px;
+            line-height: 1.45;
+        }
+
+        /* SIGNATURES */
+        .doc-footer {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 16px;
+            padding-top: 14px;
+            border-top: 1.5px solid var(--brand-gold);
+        }
+
+        .sign-col { text-align: left; }
+        .sign-col.right { text-align: right; }
+        .sign-label { font-size: 0.68rem; color: #777; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 3px; }
+        .sign-name { font-size: 0.88rem; font-weight: 700; color: var(--text-main); }
+        .sign-sub { font-size: 0.78rem; color: var(--brand-gold); font-weight: 600; }
+
+        /* FOOTER STRIP EN CADA PÁGINA */
+        .page-footer-strip {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.72rem;
+            color: #888;
+            border-top: 1px solid #E5E0D5;
+            padding-top: 8px;
+            margin-top: 12px;
+        }
+
+        /* BOTÓN FLOTANTE NO PRINT */
+        .no-print-bar {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 9999;
+        }
+
+        .btn-download {
+            background: linear-gradient(135deg, #FF4500 0%, #D83B00 100%);
+            color: #ffffff;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(255, 69, 0, 0.4);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        .btn-download:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 30px rgba(255, 69, 0, 0.5);
+        }
+
+        @media print {
+            body {
+                background-color: #ffffff;
+                padding: 0;
+            }
+            .page {
+                box-shadow: none;
+                border: none;
+                margin: 0;
+                width: 210mm;
+                height: 297mm;
+                page-break-after: always;
+                break-after: page;
+                page-break-inside: avoid;
+                break-inside: avoid;
+            }
+            .no-print-bar {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- BOTÓN DE DESCARGA PDF / IMPRIMIR -->
+    <div class="no-print-bar">
+        <button class="btn-download" onclick="window.print()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Descargar como PDF / Imprimir
+        </button>
+    </div>
+
+    <!-- ==================== PÁGINA 1 DE 4 ==================== -->
+    <div class="page">
+        <div>
+            <!-- HEADER -->
+            <header>
+                <div>
+                    <div class="brand-logo">Architect<span>.Sys</span></div>
+                    <div class="brand-subtitle">Desarrollo Web & Consultoría Tecnológica</div>
+                </div>
+                <div class="document-meta">
+                    <strong>INFORME TÉCNICO DE ENTREGA</strong><br>
+                    <span>Cliente: Cueva Venta El Gallo</span><br>
+                    <span>Fecha: 25 de Julio, 2026</span>
+                </div>
+            </header>
+
+            <div class="status-badge">Documento Oficial de Transmisión</div>
+
+            <h1>Informe Técnico de Modificaciones y Protocolo de Cierre</h1>
+
+            <div class="intro-box">
+                <strong>Estimado Germán:</strong><br>
+                Te presento el informe técnico detallado de ejecución correspondiente a la primera fase de desarrollo de la web oficial de <strong>Cueva Venta El Gallo</strong>. Todas las modificaciones solicitadas han sido implementadas a precisión en el código fuente, probadas en dispositivos móviles y desplegadas en el entorno de pruebas para su revisión.
+            </div>
+
+            <h2 class="section-title">1. Resumen Detallado de Modificaciones Ejecutadas</h2>
+
+            <div class="change-item done">
+                <div class="change-header">
+                    <span class="change-title">Punto 1: Selector de Idioma Multi-país (ES / EN / FR)</span>
+                    <span class="tag-status">Ejecutado</span>
+                </div>
+                <p class="change-desc">
+                    Integración de banderas vectoriales SVG de España (ES 🇪🇸), Reino Unido (EN 🇬🇧) y Francia (FR 🇫🇷) en la barra de navegación superior (Desktop) y en el menú desplegable (Móvil), permitiendo el cambio inmediato de idioma.
+                </p>
+            </div>
+
+            <div class="change-item done">
+                <div class="change-header">
+                    <span class="change-title">Punto 2: Redirección Directa a Ficha de Google Maps</span>
+                    <span class="tag-status">Ejecutado</span>
+                </div>
+                <p class="change-desc">
+                    Conexión directa del mapa interactivo y botones de ubicación con la ficha oficial de Sacromonte en Google Maps para una navegación GPS exacta de los visitantes.
+                </p>
+            </div>
+
+            <div class="change-item done">
+                <div class="change-header">
+                    <span class="change-title">Punto 3: Avatar en Alta Definición del Fundador Juanillo Heredia</span>
+                    <span class="tag-status">Ejecutado</span>
+                </div>
+                <p class="change-desc">
+                    Sustitución y ampliación de nitidez de la fotografía del fundador en la portada y sección histórica, destacando su legado institucional.
+                </p>
+            </div>
+
+            <div class="change-item done">
+                <div class="change-header">
+                    <span class="change-title">Punto 4: Fotografía Oficial "Dinastía Heredia"</span>
+                    <span class="tag-status">Ejecutado</span>
+                </div>
+                <p class="change-desc">
+                    Actualización de la imagen del elenco en la sección de Artistas por la fotografía oficial con encuadre ambiental ajustado a pantallas móviles.
+                </p>
+            </div>
+        </div>
+
+        <div class="page-footer-strip">
+            <span>Architect.Sys — Documento Oficial de Entrega</span>
+            <span>Página 1 de 4 — Cueva Venta El Gallo</span>
+        </div>
+    </div>
+
+
+    <!-- ==================== PÁGINA 2 DE 4 ==================== -->
+    <div class="page">
+        <div>
+            <!-- HEADER PÁGINA CONTINUA -->
+            <header>
+                <div>
+                    <div class="brand-logo" style="font-size: 1.4rem;">Architect<span>.Sys</span></div>
+                    <div class="brand-subtitle">Desarrollo Web & Consultoría Tecnológica</div>
+                </div>
+                <div class="document-meta">
+                    <strong>INFORME DE ENTREGA — FASE 1</strong><br>
+                    <span>Cliente: Cueva Venta El Gallo</span>
+                </div>
+            </header>
+
+            <h2 class="section-title" style="margin-top: 0;">Resumen de Modificaciones (Continuación)</h2>
+
+            <div class="change-item done">
+                <div class="change-header">
+                    <span class="change-title">Puntos 5 y 6: Carrusel Histórico y Encuadre "La Sangre Continúa"</span>
+                    <span class="tag-status">Ejecutado</span>
+                </div>
+                <p class="change-desc">
+                    Carrusel dinámico con temporizador inteligente por visor (4s) en la sección del Galardón. Ajuste de encuadre en la fotografía de las tres herederas ("La Sangre Continúa"), garantizando que sus tres rostros se vean al 100% en pantallas móviles sin recortes.
+                </p>
+            </div>
+
+            <div class="change-item done">
+                <div class="change-header">
+                    <span class="change-title">Punto 7: Redacción Exacta en Carta de Restaurante y Bebidas</span>
+                    <span class="tag-status">Ejecutado</span>
+                </div>
+                <p class="change-desc">
+                    Actualización rigurosa del texto de oferta gastronómica a la redacción oficial: <strong>"1 copa de Bienvenida + 2 bebidas a elegir durante la cena"</strong> en las 3 lenguas del sitio (Español, Inglés y Francés).
+                </p>
+            </div>
+
+            <div class="change-item done">
+                <div class="change-header">
+                    <span class="change-title">Puntos 9, 10, 11 y 13: Agencias, Teléfonos Oficiales y Enrutamiento de Correos</span>
+                    <span class="tag-status">Ejecutado</span>
+                </div>
+                <p class="change-desc">
+                    Eliminación de la tarjeta de Germán en Agencias y actualización de Paco a <strong>Francisco</strong>. Corrección de teléfonos a los números oficiales (<strong>+34 640 14 79 85</strong> y <strong>+34 858 95 03 15</strong>) y canalización de reservas a <code>reservas@cuevaventaelgallo.es</code> e información general a <code>info@cuevaventaelgallo.es</code>.
+                </p>
+            </div>
+
+            <div class="change-item done">
+                <div class="change-header">
+                    <span class="change-title">Punto 12: Integración y Verificación de Reseñas de Google</span>
+                    <span class="tag-status">Ejecutado</span>
+                </div>
+                <p class="change-desc">
+                    Integración de un botón destacado con borde dorado (<em>"Déjanos tu reseña en Google"</em>) vinculado directamente a la ficha real de Google Maps. Esto permite a los comensales verificar opiniones auténticas y redactar sus comentarios de inmediato.
+                </p>
+            </div>
+        </div>
+
+        <div class="page-footer-strip">
+            <span>Architect.Sys — Documento Oficial de Entrega</span>
+            <span>Página 2 de 4 — Cueva Venta El Gallo</span>
+        </div>
+    </div>
+
+
+    <!-- ==================== PÁGINA 3 DE 4 ==================== -->
+    <div class="page">
+        <div>
+            <!-- HEADER PÁGINA 3 -->
+            <header>
+                <div>
+                    <div class="brand-logo" style="font-size: 1.4rem;">Architect<span>.Sys</span></div>
+                    <div class="brand-subtitle">Desarrollo Web & Consultoría Tecnológica</div>
+                </div>
+                <div class="document-meta">
+                    <strong>ANÁLISIS TÉCNICO DE RESEÑAS</strong><br>
+                    <span>Cliente: Cueva Venta El Gallo</span>
+                </div>
+            </header>
+
+            <h2 class="section-title" style="margin-top: 0;">2. Análisis Técnico & Operativa de Reseñas de Google</h2>
+
+            <div class="tech-box">
+                <h3>Funcionamiento Actual de la Sección de Reseñas (Nativo)</h3>
+                <p>
+                    Las valoraciones expuestas actualmente en el carrusel de la web corresponden a <strong>reseñas reales y auténticas</strong> extraídas de la ficha oficial de <strong>Google Business Profile</strong> de Cueva Venta El Gallo. 
+                </p>
+                <p>
+                    Para potenciar este canal, se integró el botón destacado <strong>"Déjanos tu reseña en Google"</strong>. Al hacer clic, el cliente es dirigido directamente a la ficha oficial para redactar su opinión. Conforme los visitantes publican sus reseñas, Google las sincroniza y alimenta de forma natural según el ciclo de actualización de su plataforma.
+                </p>
+            </div>
+
+            <div class="tech-box">
+                <h3>Alternativa de Autogestión / Filtrado Manual con Plataformas SaaS Terceras</h3>
+                <p>
+                    En caso de que la dirección requiera <strong>seleccionar manualmente</strong> qué reseñas específicas mostrar, aplicar filtros por puntuación (ej. mostrar solo 5 estrellas) o moderar comentarios negativos en tiempo real antes de su publicación en el sitio web, el sistema nativo no lo permite por políticas de privacidad de Google.
+                </p>
+                <p>
+                    Para lograr un control manual o filtrado personalizado, se requiere la contratación e integración de un motor SaaS externo de terceros (como <em>Elfsight, Trustindex o Google Places API Premium</em>).
+                </p>
+
+                <div class="option-card">
+                    <h4>Implicaciones Económicas y de Licencia Externa</h4>
+                    <p>
+                        Dichas herramientas SaaS conllevan un costo recurrente de suscripción (aproximadamente entre <strong>5€ y 12€ / mes</strong>), abonados directamente por el cliente al proveedor del software.
+                    </p>
+                </div>
+                <div class="option-card">
+                    <h4>Flexibilidad Técnica e Independencia de Desarrollo</h4>
+                    <p>
+                        Por parte de mi dirección técnica, <strong>no existe inconveniente alguno en mantener la integración nativa actual o migrar a la solución autogestionada por suscripción</strong>. Sin embargo, se deja constancia formal de que las tarifas de licencias externas corresponden a plataformas de terceros y son independientes de mis honorarios de desarrollo.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="page-footer-strip">
+            <span>Architect.Sys — Documento Oficial de Entrega</span>
+            <span>Página 3 de 4 — Cueva Venta El Gallo</span>
+        </div>
+    </div>
+
+
+    <!-- ==================== PÁGINA 4 DE 4 ==================== -->
+    <div class="page">
+        <div>
+            <!-- HEADER PÁGINA 4 -->
+            <header>
+                <div>
+                    <div class="brand-logo" style="font-size: 1.4rem;">Architect<span>.Sys</span></div>
+                    <div class="brand-subtitle">Desarrollo Web & Consultoría Tecnológica</div>
+                </div>
+                <div class="document-meta">
+                    <strong>HOJA DE RUTA & FIRMAS DE ENTREGA</strong><br>
+                    <span>Cliente: Cueva Venta El Gallo</span>
+                </div>
+            </header>
+
+            <h2 class="section-title" style="margin-top: 0;">3. Compromiso de Valor Añadido (Fase 2 — Sin Costo Adicional)</h2>
+
+            <!-- FASE 2 BONUS BOX -->
+            <div class="bonus-box">
+                <h3>Desarrollo e Integración Post-Despliegue (0€ Extra)</h3>
+                <p>
+                    Aunque las siguientes dos características no estaban contempladas en la estructura contratada inicialmente, por mi parte las desarrollaré e integraré <strong>totalmente gratis</strong> tras la entrega del sitio web:
+                </p>
+                <div class="bonus-grid">
+                    <div class="bonus-card">
+                        <h4>1. Reproductor de Video Promocional</h4>
+                        <p>Integración de la sección de video promocional en alta definición una vez que me envíen el archivo editado.</p>
+                    </div>
+                    <div class="bonus-card">
+                        <h4>2. Biblioteca de Platos/Terraza + Mini-App</h4>
+                        <p>Carrusel fotográfico de gastronomía y vistas + Desarrollo de una Mini-App en Firebase para que puedan cambiar las fotos sin tocar código.</p>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="section-title">4. Protocolo de Cierre & Despliegue en Hosting Ionos</h2>
+
+            <div class="steps-box">
+                <p style="font-weight: 700; color: var(--text-main);">Pasos finales para la publicación definitiva:</p>
+                <ul class="steps-list">
+                    <li><strong>Confirmación de Visto Bueno:</strong> Respuesta con un mensaje de "OK" o aprobación tras revisar la URL de pruebas.</li>
+                    <li><strong>Pago del Saldo Pendiente:</strong> Abono de la factura final del proyecto contratado.</li>
+                    <li><strong>Migración al Hosting Ionos:</strong> Migración del código al servidor definitivo de Ionos y deshabilitación de la URL temporal de GitHub por razones de seguridad e integridad del proyecto.</li>
+                    <li><strong>Período de Integración de Fase 2 (2 a 3 semanas):</strong> Recopilación del material fotográfico/video por parte de ustedes y entrega de la Mini-App de autogestión.</li>
+                </ul>
+            </div>
+
+            <div class="small-print">
+                <strong>Nota Aclaratoria:</strong> Este informe certifica la entrega completa de los requerimientos y ajustes acordados. Tras la adición sin costo de los dos elementos de la Fase 2 (Video y Biblioteca de Platos con Mini-App), cualquier cambio de estructura posterior o nueva sección futura se cotizará de forma independiente según las tarifas contractuales vigentes.
+            </div>
+        </div>
+
+        <!-- FIRMAS E INSTITUCIONAL AL PIE DE PÁGINA 4 -->
+        <div>
+            <div class="doc-footer">
+                <div class="sign-col">
+                    <div class="sign-label">Dirección Técnica</div>
+                    <div class="sign-name">Architect.Sys</div>
+                    <div class="sign-sub">Desarrollo Web & Consultoría</div>
+                </div>
+                <div class="sign-col right">
+                    <div class="sign-label">Conformidad del Cliente</div>
+                    <div class="sign-name">Cueva Venta El Gallo</div>
+                    <div class="sign-sub">Granada, España</div>
+                </div>
+            </div>
+
+            <div class="page-footer-strip">
+                <span>Architect.Sys — Documento Oficial de Entrega</span>
+                <span>Página 4 de 4 — Cueva Venta El Gallo</span>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

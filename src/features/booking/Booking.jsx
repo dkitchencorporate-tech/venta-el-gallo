@@ -49,9 +49,9 @@ const Booking = () => {
             transition={{ delay: 0.3 }}
             className="flex flex-col sm:flex-row items-center justify-center gap-6 max-w-3xl mx-auto mb-20"
           >
-            {/* Phone Button */}
+            {/* Phone Button (Fijo) */}
             <a 
-              href="tel:+34640147985"
+              href="tel:+34858950315"
               className="w-full sm:w-1/2 flex items-center justify-center gap-4 bg-white/5 backdrop-blur-md border border-white/20 px-8 py-6 rounded-2xl hover:bg-white/10 hover:border-gold/50 transition-all duration-300 group"
             >
               <div className="w-12 h-12 rounded-full bg-gold/10 flex items-center justify-center text-gold group-hover:scale-110 transition-transform shrink-0">
@@ -59,20 +59,20 @@ const Booking = () => {
               </div>
               <div className="text-left flex-grow">
                 <p className="text-[10px] text-gray-400 uppercase tracking-widest font-black mb-1">{t('contact_page.buttons.call_title')}</p>
-                <p className="text-lg font-serif text-white group-hover:text-gold transition-colors">+34 640 14 79 85</p>
+                <p className="text-lg font-serif text-white group-hover:text-gold transition-colors">+34 858 95 03 15</p>
               </div>
             </a>
 
-            {/* WhatsApp / Secondary Phone Button */}
+            {/* WhatsApp / Móvil Button */}
             <a 
-              href="https://wa.me/34858950315"
+              href="https://wa.me/34640147985"
               target="_blank"
               rel="noopener noreferrer"
               className="w-full sm:w-1/2 flex items-center justify-between gap-4 bg-[#25D366]/10 backdrop-blur-md border border-[#25D366]/30 px-8 py-6 rounded-2xl hover:bg-[#25D366]/20 transition-all duration-300 group"
             >
               <div className="text-left flex-grow">
                 <p className="text-[10px] text-[#25D366] uppercase tracking-widest font-black mb-1">{t('contact_page.buttons.chat_title')}</p>
-                <p className="text-lg font-serif text-white group-hover:text-[#25D366] transition-colors">+34 858 95 03 15</p>
+                <p className="text-lg font-serif text-white group-hover:text-[#25D366] transition-colors">+34 640 14 79 85</p>
               </div>
               <div className="w-12 h-12 rounded-full bg-[#25D366] flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition-transform shrink-0">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">

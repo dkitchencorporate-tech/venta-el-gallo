@@ -376,8 +376,8 @@ const InteractiveMenu = () => {
             <Info size={14} /> {t('restaurant_page.interactive_menu.section.allergens')}
           </Link>
         </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {/* DISEÑO ORIGINAL - SOLO TARJETAS (CÓDIGO NATIVO) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
           {cards.map((card) => (
             <motion.div
               key={card.id}
@@ -385,14 +385,14 @@ const InteractiveMenu = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               onClick={() => setActiveModal(card.id)}
-              className="bg-white rounded-[2rem] p-8 md:p-12 shadow-[0_20px_50px_rgba(0,0,0,0.05)] border border-gold/10 hover:border-gold/30 cursor-pointer transition-all duration-300 group hover:-translate-y-2 flex flex-col items-center text-center"
+              className="bg-white rounded-[2rem] p-8 md:p-12 shadow-[0_10px_40px_rgba(0,0,0,0.08)] border border-gold/10 hover:border-gold/30 cursor-pointer transition-all duration-300 group hover:-translate-y-2 flex flex-col items-center text-center"
             >
               <div className="w-16 h-16 rounded-full bg-gold/10 flex items-center justify-center text-gold mb-6 group-hover:scale-110 transition-transform">
                 <ExternalLink size={24} />
               </div>
-              <h3 className="text-2xl font-serif text-deep-black mb-4">{card.title}</h3>
-              <p className="text-gray-600 font-light mb-8">{card.subtitle}</p>
-              <span className="text-[10px] uppercase tracking-[0.2em] font-black text-gold border-b border-transparent group-hover:border-gold transition-colors">
+              <h3 className="text-2xl font-serif text-deep-black mb-3">{card.title}</h3>
+              <p className="text-gray-600 font-light text-base mb-8 max-w-sm">{card.subtitle}</p>
+              <span className="text-xs uppercase tracking-[0.2em] font-black text-gold border-b border-transparent group-hover:border-gold transition-colors mt-auto">
                 {card.id === 'menu' ? t('restaurant_page.interactive_menu.section.cards.menu_link') : t('restaurant_page.interactive_menu.section.cards.carta_link')}
               </span>
             </motion.div>
