@@ -5,6 +5,7 @@ import { X, ExternalLink, Info } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { useBooking } from '../../../context/BookingContext';
+import GastronomyCarousel from './GastronomyCarousel';
 
 // Data from JSON
 
@@ -72,22 +73,31 @@ const MenuLayout = () => {
       <MenuHeader type="menu" />
       
       {/* 1. ENTRANTE */}
+      {menuData.entrantes && menuData.entrantes.length > 0 && (
       <div className="w-full">
         <SectionTitle title={t('restaurant_page.interactive_menu.sections.entrante')} />
         <div className="max-w-xl mx-auto mt-4">
           {menuData.entrantes.map((item, i) => <MenuItem key={i} {...item} />)}
         </div>
       </div>
+      )}
 
       {/* 2. PRIMER PLATO */}
+      {(menuData.primerPlato?.length > 0 || menuData.invierno?.length > 0 || menuData.verano?.length > 0) && (
       <div className="w-full">
-        <SectionTitle title={t('restaurant_page.interactive_menu.sections.primer_plato')} />
-        <div className="max-w-xl mx-auto mb-8 mt-4">
-          {menuData.primerPlato.map((item, i) => <MenuItem key={i} {...item} />)}
-        </div>
+        {menuData.primerPlato?.length > 0 && (
+          <>
+            <SectionTitle title={t('restaurant_page.interactive_menu.sections.primer_plato')} />
+            <div className="max-w-xl mx-auto mb-8 mt-4">
+              {menuData.primerPlato.map((item, i) => <MenuItem key={i} {...item} />)}
+            </div>
+          </>
+        )}
         
         {/* Sub-secciones de Temporada dentro de Primer Plato */}
+        {(menuData.invierno?.length > 0 || menuData.verano?.length > 0) && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6 max-w-3xl mx-auto">
+          {menuData.invierno?.length > 0 && (
           <div className="bg-[#faf9f6] p-6 rounded-3xl border border-gray-200/60 shadow-[inset_0_0_20px_rgba(0,0,0,0.01)] relative">
             <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#faf9f6] px-3">
               <span className="text-gold text-xl">❅</span>
@@ -97,6 +107,8 @@ const MenuLayout = () => {
               {menuData.invierno.map((item, i) => <MenuItem key={i} {...item} />)}
             </div>
           </div>
+          )}
+          {menuData.verano?.length > 0 && (
           <div className="bg-[#faf9f6] p-6 rounded-3xl border border-gray-200/60 shadow-[inset_0_0_20px_rgba(0,0,0,0.01)] relative">
             <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#faf9f6] px-3">
               <span className="text-gold text-xl">☼</span>
@@ -106,18 +118,24 @@ const MenuLayout = () => {
               {menuData.verano.map((item, i) => <MenuItem key={i} {...item} />)}
             </div>
           </div>
+          )}
         </div>
+        )}
       </div>
+      )}
 
       {/* 3. PRINCIPAL */}
+      {menuData.principal && menuData.principal.length > 0 && (
       <div className="w-full">
         <SectionTitle title={t('restaurant_page.interactive_menu.sections.principal')} />
         <div className="max-w-xl mx-auto mt-4">
           {menuData.principal.map((item, i) => <MenuItem key={i} {...item} />)}
         </div>
       </div>
+      )}
       
       {/* 4. POSTRES CASEROS */}
+      {menuData.postres && menuData.postres.length > 0 && (
       <div className="w-full">
         <SectionTitle title={t('restaurant_page.interactive_menu.sections.postres')} />
         <div className="flex flex-wrap justify-center gap-3 md:gap-4 mt-6 max-w-2xl mx-auto">
@@ -126,6 +144,7 @@ const MenuLayout = () => {
           ))}
         </div>
       </div>
+      )}
 
       {/* 5. BEBIDAS INCLUIDAS - DISEÑO PREMIUM */}
       <div className="bg-[#0a0a0a] border border-gold/30 text-white rounded-[2rem] p-6 sm:p-10 relative overflow-hidden w-full shadow-[0_20px_50px_rgba(0,0,0,0.2)] mt-2">
@@ -202,14 +221,21 @@ const CartaLayout = () => {
       <MenuHeader type="carta" />
       
       {/* 1. ENTRANTES */}
+      {(cartaData.entrantes?.length > 0 || cartaData.invierno?.length > 0 || cartaData.verano?.length > 0) && (
       <div className="w-full">
-        <SectionTitle title={t('restaurant_page.interactive_menu.sections.entrantes')} />
-        <div className="max-w-xl mx-auto mb-8 mt-4">
-          {cartaData.entrantes.map((item, i) => <MenuItem key={i} {...item} />)}
-        </div>
+        {cartaData.entrantes?.length > 0 && (
+          <>
+            <SectionTitle title={t('restaurant_page.interactive_menu.sections.entrantes')} />
+            <div className="max-w-xl mx-auto mb-8 mt-4">
+              {cartaData.entrantes.map((item, i) => <MenuItem key={i} {...item} />)}
+            </div>
+          </>
+        )}
 
         {/* Sub-secciones de Temporada como Parte de Entrantes */}
+        {(cartaData.invierno?.length > 0 || cartaData.verano?.length > 0) && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8 max-w-3xl mx-auto">
+          {cartaData.invierno?.length > 0 && (
           <div className="bg-[#faf9f6] p-6 rounded-3xl border border-gray-200/60 shadow-[inset_0_0_20px_rgba(0,0,0,0.01)] relative">
             <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#faf9f6] px-3">
               <span className="text-gold text-xl">❅</span>
@@ -219,6 +245,8 @@ const CartaLayout = () => {
               {cartaData.invierno.map((item, i) => <MenuItem key={i} {...item} />)}
             </div>
           </div>
+          )}
+          {cartaData.verano?.length > 0 && (
           <div className="bg-[#faf9f6] p-6 rounded-3xl border border-gray-200/60 shadow-[inset_0_0_20px_rgba(0,0,0,0.01)] relative">
             <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#faf9f6] px-3">
               <span className="text-gold text-xl">☼</span>
@@ -228,32 +256,41 @@ const CartaLayout = () => {
               {cartaData.verano.map((item, i) => <MenuItem key={i} {...item} />)}
             </div>
           </div>
+          )}
         </div>
+        )}
       </div>
+      )}
 
       {/* 2. PESCADOS */}
+      {cartaData.pescados && cartaData.pescados.length > 0 && (
       <div className="w-full">
         <SectionTitle title={t('restaurant_page.interactive_menu.sections.pescados')} />
         <div className="max-w-xl mx-auto mt-4">
           {cartaData.pescados.map((item, i) => <MenuItem key={i} {...item} />)}
         </div>
       </div>
+      )}
 
       {/* 3. CARNES */}
+      {cartaData.carnes && cartaData.carnes.length > 0 && (
       <div className="w-full">
         <SectionTitle title={t('restaurant_page.interactive_menu.sections.carnes')} />
         <div className="max-w-xl mx-auto mt-4">
           {cartaData.carnes.map((item, i) => <MenuItem key={i} {...item} />)}
         </div>
       </div>
+      )}
 
       {/* 4. POSTRES CASEROS */}
+      {cartaData.postres && cartaData.postres.length > 0 && (
       <div className="w-full">
         <SectionTitle title={t('restaurant_page.interactive_menu.sections.postres')} />
         <div className="max-w-xl mx-auto mt-4">
           {cartaData.postres.map((item, i) => <MenuItem key={i} {...item} />)}
         </div>
       </div>
+      )}
 
       {/* 5. BODEGA Y BEBIDAS */}
       <div className="w-full mt-4 pt-8 border-t-[2px] border-gold/30">
@@ -376,6 +413,10 @@ const InteractiveMenu = () => {
             <Info size={14} /> {t('restaurant_page.interactive_menu.section.allergens')}
           </Link>
         </div>
+
+        {/* CARRUSEL GASTRONÓMICO (FASE 2) */}
+        <GastronomyCarousel />
+
         {/* DISEÑO ORIGINAL - SOLO TARJETAS (CÓDIGO NATIVO) */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
           {cards.map((card) => (
