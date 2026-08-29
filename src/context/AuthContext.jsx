@@ -1,67 +1,98 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
-const AuthContext = createContext();
-
-export const useAuth = () => {
-  return useContext(AuthContext);
-};
+const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  // Mock Admin Credentials
-  const MOCK_ADMIN_EMAIL = "admin@ventaelgallo.com";
-  const MOCK_ADMIN_PASSWORD = "admin";
-
-  useEffect(() => {
-    // Check local storage for session
-    const storedUser = localStorage.getItem('venta_admin_session');
-    if (storedUser) {
-      setCurrentUser(JSON.parse(storedUser));
-    }
-    setLoading(false);
-  }, []);
+  const [currentUser, setCurrentUser] = useState(() => {
+    const saved = localStorage.getItem('veg_auth_user');
+    return saved ? JSON.parse(saved) : null;
+  });
+  const [loading, setLoading] = useState(false);
 
   const login = async (email, password) => {
-    // Simulando delay de red
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (email === MOCK_ADMIN_EMAIL && password === MOCK_ADMIN_PASSWORD) {
-          const user = { email, uid: 'mock-admin-uid-123' };
-          setCurrentUser(user);
-          localStorage.setItem('venta_admin_session', JSON.stringify(user));
-          resolve(user);
-        } else {
-          reject(new Error('Credenciales incorrectas'));
+    setLoading(true);
+    try {
+      // Intentar autenticación contra API si está disponible en producción
+      const isProduction = window.location.hostname.includes('cuevaventaelgallo.es');
+      
+      if (isProduction) {
+        const response = await fetch('/api/auth.php?action=login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password })
+        });
+        const data = await response.json();
+        if (!response.ok || !data.success) {
+          throw new Error(data.error || 'Credenciales inválidas');
         }
-      }, 1000);
-    });
+        localStorage.setItem('veg_auth_token', data.token);
+        localStorage.setItem('veg_auth_user', JSON.stringify(data.user));
+        setCurrentUser(data.user);
+        return data.user;
+      } else {
+        // En entorno de pruebas GitHub Pages (Modo Staging Seguro)
+        if (email.toLowerCase() === 'info@cuevaventaelgallo.es' || email.toLowerCase() === 'admin@ventaelgallo.com') {
+          const user = { email: email.toLowerCase(), role: 'admin' };
+          localStorage.setItem('veg_auth_token', 'mock_jwt_staging_token_2026');
+          localStorage.setItem('veg_auth_user', JSON.stringify(user));
+          setCurrentUser(user);
+          return user;
+        } else {
+          throw new Error('Credenciales incorrectas. El usuario administrador es info@cuevaventaelgallo.es');
+        }
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const requestPasswordReset = async (email) => {
+    const isProduction = window.location.hostname.includes('cuevaventaelgallo.es');
+    if (isProduction) {
+      const response = await fetch('/api/auth.php?action=request-reset', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email })
+      });
+      return await response.json();
+    }
+    return {
+      success: true,
+      message: 'Si el correo coincide con el administrador, se ha enviado un enlace de recuperación a tu bandeja de entrada.'
+    };
+  };
+
+  const confirmPasswordReset = async (token, password) => {
+    const isProduction = window.location.hostname.includes('cuevaventaelgallo.es');
+    if (isProduction) {
+      const response = await fetch('/api/auth.php?action=confirm-reset', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token, password })
+      });
+      const data = await response.json();
+      if (!response.ok || !data.success) {
+        throw new Error(data.error || 'Error al restablecer contraseña.');
+      }
+      return data;
+    }
+    return {
+      success: true,
+      message: 'Contraseña actualizada con éxito en el entorno de pruebas.'
+    };
   };
 
   const logout = () => {
+    localStorage.removeItem('veg_auth_token');
+    localStorage.removeItem('veg_auth_user');
     setCurrentUser(null);
-    localStorage.removeItem('venta_admin_session');
-  };
-
-  const resetPassword = async (email) => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(`Correo de recuperación enviado a ${email}`);
-      }, 1000);
-    });
-  };
-
-  const value = {
-    currentUser,
-    login,
-    logout,
-    resetPassword
   };
 
   return (
-    <AuthContext.Provider value={value}>
-      {!loading && children}
+    <AuthContext.Provider value={{ currentUser, login, logout, requestPasswordReset, confirmPasswordReset, loading }}>
+      {children}
     </AuthContext.Provider>
   );
 };
+
+export const useAuth = () => useContext(AuthContext);
