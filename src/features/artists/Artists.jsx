@@ -24,10 +24,32 @@ const Artists = () => {
     return () => window.removeEventListener('veg_artists_updated', handleUpdate);
   }, []);
 
+  const handleNextArtist = () => {
+    if (!selectedArtist || artistsList.length === 0) return;
+    const currentIndex = artistsList.findIndex(a => a.id === selectedArtist.id);
+    const nextIndex = (currentIndex + 1) % artistsList.length;
+    const next = artistsList[nextIndex];
+    setSelectedArtist({
+      ...next,
+      imageUrl: resolveAssetUrl(next.imageUrl)
+    });
+  };
+
+  const handlePrevArtist = () => {
+    if (!selectedArtist || artistsList.length === 0) return;
+    const currentIndex = artistsList.findIndex(a => a.id === selectedArtist.id);
+    const prevIndex = (currentIndex - 1 + artistsList.length) % artistsList.length;
+    const prev = artistsList[prevIndex];
+    setSelectedArtist({
+      ...prev,
+      imageUrl: resolveAssetUrl(prev.imageUrl)
+    });
+  };
+
   return (
     <div className="min-h-screen bg-deep-black text-white relative">
       
-      {/* 1. HERO SECTION CINEMATOGRÁFICA */}
+      {/* 1. HERO SECTION */}
       <section className="relative h-[65vh] md:h-[75vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img 
@@ -110,14 +132,13 @@ const Artists = () => {
       </section>
 
       {/* 4. MODAL DETALLADO DE BIOGRAFÍA */}
-      <AnimatePresence>
-        {selectedArtist && (
-          <BiographyModal 
-            artist={selectedArtist} 
-            onClose={() => setSelectedArtist(null)} 
-          />
-        )}
-      </AnimatePresence>
+      <BiographyModal 
+        artist={selectedArtist} 
+        isOpen={Boolean(selectedArtist)}
+        onClose={() => setSelectedArtist(null)} 
+        onNext={handleNextArtist}
+        onPrev={handlePrevArtist}
+      />
 
     </div>
   );
