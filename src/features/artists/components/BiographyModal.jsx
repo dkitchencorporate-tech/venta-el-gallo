@@ -1,54 +1,62 @@
 import React, { useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const BiographyModal = ({ artist, isOpen, onClose, onNext, onPrev }) => {
-  // Prevent scrolling on the body when modal is open
+const BiographyModal = ({ artist, isOpen = true, onClose, onNext, onPrev }) => {
+  const isVisible = Boolean(isOpen && artist);
+
   useEffect(() => {
-    if (isOpen) {
+    if (isVisible) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'unset';
     }
     return () => { document.body.style.overflow = 'unset'; };
-  }, [isOpen]);
+  }, [isVisible]);
 
-  if (!isOpen || !artist) return null;
+  if (!isVisible) return null;
 
   return (
     <AnimatePresence>
-      {isOpen && (
+      {isVisible && (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.3 }}
-          className="fixed inset-0 z-[100] flex items-center justify-center p-0 md:p-6 lg:p-12"
+          className="fixed inset-0 z-[99999] flex items-center justify-center p-0 md:p-6 lg:p-12"
         >
           {/* Fondo Cristalino/Desenfocado */}
           <div 
-            className="absolute inset-0 bg-deep-black/80 backdrop-blur-[10px]"
+            className="absolute inset-0 bg-deep-black/85 backdrop-blur-[12px]"
             onClick={onClose}
           />
 
           {/* Botones Laterales Sutiles (Escritorio) */}
-          <button 
-            onClick={(e) => { e.stopPropagation(); onPrev(); }}
-            className="hidden md:flex absolute left-4 lg:left-8 top-1/2 -translate-y-1/2 w-12 h-12 lg:w-16 lg:h-16 rounded-full bg-white/5 hover:bg-white/10 backdrop-blur-md border border-white/10 items-center justify-center text-white/50 hover:text-gold transition-all duration-300 z-[110] group"
-          >
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="group-hover:-translate-x-1 transition-transform"><path d="M15 18l-6-6 6-6"/></svg>
-          </button>
+          {onPrev && (
+            <button 
+              onClick={(e) => { e.stopPropagation(); onPrev(); }}
+              className="hidden md:flex absolute left-4 lg:left-8 top-1/2 -translate-y-1/2 w-12 h-12 lg:w-16 lg:h-16 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/15 items-center justify-center text-white/70 hover:text-gold transition-all duration-300 z-[110] group"
+              title="Artista Anterior"
+            >
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="group-hover:-translate-x-1 transition-transform"><path d="M15 18l-6-6 6-6"/></svg>
+            </button>
+          )}
           
-          <button 
-            onClick={(e) => { e.stopPropagation(); onNext(); }}
-            className="hidden md:flex absolute right-4 lg:right-8 top-1/2 -translate-y-1/2 w-12 h-12 lg:w-16 lg:h-16 rounded-full bg-white/5 hover:bg-white/10 backdrop-blur-md border border-white/10 items-center justify-center text-white/50 hover:text-gold transition-all duration-300 z-[110] group"
-          >
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="group-hover:translate-x-1 transition-transform"><path d="M9 18l6-6-6-6"/></svg>
-          </button>
+          {onNext && (
+            <button 
+              onClick={(e) => { e.stopPropagation(); onNext(); }}
+              className="hidden md:flex absolute right-4 lg:right-8 top-1/2 -translate-y-1/2 w-12 h-12 lg:w-16 lg:h-16 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/15 items-center justify-center text-white/70 hover:text-gold transition-all duration-300 z-[110] group"
+              title="Siguiente Artista"
+            >
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="group-hover:translate-x-1 transition-transform"><path d="M9 18l6-6-6-6"/></svg>
+            </button>
+          )}
 
           {/* Botón de Cierre General (Top Right Flotante) */}
           <button 
             onClick={onClose}
-            className="absolute top-4 right-4 lg:top-8 lg:right-8 w-12 h-12 rounded-full bg-white/5 hover:bg-sacromonte-red backdrop-blur-md border border-white/10 flex items-center justify-center text-white/70 hover:text-white transition-all duration-300 z-[110]"
+            className="absolute top-4 right-4 lg:top-8 lg:right-8 w-12 h-12 rounded-full bg-white/10 hover:bg-sacromonte-red backdrop-blur-md border border-white/15 flex items-center justify-center text-white/80 hover:text-white transition-all duration-300 z-[110]"
+            title="Cerrar Biografía"
           >
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
           </button>
@@ -62,7 +70,7 @@ const BiographyModal = ({ artist, isOpen, onClose, onNext, onPrev }) => {
             className="relative w-full max-w-6xl h-[100dvh] md:h-[85vh] max-h-screen md:max-h-[900px] bg-[#0a0a0a] md:rounded-3xl shadow-[0_20px_100px_rgba(0,0,0,0.8)] overflow-hidden flex flex-col md:flex-row z-10 border-0 md:border border-white/10"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Top Bar CERRAR PARA MÓVIL (Solo visible < md) */}
+            {/* Top Bar CERRAR PARA MÓVIL */}
             <div className="absolute top-0 right-0 left-0 bg-gradient-to-b from-black/80 to-transparent p-4 flex justify-between md:hidden z-[60]">
                <div className="flex-1"></div>
                <button 
@@ -90,31 +98,30 @@ const BiographyModal = ({ artist, isOpen, onClose, onNext, onPrev }) => {
               <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/40 to-transparent md:hidden z-30 pointer-events-none" />
               <div className="absolute inset-y-0 right-0 w-1/3 bg-gradient-to-l from-[#0a0a0a] via-[#0a0a0a]/40 to-transparent hidden md:block z-30 pointer-events-none" />
 
-              {/* CONTROLES DE NAVEGACIÓN MÓVIL (dentro de la imagen) */}
+              {/* CONTROLES DE NAVEGACIÓN MÓVIL */}
               <div className="absolute bottom-4 left-0 right-0 flex justify-between px-4 md:hidden z-[70]">
-                <button 
-                  onClick={(e) => { e.stopPropagation(); onPrev(); }}
-                  className="w-12 h-12 rounded-full bg-black/60 backdrop-blur-xl border border-white/20 flex items-center justify-center text-white active:scale-90 transition-all shadow-2xl"
-                >
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M15 18l-6-6 6-6"/></svg>
-                </button>
-                <button 
-                  onClick={(e) => { e.stopPropagation(); onNext(); }}
-                  className="w-12 h-12 rounded-full bg-black/60 backdrop-blur-xl border border-white/20 flex items-center justify-center text-white active:scale-90 transition-all shadow-2xl"
-                >
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 18l6-6-6-6"/></svg>
-                </button>
+                {onPrev && (
+                  <button 
+                    onClick={(e) => { e.stopPropagation(); onPrev(); }}
+                    className="w-12 h-12 rounded-full bg-black/60 backdrop-blur-xl border border-white/20 flex items-center justify-center text-white active:scale-90 transition-all shadow-2xl"
+                  >
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M15 18l-6-6 6-6"/></svg>
+                  </button>
+                )}
+                {onNext && (
+                  <button 
+                    onClick={(e) => { e.stopPropagation(); onNext(); }}
+                    className="w-12 h-12 rounded-full bg-black/60 backdrop-blur-xl border border-white/20 flex items-center justify-center text-white active:scale-90 transition-all shadow-2xl ml-auto"
+                  >
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 18l6-6-6-6"/></svg>
+                  </button>
+                )}
               </div>
             </div>
 
             {/* SECCIÓN DERECHA: Texto con Scroll Independiente */}
             <div className="flex-1 md:w-7/12 lg:w-1/2 flex flex-col bg-[#0a0a0a] overflow-y-auto custom-scrollbar z-20 relative">
-              
-              {/* Aquí estaba el error: justify-center empujaba el contenido largo fuera del área visible hacia arriba. */}
-              {/* Cambiado a justify-start y agregado mt-auto mb-auto a un contenedor interior si se desea centrado sutil, pero para textos largos el justify-start es el único correcto. */}
               <div className="p-8 md:p-12 lg:p-16 flex flex-col min-h-full justify-start">
-                
-                {/* Usamos margin auto solo si el texto es corto para centrarlo, pero no fuerza el overflow-upwards */}
                 <motion.div
                   key={artist.name}
                   initial={{ opacity: 0, x: 20 }}
@@ -143,12 +150,11 @@ const BiographyModal = ({ artist, isOpen, onClose, onNext, onPrev }) => {
                     Venta el Gallo
                   </div>
                   
-                  {/* Espacio extra abajo en móvil */}
                   <div className="h-8 md:h-0"></div>
                 </motion.div>
               </div>
-
             </div>
+
           </motion.div>
         </motion.div>
       )}
