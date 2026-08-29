@@ -1,194 +1,227 @@
 import React, { useState } from 'react';
-import { Outlet, Navigate, Link, useLocation } from 'react-router-dom';
+import { Outlet, NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { LogOut, Image as ImageIcon, Menu, X, ChevronLeft, ChevronRight, BookOpen } from 'lucide-react';
+import { 
+  LayoutDashboard, 
+  Users2, 
+  UtensilsCrossed, 
+  Images, 
+  CalendarClock, 
+  ExternalLink, 
+  LogOut, 
+  Menu, 
+  X, 
+  ShieldCheck, 
+  Sparkles,
+  ChevronRight
+} from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import logoGallo from '../assets/raw/logoVentaelGallo.webp';
+
+const navItems = [
+  { name: 'Panel Principal', path: '/admin', icon: LayoutDashboard, exact: true },
+  { name: 'Gestor de Artistas', path: '/admin/artistas', icon: Users2 },
+  { name: 'Carta y Menú', path: '/admin/menu', icon: UtensilsCrossed },
+  { name: 'Carrusel de Fotos', path: '/admin/carrusel', icon: Images },
+  { name: 'Pases & Tracking', path: '/admin/pases', icon: CalendarClock },
+];
 
 const AdminLayout = () => {
   const { currentUser, logout } = useAuth();
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const navigate = useNavigate();
   const location = useLocation();
 
-  // Protect Admin Routes
-  if (!currentUser) {
-    return <Navigate to="/admin/login" replace />;
-  }
+  const handleLogout = () => {
+    logout();
+    navigate('/admin/login');
+  };
 
-  const toggleMobile = () => setIsMobileOpen(!isMobileOpen);
-  const closeMobile = () => setIsMobileOpen(false);
-  const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
-
-  const navItems = [
-    { name: 'Imágenes Carrusel', path: '/admin/carrusel', icon: <ImageIcon size={20} /> },
-    { name: 'Gestión de Carta', path: '/admin/menu', icon: <BookOpen size={20} /> },
-  ];
+  const getPageTitle = () => {
+    const current = navItems.find(item => item.exact ? location.pathname === item.path : location.pathname.startsWith(item.path));
+    return current ? current.name : 'Administración';
+  };
 
   return (
-    <div className="h-screen w-full bg-[#0d0d0d] text-white font-sans flex overflow-hidden">
+    <div className="min-h-screen bg-[#07090E] text-slate-100 flex flex-col font-sans selection:bg-gold/30 selection:text-white">
       
-      {/* Background Decor */}
-      <div className="absolute inset-0 z-0 pointer-events-none">
-        <div className="absolute top-0 right-0 w-1/3 h-full bg-sacromonte-red/5 blur-[150px]" />
-        <div className="absolute bottom-0 left-1/4 w-1/2 h-96 bg-gold/10 rounded-full blur-[150px]" />
-      </div>
-
-      {/* Mobile Hamburger Button */}
-      <button 
-        onClick={toggleMobile}
-        className="md:hidden fixed top-4 right-4 z-50 p-3 bg-dark-charcoal/80 backdrop-blur-md rounded-xl text-gold border border-gold/20 hover:bg-gold hover:text-deep-black transition-all shadow-lg"
-      >
-        {isMobileOpen ? <X size={24} /> : <Menu size={24} />}
-      </button>
-
-      {/* Sidebar Overlay for Mobile */}
-      <AnimatePresence>
-        {isMobileOpen && (
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={closeMobile}
-            className="fixed inset-0 bg-black/80 z-40 md:hidden backdrop-blur-sm"
-          />
-        )}
-      </AnimatePresence>
-
-      {/* Sidebar */}
-      <motion.aside
-        initial={false}
-        animate={{ 
-          width: isSidebarOpen ? '280px' : '80px',
-          x: window.innerWidth < 768 ? (isMobileOpen ? 0 : '-100%') : 0
-        }}
-        transition={{ type: 'spring', bounce: 0, duration: 0.5 }}
-        className={`fixed md:relative top-0 left-0 h-screen bg-[#111111]/95 backdrop-blur-3xl border-r border-white/20 z-50 flex flex-col shadow-[10px_0_50px_rgba(0,0,0,0.8)] overflow-hidden`}
-        style={{ position: window.innerWidth < 768 ? 'fixed' : 'relative' }}
-      >
-        <div className="p-6 flex items-center justify-between border-b border-white/20 relative">
-          <AnimatePresence mode="wait">
-            {isSidebarOpen ? (
-              <motion.div 
-                key="full-logo"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="flex-1 text-center"
-              >
-                <h2 className="font-serif text-2xl text-gold tracking-widest">ADMIN</h2>
-                <p className="text-[10px] text-white/50 uppercase tracking-[0.2em] mt-1">Venta El Gallo</p>
-              </motion.div>
-            ) : (
-              <motion.div 
-                key="short-logo"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="flex-1 flex justify-center"
-              >
-                <h2 className="font-serif text-2xl text-gold">V</h2>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-
-        <nav className="flex-1 py-8 px-4 space-y-3 overflow-y-auto overflow-x-hidden no-scrollbar">
-          {navItems.map((item) => {
-            const isActive = location.pathname === item.path;
-            return (
-              <Link
-                key={item.path}
-                to={item.path}
-                onClick={() => window.innerWidth < 768 && closeMobile()}
-                className={`flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-300 relative group overflow-hidden ${
-                  isActive 
-                    ? 'bg-sacromonte-red/10 text-white border border-sacromonte-red/30 shadow-[0_0_15px_rgba(220,38,38,0.15)]' 
-                    : 'text-white/60 hover:bg-white/5 hover:text-white border border-transparent'
-                } ${!isSidebarOpen && 'justify-center px-0'}`}
-                title={!isSidebarOpen ? item.name : ''}
-              >
-                {isActive && (
-                  <motion.div layoutId="activeNav" className="absolute left-0 top-0 bottom-0 w-1 bg-sacromonte-red" />
-                )}
-                <div className={`${isActive ? 'text-sacromonte-red' : 'group-hover:text-gold transition-colors'}`}>
-                  {item.icon}
-                </div>
-                <AnimatePresence>
-                  {isSidebarOpen && (
-                    <motion.span 
-                      initial={{ opacity: 0, x: -10 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: -10 }}
-                      className="font-medium text-sm tracking-wide whitespace-nowrap"
-                    >
-                      {item.name}
-                    </motion.span>
-                  )}
-                </AnimatePresence>
-              </Link>
-            );
-          })}
-        </nav>
-
-        <div className="p-5 border-t border-white/10 bg-[#0a0a0a]/50">
-          <AnimatePresence>
-            {isSidebarOpen && (
-              <motion.div 
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="mb-4 px-2"
-              >
-                <p className="text-[10px] uppercase tracking-widest text-white/40 mb-1">Sesión activa</p>
-                <p className="text-sm text-gold truncate font-medium">{currentUser.email}</p>
-              </motion.div>
-            )}
-          </AnimatePresence>
-          
+      {/* Topbar Fija Micro-SaaS */}
+      <header className="h-16 border-b border-gold/15 bg-black/80 backdrop-blur-xl sticky top-0 z-40 px-4 md:px-8 flex items-center justify-between">
+        <div className="flex items-center gap-4">
           <button
-            onClick={logout}
-            className={`w-full flex items-center justify-center gap-3 px-4 py-3 bg-sacromonte-red text-white hover:bg-red-700 border border-sacromonte-red rounded-xl transition-all duration-300 shadow-[0_0_20px_rgba(220,38,38,0.3)] group ${!isSidebarOpen && 'px-0 bg-transparent border-transparent hover:bg-sacromonte-red/10 text-sacromonte-red hover:text-sacromonte-red shadow-none'}`}
-            title="Cerrar Sesión"
+            onClick={() => setMobileMenuOpen(true)}
+            className="md:hidden p-2 rounded-lg bg-white/5 border border-white/10 text-gold hover:bg-white/10 transition-colors"
           >
-            <LogOut size={18} className={`transition-transform ${isSidebarOpen ? 'group-hover:-translate-x-1' : 'group-hover:scale-110'}`} />
-            <AnimatePresence>
-              {isSidebarOpen && (
-                <motion.span 
-                  initial={{ opacity: 0, width: 0 }}
-                  animate={{ opacity: 1, width: 'auto' }}
-                  exit={{ opacity: 0, width: 0 }}
-                  className="font-bold text-xs uppercase tracking-widest whitespace-nowrap"
-                >
-                  Salir
-                </motion.span>
-              )}
-            </AnimatePresence>
+            <Menu size={20} />
           </button>
-        </div>
-
-        {/* Desktop Toggle Button (At the bottom) */}
-        <div className="hidden md:flex border-t border-white/20 bg-[#0d0d0d]">
-          <button 
-            onClick={toggleSidebar}
-            className="w-full py-4 flex items-center justify-center text-white/50 hover:text-white hover:bg-white/5 transition-colors"
-          >
-            {isSidebarOpen ? (
-              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest">
-                <ChevronLeft size={16} /> Colapsar
+          
+          <div className="flex items-center gap-3">
+            <img src={logoGallo} alt="Logo" className="h-9 w-auto object-contain filter drop-shadow-[0_0_8px_rgba(212,175,55,0.4)]" />
+            <div className="hidden sm:block">
+              <div className="flex items-center gap-2">
+                <span className="font-serif text-sm uppercase tracking-widest text-gold font-bold">Venta El Gallo</span>
+                <span className="text-[9px] px-1.5 py-0.5 rounded bg-gold/10 border border-gold/30 text-gold uppercase font-mono font-bold">Admin Engine</span>
               </div>
-            ) : (
-              <ChevronRight size={18} />
-            )}
-          </button>
+              <p className="text-[10px] text-slate-400 font-light">Panel de Control & Autogestión</p>
+            </div>
+          </div>
         </div>
-      </motion.aside>
 
-      {/* Main Content Area */}
-      <main className="flex-1 min-w-0 flex flex-col min-h-screen max-h-screen overflow-y-auto relative z-10 w-full no-scrollbar">
-        <div className="p-6 md:p-12 w-full max-w-7xl mx-auto">
-          <Outlet />
+        <div className="flex items-center gap-3 md:gap-5">
+          <a
+            href="/"
+            target="_blank"
+            rel="noreferrer"
+            className="hidden sm:flex items-center gap-1.5 text-xs text-slate-300 hover:text-gold transition-colors px-3 py-1.5 rounded-full bg-white/5 border border-white/10 hover:border-gold/30"
+          >
+            <ExternalLink size={13} />
+            <span>Ver Sitio Web</span>
+          </a>
+
+          <div className="flex items-center gap-3 pl-3 border-l border-white/10">
+            <div className="w-8 h-8 rounded-full bg-gold/20 border border-gold/40 flex items-center justify-center text-gold font-bold text-xs">
+              {currentUser?.email ? currentUser.email.charAt(0).toUpperCase() : 'A'}
+            </div>
+            <div className="hidden lg:block text-left">
+              <p className="text-xs font-medium text-white truncate max-w-[140px]">{currentUser?.email || 'admin@ventaelgallo.com'}</p>
+              <div className="flex items-center gap-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span className="text-[9px] text-emerald-400 uppercase tracking-wider font-semibold">Sesión Activa</span>
+              </div>
+            </div>
+            <button
+              onClick={handleLogout}
+              title="Cerrar Sesión"
+              className="p-2 rounded-lg text-slate-400 hover:text-sacromonte-red hover:bg-sacromonte-red/10 transition-colors"
+            >
+              <LogOut size={18} />
+            </button>
+          </div>
         </div>
-      </main>
+      </header>
+
+      <div className="flex-1 flex overflow-hidden">
+        {/* Sidebar Desktop */}
+        <aside className={`hidden md:flex flex-col border-r border-gold/15 bg-black/60 backdrop-blur-md transition-all duration-300 ${sidebarCollapsed ? 'w-20' : 'w-64'}`}>
+          <div className="p-4 flex flex-col gap-1.5 flex-1">
+            <div className="px-3 py-2 text-[10px] uppercase font-bold tracking-widest text-slate-400">
+              {!sidebarCollapsed ? 'Navegación del Sistema' : '•••'}
+            </div>
+            {navItems.map((item) => {
+              const Icon = item.icon;
+              return (
+                <NavLink
+                  key={item.path}
+                  to={item.path}
+                  end={item.exact}
+                  className={({ isActive }) =>
+                    `flex items-center gap-3 px-3.5 py-3 rounded-xl text-xs font-medium transition-all duration-200 group ${
+                      isActive
+                        ? 'bg-gradient-to-r from-gold/20 to-gold/5 text-gold border border-gold/30 shadow-[0_0_15px_rgba(212,175,55,0.15)]'
+                        : 'text-slate-400 hover:text-white hover:bg-white/5 border border-transparent'
+                    }`
+                  }
+                >
+                  <Icon size={18} className="flex-shrink-0 group-hover:scale-110 transition-transform" />
+                  {!sidebarCollapsed && <span className="truncate">{item.name}</span>}
+                </NavLink>
+              );
+            })}
+          </div>
+
+          <div className="p-4 border-t border-white/5">
+            <button
+              onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
+              className="w-full py-2 px-3 rounded-lg text-[11px] text-slate-400 hover:text-gold hover:bg-white/5 transition-colors flex items-center justify-center gap-2 border border-white/5"
+            >
+              <ChevronRight size={14} className={`transform transition-transform ${sidebarCollapsed ? '' : 'rotate-180'}`} />
+              {!sidebarCollapsed && <span>Plegar Menú</span>}
+            </button>
+          </div>
+        </aside>
+
+        {/* Mobile Drawer */}
+        <AnimatePresence>
+          {mobileMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-50 md:hidden bg-black/80 backdrop-blur-md"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              <motion.div
+                initial={{ x: -280 }}
+                animate={{ x: 0 }}
+                exit={{ x: -280 }}
+                transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+                className="w-72 h-full bg-[#0d0f15] border-r border-gold/20 p-5 flex flex-col"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <div className="flex items-center justify-between pb-4 border-b border-white/10 mb-4">
+                  <div className="flex items-center gap-2">
+                    <img src={logoGallo} alt="Logo" className="h-8 w-auto" />
+                    <span className="font-serif text-xs uppercase tracking-widest text-gold font-bold">Admin Venta El Gallo</span>
+                  </div>
+                  <button onClick={() => setMobileMenuOpen(false)} className="text-slate-400 hover:text-white">
+                    <X size={20} />
+                  </button>
+                </div>
+
+                <div className="flex flex-col gap-1.5 flex-1">
+                  {navItems.map((item) => {
+                    const Icon = item.icon;
+                    return (
+                      <NavLink
+                        key={item.path}
+                        to={item.path}
+                        end={item.exact}
+                        onClick={() => setMobileMenuOpen(false)}
+                        className={({ isActive }) =>
+                          `flex items-center gap-3 px-3.5 py-3 rounded-xl text-xs font-medium transition-all ${
+                            isActive
+                              ? 'bg-gold/20 text-gold border border-gold/30'
+                              : 'text-slate-400 hover:text-white hover:bg-white/5'
+                          }`
+                        }
+                      >
+                        <Icon size={18} />
+                        <span>{item.name}</span>
+                      </NavLink>
+                    );
+                  })}
+                </div>
+
+                <div className="pt-4 border-t border-white/10 flex flex-col gap-2">
+                  <a
+                    href="/"
+                    target="_blank"
+                    className="flex items-center justify-center gap-2 py-2.5 rounded-lg bg-white/5 text-xs text-slate-300"
+                  >
+                    <ExternalLink size={14} />
+                    <span>Ver Web Pública</span>
+                  </a>
+                  <button
+                    onClick={handleLogout}
+                    className="flex items-center justify-center gap-2 py-2.5 rounded-lg bg-sacromonte-red/10 text-sacromonte-red text-xs font-medium"
+                  >
+                    <LogOut size={14} />
+                    <span>Cerrar Sesión</span>
+                  </button>
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Contenido Principal */}
+        <main className="flex-1 overflow-y-auto custom-scrollbar p-4 md:p-8 lg:p-10 bg-gradient-to-b from-[#07090E] via-[#090C12] to-[#07090E]">
+          <div className="max-w-7xl mx-auto">
+            <Outlet />
+          </div>
+        </main>
+      </div>
     </div>
   );
 };
