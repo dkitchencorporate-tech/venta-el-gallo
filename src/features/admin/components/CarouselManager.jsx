@@ -1,17 +1,64 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { 
   Images, 
   Plus, 
   Trash2, 
-  Check, 
-  X, 
   ArrowUp, 
-  ArrowDown 
+  ArrowDown, 
+  Check, 
+  X,
+  Upload,
+  Image as ImageIcon
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { getCarouselImages, saveCarouselImages, resolveAssetUrl } from '../../../services/adminService';
+import { 
+  getCarouselImages, 
+  saveCarouselImages, 
+  resolveAssetUrl 
+} from '../../../services/adminService';
 
-const MAX_IMAGES = 25;
+const MAX_IMAGES = 12;
+
+// Helper para optimizar fotos del carrusel desde el dispositivo
+const optimizeCarouselFile = (file) => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = (event) => {
+      const img = new Image();
+      img.src = event.target.result;
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        const MAX_WIDTH = 1600;
+        const MAX_HEIGHT = 1000;
+        let width = img.width;
+        let height = img.height;
+
+        if (width > height) {
+          if (width > MAX_WIDTH) {
+            height *= MAX_WIDTH / width;
+            width = MAX_WIDTH;
+          }
+        } else {
+          if (height > MAX_HEIGHT) {
+            width *= MAX_HEIGHT / height;
+            height = MAX_HEIGHT;
+          }
+        }
+
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, width, height);
+        
+        const dataUrl = canvas.toDataURL('image/jpeg', 0.85);
+        resolve(dataUrl);
+      };
+      img.onerror = (err) => reject(err);
+    };
+    reader.onerror = (err) => reject(err);
+  });
+};
 
 const CarouselManager = () => {
   const [images, setImages] = useState([]);
@@ -20,9 +67,18 @@ const CarouselManager = () => {
   const [newAlt, setNewAlt] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
   const [toastMsg, setToastMsg] = useState('');
+  const [isUploading, setIsUploading] = useState(false);
+  const fileInputRef = useRef(null);
+
+  const loadCarousel = () => {
+    setImages(getCarouselImages());
+  };
 
   useEffect(() => {
-    setImages(getCarouselImages());
+    loadCarousel();
+    const handleUpdate = () => loadCarousel();
+    window.addEventListener('veg_carousel_updated', handleUpdate);
+    return () => window.removeEventListener('veg_carousel_updated', handleUpdate);
   }, []);
 
   const showToast = (msg) => {
@@ -30,75 +86,106 @@ const CarouselManager = () => {
     setTimeout(() => setToastMsg(''), 3500);
   };
 
+  const handleMove = (index, direction) => {
+    const targetIndex = direction === 'up' ? index - 1 : index + 1;
+    if (targetIndex < 0 || targetIndex >= images.length) return;
+
+    const newArr = [...images];
+    const [moved] = newArr.splice(index, 1);
+    newArr.splice(targetIndex, 0, moved);
+
+    setImages(newArr);
+    saveCarouselImages(newArr);
+    showToast('Orden del carrusel actualizado.');
+  };
+
   const handleDelete = (id) => {
-    if (window.confirm('¿Deseas retirar esta fotografía del carrusel?')) {
-      const updated = images.filter(img => img.id !== id);
+    if (images.length <= 3) {
+      alert('Se recomienda mantener un mínimo de 3 fotografías activas en el carrusel.');
+      return;
+    }
+    if (window.confirm('¿Estás seguro de eliminar esta fotografía de la galería?')) {
+      const updated = images.filter((img) => img.id !== id);
       setImages(updated);
       saveCarouselImages(updated);
-      showToast('Fotografía eliminada.');
+      showToast('Fotografía eliminada con éxito.');
     }
   };
 
-  const handleMove = (index, direction) => {
-    const targetIdx = direction === 'up' ? index - 1 : index + 1;
-    if (targetIdx < 0 || targetIdx >= images.length) return;
-    const updated = [...images];
-    const temp = updated[index];
-    updated[index] = updated[targetIdx];
-    updated[targetIdx] = temp;
-    setImages(updated);
-    saveCarouselImages(updated);
+  const handleFileChange = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (!file.type.startsWith('image/')) {
+      setErrorMsg('Por favor selecciona una imagen válida (JPG, PNG, WEBP).');
+      return;
+    }
+
+    try {
+      setIsUploading(true);
+      setErrorMsg('');
+      const optimized = await optimizeCarouselFile(file);
+      setNewUrl(optimized);
+      if (!newAlt) {
+        setNewAlt(file.name.replace(/\.[^/.]+$/, "").replace(/[-_]/g, ' '));
+      }
+      showToast('Fotografía cargada y optimizada.');
+    } catch (err) {
+      console.error(err);
+      setErrorMsg('Error al procesar la imagen seleccionada.');
+    } finally {
+      setIsUploading(false);
+    }
   };
 
   const handleAddImage = (e) => {
     e.preventDefault();
-    if (!newUrl.trim()) return;
-
-    if (images.length >= MAX_IMAGES) {
-      setErrorMsg(`Se ha alcanzado el límite de ${MAX_IMAGES} fotos.`);
+    if (!newUrl.trim()) {
+      setErrorMsg('Debes subir una fotografía desde tu dispositivo.');
       return;
     }
 
-    const newImgObj = {
+    const newImageItem = {
       id: `car-${Date.now()}`,
       src: newUrl.trim(),
-      alt: newAlt.trim() || 'Experiencia Gastronómica Venta El Gallo',
-      title: newAlt.trim() || 'Venta El Gallo'
+      alt: newAlt.trim() || 'Fotografía Venta El Gallo',
+      title: newAlt.trim() || 'Cueva Flamenca Venta El Gallo'
     };
 
-    const updated = [newImgObj, ...images];
+    const updated = [...images, newImageItem];
     setImages(updated);
     saveCarouselImages(updated);
-    showToast('Fotografía añadida al carrusel.');
-    setIsModalOpen(false);
+
     setNewUrl('');
     setNewAlt('');
+    setIsModalOpen(false);
+    showToast('Nueva fotografía añadida al carrusel.');
   };
 
   return (
     <div className="space-y-8 fade-in">
       
-      {/* Header */}
+      {/* Header Luxury */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-stone-200/80">
         <div>
           <div className="flex items-center gap-2 mb-1">
             <div className="w-3 h-[1px] bg-sacromonte-red"></div>
             <span className="text-[10px] uppercase tracking-[0.25em] font-bold text-gold">
-              Galería Fotográfica
+              Galería Visual
             </span>
           </div>
           <h1 className="text-2xl md:text-3xl font-serif text-[#1A1A1A] font-bold">
-            Carrusel de <span className="text-gold italic">Experiencia</span>
+            Carrusel de <span className="text-gold italic">Fotografías</span>
           </h1>
           <p className="text-stone-500 text-xs mt-1 font-light">
-            Reordena las fotos o añade nuevas tomas (Activas: <strong className="text-stone-800 font-semibold">{images.length}/{MAX_IMAGES}</strong>).
+            Sube nuevas fotos directamente desde tu dispositivo y reordénalas (Activas: <strong className="text-stone-800 font-semibold">{images.length}/{MAX_IMAGES}</strong>).
           </p>
         </div>
 
         <button
-          onClick={() => { setErrorMsg(''); setIsModalOpen(true); }}
+          onClick={() => { setErrorMsg(''); setNewUrl(''); setNewAlt(''); setIsModalOpen(true); }}
           disabled={images.length >= MAX_IMAGES}
-          className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gold hover:bg-[#1A1A1A] hover:text-white text-black font-bold uppercase tracking-wider text-xs shadow-md transition-all disabled:opacity-50"
+          className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gold hover:bg-[#1A1A1A] hover:text-white text-black font-bold uppercase tracking-wider text-xs shadow-md transition-all disabled:opacity-50 self-start sm:self-auto"
         >
           <Plus size={16} strokeWidth={2.5} />
           <span>Añadir Imagen</span>
@@ -119,7 +206,7 @@ const CarouselManager = () => {
         )}
       </AnimatePresence>
 
-      {/* Grid de Imágenes */}
+      {/* Grid de Imágenes con Tarjetas Luxury */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {images.map((img, idx) => {
           const imgSrc = resolveAssetUrl(img.src || img.url);
@@ -178,7 +265,7 @@ const CarouselManager = () => {
         })}
       </div>
 
-      {/* Modal Añadir Imagen */}
+      {/* Modal Añadir Imagen con File Picker */}
       <AnimatePresence>
         {isModalOpen && (
           <motion.div
@@ -198,7 +285,7 @@ const CarouselManager = () => {
               <div className="flex items-center justify-between pb-4 border-b border-stone-100 mb-6">
                 <div>
                   <h3 className="font-serif text-xl text-[#1A1A1A] font-bold">Añadir Fotografía</h3>
-                  <p className="text-xs text-stone-400">Recomendado WebP / JPG optimizado &lt;500KB</p>
+                  <p className="text-xs text-stone-400">Sube directamente desde tu dispositivo</p>
                 </div>
                 <button onClick={() => setIsModalOpen(false)} className="text-stone-400 hover:text-stone-700">
                   <X size={20} />
@@ -212,30 +299,77 @@ const CarouselManager = () => {
               )}
 
               <form onSubmit={handleAddImage} className="space-y-4">
+                
+                {/* ZONA DE SUBIDA DIRECTA DE FOTO */}
                 <div>
-                  <label className="block text-xs uppercase tracking-wider text-stone-600 mb-1 font-semibold">
-                    Ruta o URL de la Imagen *
+                  <label className="block text-xs uppercase tracking-wider text-stone-600 mb-2 font-semibold flex items-center gap-1.5">
+                    <ImageIcon size={14} className="text-gold" />
+                    <span>Seleccionar Archivo de Fotografía *</span>
                   </label>
+
                   <input
-                    type="text"
-                    required
-                    value={newUrl}
-                    onChange={(e) => setNewUrl(e.target.value)}
-                    placeholder="Ej: images/carrusel/cena-espectaculo-flamenco-granada.jpeg"
-                    className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-2.5 text-sm text-[#1A1A1A] focus:outline-none focus:border-gold"
+                    type="file"
+                    ref={fileInputRef}
+                    onChange={handleFileChange}
+                    accept="image/*"
+                    className="hidden"
                   />
+
+                  {newUrl ? (
+                    <div className="relative rounded-2xl overflow-hidden border border-stone-200 bg-stone-50 p-2 flex items-center gap-4">
+                      <img
+                        src={resolveAssetUrl(newUrl)}
+                        alt="Preview"
+                        className="w-24 h-16 object-cover rounded-xl border border-stone-300"
+                      />
+                      <div className="flex-1">
+                        <span className="text-xs font-bold text-stone-800 block">Fotografía seleccionada</span>
+                        <span className="text-[10px] text-stone-500 block mb-2">Comprimida a máxima calidad</span>
+                        <button
+                          type="button"
+                          onClick={() => fileInputRef.current?.click()}
+                          className="px-3 py-1 rounded-full bg-stone-200 hover:bg-gold hover:text-black text-stone-700 text-[11px] font-semibold transition-colors"
+                        >
+                          Cambiar Foto
+                        </button>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => setNewUrl('')}
+                        className="p-1.5 rounded-full bg-stone-200 hover:bg-sacromonte-red/10 text-stone-500 hover:text-sacromonte-red transition-colors mr-2"
+                        title="Quitar foto"
+                      >
+                        <Trash2 size={15} />
+                      </button>
+                    </div>
+                  ) : (
+                    <div
+                      onClick={() => fileInputRef.current?.click()}
+                      className="border-2 border-dashed border-stone-300 hover:border-gold rounded-2xl p-6 text-center cursor-pointer transition-all bg-stone-50/50 hover:bg-stone-50 group"
+                    >
+                      <div className="w-12 h-12 rounded-full bg-gold/10 text-gold flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform">
+                        <Upload size={20} />
+                      </div>
+                      <span className="text-xs font-bold text-stone-700 block">
+                        {isUploading ? 'Procesando imagen...' : 'Subir Fotografía desde este Dispositivo'}
+                      </span>
+                      <span className="text-[10px] text-stone-400 block mt-1">
+                        Haz clic para seleccionar desde tu galería o fotos (JPG, PNG, WEBP)
+                      </span>
+                    </div>
+                  )}
                 </div>
 
                 <div>
                   <label className="block text-xs uppercase tracking-wider text-stone-600 mb-1 font-semibold">
-                    Título / Texto Alternativo
+                    Título / Descripción de la Fotografía
                   </label>
                   <input
                     type="text"
                     value={newAlt}
                     onChange={(e) => setNewAlt(e.target.value)}
-                    placeholder="Ej: Terraza con vistas a la Alhambra"
-                    className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-2.5 text-sm text-[#1A1A1A] focus:outline-none focus:border-gold"
+                    placeholder="Ej: Vista panorámica de la Cueva y la Alhambra"
+                    className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-2.5 text-sm text-[#1A1A1A] focus:outline-none focus:border-gold font-medium"
                   />
                 </div>
 
@@ -251,7 +385,7 @@ const CarouselManager = () => {
                     type="submit"
                     className="px-6 py-2.5 rounded-full bg-gold hover:bg-[#1A1A1A] hover:text-white text-black font-bold uppercase tracking-wider text-xs shadow-md transition-colors"
                   >
-                    Añadir Imagen
+                    Añadir al Carrusel
                   </button>
                 </div>
               </form>
