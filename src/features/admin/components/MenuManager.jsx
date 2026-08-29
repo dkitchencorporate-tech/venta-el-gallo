@@ -61,7 +61,7 @@ const MenuManager = () => {
     setTimeout(() => setToastMsg(''), 3500);
   };
 
-  if (!menuState) return <div className="p-8 text-slate-800">Cargando menú...</div>;
+  if (!menuState) return <div className="p-8 text-slate-800 font-bold">Cargando menú...</div>;
 
   const currentCategories = activeTab === 'carta' ? CARTA_CATEGORIES : MENU_CATEGORIES;
   const currentDishesObj = activeTab === 'carta' ? (menuState.cartaData || {}) : (menuState.menuData || {});
@@ -146,38 +146,39 @@ const MenuManager = () => {
     <div className="space-y-8 fade-in">
       
       {/* Header & Switch Carta/Menú */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-stone-200">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b-2 border-stone-200">
         <div>
-          <div className="flex items-center gap-2 text-gold text-xs uppercase font-bold tracking-widest mb-1">
-            <UtensilsCrossed size={16} />
+          <div className="flex items-center gap-2 text-black text-xs uppercase font-black tracking-widest mb-1">
+            <div className="w-2 h-2 rounded-full bg-sacromonte-red"></div>
+            <UtensilsCrossed size={16} className="text-gold" />
             <span>Gestión Gastronómica</span>
           </div>
-          <h1 className="text-2xl md:text-3xl font-serif text-slate-900 uppercase tracking-tight font-bold">
+          <h1 className="text-2xl md:text-4xl font-serif text-black uppercase tracking-tight font-black">
             Carta & <span className="text-gold">Menús Degustación</span>
           </h1>
-          <p className="text-slate-600 text-xs mt-1 font-normal">
+          <p className="text-slate-700 text-xs md:text-sm mt-1 font-medium">
             Edita platos, precios, temporadas de verano/invierno y los 14 alérgenos de la normativa europea.
           </p>
         </div>
 
         <div className="flex items-center gap-3">
-          <div className="p-1 bg-stone-100 border border-stone-300 rounded-2xl flex items-center gap-1">
+          <div className="p-1.5 bg-[#FBFBFA] border-2 border-black rounded-2xl flex items-center gap-1 shadow-sm">
             <button
               onClick={() => { setActiveTab('carta'); setActiveCat('entrantes'); }}
-              className={`px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all ${
+              className={`px-5 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider transition-all ${
                 activeTab === 'carta'
-                  ? 'bg-gold text-black shadow-sm'
-                  : 'text-slate-600 hover:text-black'
+                  ? 'bg-black text-gold shadow-md'
+                  : 'text-slate-700 hover:text-black'
               }`}
             >
               Carta Completa
             </button>
             <button
               onClick={() => { setActiveTab('menu'); setActiveCat('entrantes'); }}
-              className={`px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all ${
+              className={`px-5 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider transition-all ${
                 activeTab === 'menu'
-                  ? 'bg-gold text-black shadow-sm'
-                  : 'text-slate-600 hover:text-black'
+                  ? 'bg-black text-gold shadow-md'
+                  : 'text-slate-700 hover:text-black'
               }`}
             >
               Menú Degustación
@@ -186,9 +187,9 @@ const MenuManager = () => {
 
           <button
             onClick={handleOpenCreate}
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-gold via-[#e8cd6e] to-gold hover:from-black hover:to-black hover:text-gold text-black font-extrabold uppercase tracking-wider text-xs shadow-md transition-colors"
+            className="inline-flex items-center gap-2 px-6 py-3.5 rounded-2xl bg-gradient-to-r from-gold via-[#e8cd6e] to-gold hover:from-black hover:to-black hover:text-gold text-black font-black uppercase tracking-wider text-xs shadow-lg transition-all border border-black"
           >
-            <Plus size={16} strokeWidth={3} />
+            <Plus size={18} strokeWidth={3} />
             <span>Añadir Plato</span>
           </button>
         </div>
@@ -200,16 +201,16 @@ const MenuManager = () => {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className="p-4 rounded-xl bg-emerald-50 border border-emerald-300 text-emerald-800 text-xs flex items-center gap-2 shadow-sm font-medium"
+            className="p-4 rounded-2xl bg-emerald-50 border-2 border-emerald-400 text-emerald-900 text-xs flex items-center gap-2 shadow-md font-bold"
           >
-            <Check size={16} className="text-emerald-600" />
+            <Check size={18} className="text-emerald-600" />
             <span>{toastMsg}</span>
           </motion.div>
         )}
       </AnimatePresence>
 
       {/* Selector de Categorías */}
-      <div className="flex items-center gap-2 overflow-x-auto custom-scrollbar pb-2">
+      <div className="flex items-center gap-2.5 overflow-x-auto custom-scrollbar pb-3">
         {currentCategories.map(cat => {
           const isWinter = cat.id === 'invierno';
           const isSummer = cat.id === 'verano';
@@ -217,16 +218,16 @@ const MenuManager = () => {
             <button
               key={cat.id}
               onClick={() => setActiveCat(cat.id)}
-              className={`px-4 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all flex items-center gap-1.5 border ${
+              className={`px-5 py-3 rounded-2xl text-xs font-black whitespace-nowrap transition-all flex items-center gap-2 border-2 ${
                 activeCat === cat.id
-                  ? 'bg-white text-slate-900 border-gold shadow-sm'
-                  : 'bg-stone-100 text-slate-600 border-stone-200 hover:bg-stone-200 hover:text-slate-900'
+                  ? 'bg-black text-white border-black shadow-md'
+                  : 'bg-white text-slate-800 border-stone-300 hover:border-black'
               }`}
             >
-              {isWinter && <Snowflake size={13} className="text-sky-600" />}
-              {isSummer && <Sun size={13} className="text-amber-600" />}
+              {isWinter && <Snowflake size={14} className="text-sky-400" />}
+              {isSummer && <Sun size={14} className="text-amber-400" />}
               <span>{cat.name}</span>
-              <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-stone-200 text-slate-700 font-mono">
+              <span className="text-[10px] px-2 py-0.5 rounded-full bg-stone-200 text-black font-mono font-bold">
                 {currentDishesObj[cat.id]?.length || 0}
               </span>
             </button>
@@ -234,26 +235,29 @@ const MenuManager = () => {
         })}
       </div>
 
-      {/* Lista de Platos con Cards Blancas */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      {/* Grid de Platos con Cards Blancas y Marco Negro */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         {currentDishes.map((dish, idx) => (
           <div
             key={idx}
-            className="p-5 rounded-2xl bg-white border border-stone-200 hover:border-gold/60 transition-all flex flex-col justify-between space-y-3 group shadow-sm hover:shadow-md"
+            className="p-6 rounded-[2rem] bg-white border-2 border-black hover:border-gold transition-all duration-300 flex flex-col justify-between space-y-4 shadow-[0_12px_30px_rgba(0,0,0,0.06)] hover:shadow-[0_18px_40px_rgba(0,0,0,0.15)] group min-h-[220px]"
           >
             <div className="flex items-start justify-between gap-4">
               <div>
-                <h4 className="font-serif text-base text-slate-900 font-bold group-hover:text-gold transition-colors">
-                  {dish.name}
-                </h4>
+                <div className="flex items-center gap-2 mb-1.5">
+                  <div className="w-2.5 h-[2px] bg-sacromonte-red"></div>
+                  <h4 className="font-serif text-lg text-black font-black group-hover:text-gold transition-colors leading-tight">
+                    {dish.name}
+                  </h4>
+                </div>
                 {dish.description && (
-                  <p className="text-xs text-slate-600 mt-1 font-normal leading-relaxed">
+                  <p className="text-xs text-slate-700 mt-1 font-medium leading-relaxed">
                     {dish.description}
                   </p>
                 )}
               </div>
               {dish.price && (
-                <span className="text-sm font-mono font-bold text-slate-900 px-3 py-1 rounded-lg bg-gold/15 border border-gold/40 flex-shrink-0">
+                <span className="text-sm font-mono font-black text-black px-3 py-1 rounded-xl bg-gold/20 border border-gold/50 flex-shrink-0 shadow-sm">
                   {dish.price}
                 </span>
               )}
@@ -261,26 +265,26 @@ const MenuManager = () => {
 
             {/* Alérgenos */}
             {dish.allergens && dish.allergens.length > 0 && (
-              <div className="flex flex-wrap gap-1.5 pt-2">
+              <div className="flex flex-wrap gap-1.5 pt-1">
                 {dish.allergens.map((alg, aIdx) => (
-                  <span key={aIdx} className="text-[9px] px-2.5 py-0.5 rounded-full bg-stone-100 border border-stone-200 text-slate-700 font-medium">
+                  <span key={aIdx} className="text-[9px] px-2.5 py-1 rounded-full bg-stone-100 border border-stone-300 text-slate-800 font-bold">
                     {alg}
                   </span>
                 ))}
               </div>
             )}
 
-            <div className="pt-3 border-t border-stone-100 flex items-center justify-end gap-2">
+            <div className="pt-3 border-t border-stone-200 flex items-center justify-end gap-2">
               <button
                 onClick={() => handleOpenEdit(dish, idx)}
-                className="px-3 py-1.5 rounded-lg bg-stone-50 hover:bg-gold/20 text-slate-700 hover:text-black border border-stone-200 text-xs flex items-center gap-1 font-medium"
+                className="px-3.5 py-1.5 rounded-xl bg-stone-100 hover:bg-gold hover:text-black text-slate-900 border border-stone-300 text-xs flex items-center gap-1.5 font-black uppercase tracking-wider"
               >
                 <Edit3 size={13} />
                 <span>Editar</span>
               </button>
               <button
                 onClick={() => handleDelete(idx, dish.name)}
-                className="px-3 py-1.5 rounded-lg bg-stone-50 hover:bg-sacromonte-red/10 text-slate-600 hover:text-sacromonte-red border border-stone-200 text-xs flex items-center gap-1 font-medium"
+                className="px-3.5 py-1.5 rounded-xl bg-stone-100 hover:bg-sacromonte-red hover:text-white text-slate-800 border border-stone-300 text-xs flex items-center gap-1.5 font-black uppercase tracking-wider"
               >
                 <Trash2 size={13} />
                 <span>Eliminar</span>
@@ -290,7 +294,7 @@ const MenuManager = () => {
         ))}
 
         {currentDishes.length === 0 && (
-          <div className="col-span-full p-12 text-center rounded-2xl border border-dashed border-stone-300 text-slate-500 bg-white">
+          <div className="col-span-full p-12 text-center rounded-[2rem] border-2 border-dashed border-stone-300 text-slate-600 bg-[#FBFBFA] font-bold">
             No hay platos registrados en esta sección. Haz clic en "Añadir Plato".
           </div>
         )}
@@ -303,66 +307,66 @@ const MenuManager = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-md"
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-md"
             onClick={() => setIsModalOpen(false)}
           >
             <motion.div
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.95, opacity: 0 }}
-              className="w-full max-w-lg bg-white border border-stone-300 rounded-3xl p-6 md:p-8 shadow-2xl overflow-y-auto max-h-[90vh] custom-scrollbar"
+              className="w-full max-w-lg bg-white border-2 border-black rounded-[2.5rem] p-6 md:p-8 shadow-2xl overflow-y-auto max-h-[90vh] custom-scrollbar"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="flex items-center justify-between pb-4 border-b border-stone-200 mb-6">
+              <div className="flex items-center justify-between pb-4 border-b-2 border-stone-200 mb-6">
                 <div>
-                  <h3 className="font-serif text-xl text-slate-900 font-bold">
+                  <h3 className="font-serif text-2xl text-black font-black">
                     {editingDish ? 'Editar Plato' : 'Nuevo Plato'}
                   </h3>
-                  <p className="text-xs text-slate-500 font-normal">Categoría: {currentCategories.find(c => c.id === activeCat)?.name}</p>
+                  <p className="text-xs text-slate-600 font-medium">Categoría: {currentCategories.find(c => c.id === activeCat)?.name}</p>
                 </div>
-                <button onClick={() => setIsModalOpen(false)} className="text-slate-400 hover:text-slate-700">
-                  <X size={20} />
+                <button onClick={() => setIsModalOpen(false)} className="text-slate-500 hover:text-black p-1">
+                  <X size={22} />
                 </button>
               </div>
 
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                  <label className="block text-[11px] uppercase tracking-widest text-slate-700 mb-1 font-bold">Nombre del Plato *</label>
+                  <label className="block text-xs uppercase tracking-widest text-black mb-1 font-black">Nombre del Plato *</label>
                   <input
                     type="text"
                     required
                     value={formName}
                     onChange={(e) => setFormName(e.target.value)}
                     placeholder="Ej: Jamón Ibérico de Bellota con Tomate y Pan de Pueblo"
-                    className="w-full bg-stone-50 border border-stone-300 rounded-xl px-4 py-2.5 text-sm text-slate-900 focus:outline-none focus:border-gold"
+                    className="w-full bg-[#FBFBFA] border-2 border-stone-300 rounded-xl px-4 py-3 text-sm text-black font-bold focus:outline-none focus:border-black"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-[11px] uppercase tracking-widest text-slate-700 mb-1 font-bold">Descripción / Ingredientes</label>
+                  <label className="block text-xs uppercase tracking-widest text-black mb-1 font-black">Descripción / Ingredientes</label>
                   <textarea
                     rows={3}
                     value={formDesc}
                     onChange={(e) => setFormDesc(e.target.value)}
                     placeholder="Detalles sobre elaboración, guarnición o procedencia..."
-                    className="w-full bg-stone-50 border border-stone-300 rounded-xl p-3 text-sm text-slate-900 focus:outline-none focus:border-gold"
+                    className="w-full bg-[#FBFBFA] border-2 border-stone-300 rounded-xl p-3.5 text-sm text-black font-medium focus:outline-none focus:border-black"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-[11px] uppercase tracking-widest text-slate-700 mb-1 font-bold">Precio (€)</label>
+                  <label className="block text-xs uppercase tracking-widest text-black mb-1 font-black">Precio (€)</label>
                   <input
                     type="text"
                     value={formPrice}
                     onChange={(e) => setFormPrice(e.target.value)}
                     placeholder="Ej: 24.50"
-                    className="w-full bg-stone-50 border border-stone-300 rounded-xl px-4 py-2.5 text-sm text-slate-900 focus:outline-none focus:border-gold"
+                    className="w-full bg-[#FBFBFA] border-2 border-stone-300 rounded-xl px-4 py-3 text-sm text-black font-bold focus:outline-none focus:border-black"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-[11px] uppercase tracking-widest text-slate-700 mb-2 font-bold">Alérgenos Presentes (Normativa UE)</label>
-                  <div className="flex flex-wrap gap-1.5 max-h-36 overflow-y-auto custom-scrollbar p-2 rounded-xl bg-stone-50 border border-stone-200">
+                  <label className="block text-xs uppercase tracking-widest text-black mb-2 font-black">Alérgenos Presentes (Normativa UE)</label>
+                  <div className="flex flex-wrap gap-1.5 max-h-36 overflow-y-auto custom-scrollbar p-3 rounded-2xl bg-[#FBFBFA] border-2 border-stone-200">
                     {ALLERGEN_LIST.map(alg => {
                       const selected = formAllergens.includes(alg);
                       return (
@@ -370,10 +374,10 @@ const MenuManager = () => {
                           type="button"
                           key={alg}
                           onClick={() => toggleAllergen(alg)}
-                          className={`px-3 py-1 rounded-lg text-[10px] font-bold transition-all ${
+                          className={`px-3 py-1.5 rounded-xl text-[10px] font-black transition-all ${
                             selected
-                              ? 'bg-gold text-black shadow-sm'
-                              : 'bg-white text-slate-600 border border-stone-200 hover:bg-stone-200'
+                              ? 'bg-black text-gold shadow-sm'
+                              : 'bg-white text-slate-700 border border-stone-300 hover:border-black'
                           }`}
                         >
                           {alg}
@@ -383,17 +387,17 @@ const MenuManager = () => {
                   </div>
                 </div>
 
-                <div className="pt-4 border-t border-stone-200 flex items-center justify-end gap-3">
+                <div className="pt-4 border-t-2 border-stone-200 flex items-center justify-end gap-3">
                   <button
                     type="button"
                     onClick={() => setIsModalOpen(false)}
-                    className="px-5 py-2.5 rounded-xl bg-stone-100 text-slate-700 text-xs font-bold"
+                    className="px-6 py-3 rounded-xl bg-stone-100 hover:bg-stone-200 text-black text-xs font-black uppercase tracking-wider"
                   >
                     Cancelar
                   </button>
                   <button
                     type="submit"
-                    className="px-6 py-2.5 rounded-xl bg-gold hover:bg-black hover:text-gold text-black font-extrabold uppercase tracking-wider text-xs shadow-md transition-colors"
+                    className="px-7 py-3.5 rounded-xl bg-gradient-to-r from-gold via-[#e8cd6e] to-gold hover:from-black hover:to-black hover:text-gold text-black font-black uppercase tracking-wider text-xs shadow-lg transition-all border border-black"
                   >
                     {editingDish ? 'Guardar Cambios' : 'Añadir a la Carta'}
                   </button>
