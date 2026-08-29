@@ -1,0 +1,7 @@
+# Bloqueo total de acceso directo a archivos de base de datos y logs
+<FilesMatch "\.(db|sqlite|sql|log|env|json|lock)$">
+    Require all denied
+</FilesMatch>
+
+# Permitir ejecución de scripts PHP
+Options -Indexes
