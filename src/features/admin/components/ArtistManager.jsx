@@ -7,8 +7,7 @@ import {
   Upload, 
   Check, 
   X,
-  Image as ImageIcon,
-  Sparkles
+  Image as ImageIcon
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
@@ -18,13 +17,13 @@ import {
   deleteArtist, 
   resolveAssetUrl 
 } from '../../../services/adminService';
+import LuxuryConfirmModal from './LuxuryConfirmModal';
 
 const ROLES = [
   "Bailaora", "Bailaor", "Cantaor", "Cantaora", 
   "Guitarrista", "Percusión", "Familia Flamenca", "Elenco Principal"
 ];
 
-// Helper para comprimir y optimizar fotos del móvil/PC a WebP/JPEG ligero
 const optimizeImageFile = (file) => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -56,7 +55,6 @@ const optimizeImageFile = (file) => {
         const ctx = canvas.getContext('2d');
         ctx.drawImage(img, 0, 0, width, height);
         
-        // Calidad 85% para máxima fidelidad visual y peso inferior a ~150KB
         const dataUrl = canvas.toDataURL('image/jpeg', 0.85);
         resolve(dataUrl);
       };
@@ -71,6 +69,15 @@ const ArtistManager = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingArtist, setEditingArtist] = useState(null);
   
+  // Confirm Modal State
+  const [confirmModal, setConfirmModal] = useState({
+    isOpen: false,
+    title: '',
+    message: '',
+    onConfirm: null,
+    type: 'danger'
+  });
+
   // Form State
   const [formName, setFormName] = useState('');
   const [formRole, setFormRole] = useState(ROLES[0]);
@@ -114,20 +121,32 @@ const ArtistManager = () => {
     setIsModalOpen(true);
   };
 
-  const handleDelete = (id, name) => {
-    if (window.confirm(`¿Estás seguro de eliminar a ${name} del elenco? Esta acción eliminará permanentemente la foto asociada.`)) {
-      deleteArtist(id);
-      showToast(`Artista ${name} eliminado con éxito.`);
-    }
+  const handleDeletePrompt = (id, name) => {
+    setConfirmModal({
+      isOpen: true,
+      title: `Eliminar a ${name}`,
+      message: `¿Estás seguro de que deseas retirar a ${name} del elenco? Esta acción eliminará permanentemente su biografía y fotografía de la web pública.`,
+      confirmText: 'Eliminar Artista',
+      type: 'danger',
+      onConfirm: () => {
+        deleteArtist(id);
+        showToast(`Artista ${name} eliminado con éxito.`);
+      }
+    });
   };
 
-  // Manejador de subida de archivo desde el dispositivo
   const handleFileChange = async (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
     if (!file.type.startsWith('image/')) {
-      alert('Por favor selecciona un archivo de imagen válido (JPG, PNG, WEBP).');
+      setConfirmModal({
+        isOpen: true,
+        title: 'Formato no compatible',
+        message: 'Por favor selecciona un archivo de imagen válido en formato JPG, PNG o WEBP.',
+        type: 'warning',
+        onConfirm: null
+      });
       return;
     }
 
@@ -138,7 +157,13 @@ const ArtistManager = () => {
       showToast('Imagen cargada y optimizada.');
     } catch (err) {
       console.error('Error optimizando imagen:', err);
-      alert('Error al procesar la imagen seleccionada.');
+      setConfirmModal({
+        isOpen: true,
+        title: 'Error al procesar',
+        message: 'No se pudo procesar la fotografía seleccionada. Intenta con otra imagen.',
+        type: 'warning',
+        onConfirm: null
+      });
     } finally {
       setIsUploading(false);
     }
@@ -209,14 +234,13 @@ const ArtistManager = () => {
         )}
       </AnimatePresence>
 
-      {/* Grid de Artistas con Tarjetas Luxury Uniformes */}
+      {/* Grid de Artistas */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {artists.map((artist) => (
           <div
             key={artist.id}
             className="rounded-3xl bg-white border border-stone-200/80 hover:border-gold/50 transition-all duration-300 overflow-hidden flex flex-col justify-between shadow-[0_10px_25px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_40px_rgba(212,175,55,0.12)] group"
           >
-            {/* Foto con Aspect Ratio Fijo y Gradiente Suave */}
             <div className="relative w-full aspect-[4/3] bg-[#0B0E14] overflow-hidden">
               <img
                 src={resolveAssetUrl(artist.imageUrl)}
@@ -230,7 +254,6 @@ const ArtistManager = () => {
               </span>
             </div>
 
-            {/* Info y Acciones */}
             <div className="p-5 flex-1 flex flex-col justify-between space-y-3">
               <div>
                 <h3 className="font-serif text-lg text-[#1A1A1A] font-bold">{artist.name}</h3>
@@ -249,7 +272,7 @@ const ArtistManager = () => {
                 </button>
 
                 <button
-                  onClick={() => handleDelete(artist.id, artist.name)}
+                  onClick={() => handleDeletePrompt(artist.id, artist.name)}
                   className="px-3.5 py-1.5 rounded-full bg-stone-100 hover:bg-sacromonte-red/10 text-stone-600 hover:text-sacromonte-red transition-colors text-xs flex items-center gap-1 font-medium"
                 >
                   <Trash2 size={13} />
@@ -261,7 +284,7 @@ const ArtistManager = () => {
         ))}
       </div>
 
-      {/* Modal de Creación / Edición con Subida Directa de Imagen */}
+      {/* Modal de Creación / Edición */}
       <AnimatePresence>
         {isModalOpen && (
           <motion.div
@@ -292,7 +315,7 @@ const ArtistManager = () => {
 
               <form onSubmit={handleSubmit} className="space-y-4">
                 
-                {/* 1. ZONA DE SUBIDA DIRECTA DE FOTOGRAFÍA */}
+                {/* ZONA DE SUBIDA DIRECTA DE FOTOGRAFÍA */}
                 <div>
                   <label className="block text-xs uppercase tracking-wider text-stone-600 mb-2 font-semibold flex items-center gap-1.5">
                     <ImageIcon size={14} className="text-gold" />
@@ -412,6 +435,17 @@ const ArtistManager = () => {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Modal de Confirmación de Autor */}
+      <LuxuryConfirmModal
+        isOpen={confirmModal.isOpen}
+        title={confirmModal.title}
+        message={confirmModal.message}
+        confirmText={confirmModal.confirmText}
+        type={confirmModal.type}
+        onConfirm={confirmModal.onConfirm}
+        onClose={() => setConfirmModal({ ...confirmModal, isOpen: false })}
+      />
 
     </div>
   );
