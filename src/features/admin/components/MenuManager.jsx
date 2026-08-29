@@ -7,10 +7,12 @@ import {
   Check, 
   Sun, 
   Snowflake, 
-  X
+  X,
+  Layers,
+  FolderOpen
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { getMenuData, saveMenuData } from '../../../services/adminService';
+import { getMenuData, saveDishAtomic, deleteDishAtomic } from '../../../services/adminService';
 
 const ALLERGEN_LIST = [
   "Gluten", "Crustáceos", "Huevos", "Pescado", "Cacahuetes", 
@@ -45,7 +47,9 @@ const MenuManager = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingDish, setEditingDish] = useState(null);
   
-  // Form State
+  // Modal Form State con Control Estricto de Destino y Categoría
+  const [formScope, setFormScope] = useState('carta');
+  const [formCategory, setFormCategory] = useState('entrantes');
   const [formName, setFormName] = useState('');
   const [formDesc, setFormDesc] = useState('');
   const [formPrice, setFormPrice] = useState('');
@@ -68,7 +72,7 @@ const MenuManager = () => {
     setTimeout(() => setToastMsg(''), 3500);
   };
 
-  if (!menuState) return <div className="p-8 text-stone-700">Cargando carta...</div>;
+  if (!menuState) return <div className="p-8 text-stone-700 font-bold">Cargando carta...</div>;
 
   const currentCategories = activeTab === 'carta' ? CARTA_CATEGORIES : MENU_CATEGORIES;
   const currentDishesObj = activeTab === 'carta' ? (menuState.cartaData || {}) : (menuState.menuData || {});
@@ -76,6 +80,8 @@ const MenuManager = () => {
 
   const handleOpenCreate = () => {
     setEditingDish(null);
+    setFormScope(activeTab);
+    setFormCategory(activeCat);
     setFormName('');
     setFormDesc('');
     setFormPrice('');
@@ -83,8 +89,10 @@ const MenuManager = () => {
     setIsModalOpen(true);
   };
 
-  const handleOpenEdit = (dish, index) => {
-    setEditingDish({ ...dish, index });
+  const handleOpenEdit = (dish) => {
+    setEditingDish(dish);
+    setFormScope(activeTab);
+    setFormCategory(activeCat);
     setFormName(dish.title || dish.name || '');
     setFormDesc(dish.desc || dish.description || '');
     setFormPrice(dish.price ? dish.price.replace('€', '').trim() : '');
@@ -92,19 +100,15 @@ const MenuManager = () => {
     setIsModalOpen(true);
   };
 
-  const handleDelete = (index, dishTitle) => {
-    if (window.confirm(`¿Eliminar "${dishTitle}" de esta categoría?`)) {
-      const updatedList = currentDishes.filter((_, idx) => idx !== index);
-      const updatedMenu = {
-        ...menuState,
-        [activeTab === 'carta' ? 'cartaData' : 'menuData']: {
-          ...currentDishesObj,
-          [activeCat]: updatedList
-        }
-      };
+  const handleDelete = (dishId, dishTitle) => {
+    if (window.confirm(`¿Estás seguro de eliminar "${dishTitle}" de forma permanente?`)) {
+      const updatedMenu = deleteDishAtomic({
+        scope: activeTab,
+        category: activeCat,
+        dishId
+      });
       setMenuState(updatedMenu);
-      saveMenuData(updatedMenu);
-      showToast(`Plato "${dishTitle}" eliminado.`);
+      showToast(`Plato "${dishTitle}" eliminado correctamente.`);
     }
   };
 
@@ -116,41 +120,40 @@ const MenuManager = () => {
     }
   };
 
+  const handleScopeChange = (newScope) => {
+    setFormScope(newScope);
+    const newCategories = newScope === 'carta' ? CARTA_CATEGORIES : MENU_CATEGORIES;
+    setFormCategory(newCategories[0].id);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!formName.trim()) return;
 
-    const formattedPrice = formPrice ? (formPrice.includes('€') ? formPrice.trim() : `${formPrice.trim()}€`) : '';
-
-    const newDish = {
-      id: editingDish?.id || `${activeTab === 'carta' ? 'c' : 'm'}_${activeCat}_${Date.now()}`,
+    const dishPayload = {
       title: formName.trim(),
-      name: formName.trim(),
       desc: formDesc.trim(),
-      description: formDesc.trim(),
-      price: formattedPrice,
+      price: formScope === 'carta' ? formPrice.trim() : '',
       allergens: formAllergens
     };
 
-    let updatedList = [...currentDishes];
-    if (editingDish !== null && editingDish.index !== undefined) {
-      updatedList[editingDish.index] = newDish;
-      showToast(`Plato "${formName}" actualizado.`);
-    } else {
-      updatedList.push(newDish);
-      showToast(`Nuevo plato "${formName}" añadido.`);
-    }
-
-    const updatedMenu = {
-      ...menuState,
-      [activeTab === 'carta' ? 'cartaData' : 'menuData']: {
-        ...currentDishesObj,
-        [activeCat]: updatedList
-      }
-    };
+    const updatedMenu = saveDishAtomic({
+      scope: formScope,
+      category: formCategory,
+      dish: dishPayload,
+      isEdit: Boolean(editingDish),
+      editId: editingDish?.id
+    });
 
     setMenuState(updatedMenu);
-    saveMenuData(updatedMenu);
+    
+    // Si el plato se guardó en una sección distinta a la que se estaba viendo, sincronizar la vista activa
+    if (activeTab !== formScope || activeCat !== formCategory) {
+      setActiveTab(formScope);
+      setActiveCat(formCategory);
+    }
+
+    showToast(editingDish ? `Plato "${formName}" actualizado con éxito.` : `Nuevo plato "${formName}" creado y asignado.`);
     setIsModalOpen(false);
   };
 
@@ -170,7 +173,7 @@ const MenuManager = () => {
             Carta & <span className="text-gold italic">Menús</span>
           </h1>
           <p className="text-stone-500 text-xs mt-1 font-light">
-            Edita platos, precios, temporadas (invierno/verano) y alérgenos con sincronización instantánea en la web pública.
+            Control estricto de platos con asignación precisa a Carta Completa o Menú Degustación.
           </p>
         </div>
 
@@ -251,12 +254,12 @@ const MenuManager = () => {
 
       {/* Grid de Platos */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {currentDishes.map((dish, idx) => {
+        {currentDishes.map((dish) => {
           const title = dish.title || dish.name || 'Sin título';
           const desc = dish.desc || dish.description || '';
           return (
             <div
-              key={dish.id || idx}
+              key={dish.id}
               className="p-6 rounded-3xl bg-white border border-stone-200/80 hover:border-gold/50 transition-all duration-300 flex flex-col justify-between space-y-4 shadow-[0_10px_25px_rgba(0,0,0,0.02)] hover:shadow-[0_15px_30px_rgba(212,175,55,0.08)] group"
             >
               <div className="flex items-start justify-between gap-4">
@@ -290,14 +293,14 @@ const MenuManager = () => {
 
               <div className="pt-3 border-t border-stone-100 flex items-center justify-end gap-2">
                 <button
-                  onClick={() => handleOpenEdit(dish, idx)}
+                  onClick={() => handleOpenEdit(dish)}
                   className="px-3.5 py-1.5 rounded-full bg-stone-100 hover:bg-gold hover:text-black text-stone-700 transition-colors text-xs flex items-center gap-1 font-medium"
                 >
                   <Edit3 size={13} />
                   <span>Editar</span>
                 </button>
                 <button
-                  onClick={() => handleDelete(idx, title)}
+                  onClick={() => handleDelete(dish.id, title)}
                   className="px-3.5 py-1.5 rounded-full bg-stone-100 hover:bg-sacromonte-red/10 text-stone-600 hover:text-sacromonte-red transition-colors text-xs flex items-center gap-1 font-medium"
                 >
                   <Trash2 size={13} />
@@ -315,7 +318,7 @@ const MenuManager = () => {
         )}
       </div>
 
-      {/* Modal Añadir / Editar Plato */}
+      {/* Modal de Creación / Edición con Control Riguroso de Asignación */}
       <AnimatePresence>
         {isModalOpen && (
           <motion.div
@@ -337,7 +340,7 @@ const MenuManager = () => {
                   <h3 className="font-serif text-xl text-[#1A1A1A] font-bold">
                     {editingDish ? 'Editar Plato' : 'Nuevo Plato'}
                   </h3>
-                  <p className="text-xs text-stone-400">Categoría: {currentCategories.find(c => c.id === activeCat)?.name}</p>
+                  <p className="text-xs text-stone-400">Asignación controlada en la carta pública</p>
                 </div>
                 <button onClick={() => setIsModalOpen(false)} className="text-stone-400 hover:text-stone-700">
                   <X size={20} />
@@ -345,6 +348,48 @@ const MenuManager = () => {
               </div>
 
               <form onSubmit={handleSubmit} className="space-y-4">
+                
+                {/* Selector de Destino: Carta Completa vs Menú Degustación */}
+                <div className="grid grid-cols-2 gap-3 p-1.5 bg-stone-100 rounded-2xl">
+                  <button
+                    type="button"
+                    onClick={() => handleScopeChange('carta')}
+                    className={`py-2 px-3 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 ${
+                      formScope === 'carta' ? 'bg-white text-black shadow-sm' : 'text-stone-500 hover:text-black'
+                    }`}
+                  >
+                    <Layers size={14} />
+                    <span>Carta Completa</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleScopeChange('menu')}
+                    className={`py-2 px-3 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 ${
+                      formScope === 'menu' ? 'bg-white text-black shadow-sm' : 'text-stone-500 hover:text-black'
+                    }`}
+                  >
+                    <UtensilsCrossed size={14} />
+                    <span>Menú Degustación</span>
+                  </button>
+                </div>
+
+                {/* Selector de Categoría según el Destino seleccionado */}
+                <div>
+                  <label className="block text-xs uppercase tracking-wider text-stone-600 mb-1 font-semibold flex items-center gap-1.5">
+                    <FolderOpen size={13} className="text-gold" />
+                    <span>Categoría Asignada *</span>
+                  </label>
+                  <select
+                    value={formCategory}
+                    onChange={(e) => setFormCategory(e.target.value)}
+                    className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-2.5 text-sm text-[#1A1A1A] focus:outline-none focus:border-gold font-medium"
+                  >
+                    {(formScope === 'carta' ? CARTA_CATEGORIES : MENU_CATEGORIES).map(cat => (
+                      <option key={cat.id} value={cat.id}>{cat.name}</option>
+                    ))}
+                  </select>
+                </div>
+
                 <div>
                   <label className="block text-xs uppercase tracking-wider text-stone-600 mb-1 font-semibold">Nombre del Plato *</label>
                   <input
@@ -368,16 +413,25 @@ const MenuManager = () => {
                   />
                 </div>
 
-                <div>
-                  <label className="block text-xs uppercase tracking-wider text-stone-600 mb-1 font-semibold">Precio (€)</label>
-                  <input
-                    type="text"
-                    value={formPrice}
-                    onChange={(e) => setFormPrice(e.target.value)}
-                    placeholder="Ej: 24.50"
-                    className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-2.5 text-sm text-[#1A1A1A] focus:outline-none focus:border-gold"
-                  />
-                </div>
+                {/* Precio (Solo activo para Carta Completa, ya que el Menú Degustación es precio cerrado por pase) */}
+                {formScope === 'carta' ? (
+                  <div>
+                    <label className="block text-xs uppercase tracking-wider text-stone-600 mb-1 font-semibold">Precio Individual (€) *</label>
+                    <input
+                      type="text"
+                      required={formScope === 'carta'}
+                      value={formPrice}
+                      onChange={(e) => setFormPrice(e.target.value)}
+                      placeholder="Ej: 24.50"
+                      className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-2.5 text-sm text-[#1A1A1A] focus:outline-none focus:border-gold font-mono font-bold"
+                    />
+                  </div>
+                ) : (
+                  <div className="p-3 rounded-xl bg-gold/10 border border-gold/30 text-stone-700 text-xs">
+                    <span className="font-bold text-black block mb-0.5">Menú Degustación Cerrado</span>
+                    El precio se calcula globalmente por pase (55€ por persona con show incluido).
+                  </div>
+                )}
 
                 <div>
                   <label className="block text-xs uppercase tracking-wider text-stone-600 mb-2 font-semibold">Alérgenos Presentes (Normativa UE)</label>
@@ -414,7 +468,7 @@ const MenuManager = () => {
                     type="submit"
                     className="px-6 py-2.5 rounded-full bg-gold hover:bg-[#1A1A1A] hover:text-white text-black font-bold uppercase tracking-wider text-xs shadow-md transition-colors"
                   >
-                    {editingDish ? 'Guardar Cambios' : 'Añadir a la Carta'}
+                    {editingDish ? 'Guardar Cambios' : 'Guardar y Asignar Plato'}
                   </button>
                 </div>
               </form>
