@@ -38,20 +38,15 @@ const AdminLayout = () => {
     navigate('/admin/login');
   };
 
-  const getPageTitle = () => {
-    const current = navItems.find(item => item.exact ? location.pathname === item.path : location.pathname.startsWith(item.path));
-    return current ? current.name : 'Administración';
-  };
-
   return (
-    <div className="min-h-screen bg-[#07090E] text-slate-100 flex flex-col font-sans selection:bg-gold/30 selection:text-white">
+    <div className="min-h-screen bg-[#F8F7F4] text-slate-900 flex flex-col font-sans selection:bg-gold/30 selection:text-black">
       
-      {/* Topbar Fija Micro-SaaS */}
-      <header className="h-16 border-b border-gold/15 bg-black/80 backdrop-blur-xl sticky top-0 z-40 px-4 md:px-8 flex items-center justify-between">
+      {/* Topbar Obsidian & Gold de Alto Lujo */}
+      <header className="h-16 border-b border-gold/20 bg-[#0B0E14] text-white sticky top-0 z-40 px-4 md:px-8 flex items-center justify-between shadow-md">
         <div className="flex items-center gap-4">
           <button
             onClick={() => setMobileMenuOpen(true)}
-            className="md:hidden p-2 rounded-lg bg-white/5 border border-white/10 text-gold hover:bg-white/10 transition-colors"
+            className="md:hidden p-2 rounded-lg bg-white/10 border border-white/15 text-gold hover:bg-white/20 transition-colors"
           >
             <Menu size={20} />
           </button>
@@ -61,7 +56,7 @@ const AdminLayout = () => {
             <div className="hidden sm:block">
               <div className="flex items-center gap-2">
                 <span className="font-serif text-sm uppercase tracking-widest text-gold font-bold">Venta El Gallo</span>
-                <span className="text-[9px] px-1.5 py-0.5 rounded bg-gold/10 border border-gold/30 text-gold uppercase font-mono font-bold">Admin Engine</span>
+                <span className="text-[9px] px-1.5 py-0.5 rounded bg-gold/15 border border-gold/40 text-gold uppercase font-mono font-bold">Admin Engine</span>
               </div>
               <p className="text-[10px] text-slate-400 font-light">Panel de Control & Autogestión</p>
             </div>
@@ -70,16 +65,14 @@ const AdminLayout = () => {
 
         <div className="flex items-center gap-3 md:gap-5">
           <a
-            href="/"
-            target="_blank"
-            rel="noreferrer"
-            className="hidden sm:flex items-center gap-1.5 text-xs text-slate-300 hover:text-gold transition-colors px-3 py-1.5 rounded-full bg-white/5 border border-white/10 hover:border-gold/30"
+            href="#/"
+            className="hidden sm:flex items-center gap-1.5 text-xs text-slate-200 hover:text-gold transition-colors px-3 py-1.5 rounded-full bg-white/10 border border-white/15 hover:border-gold/40"
           >
             <ExternalLink size={13} />
             <span>Ver Sitio Web</span>
           </a>
 
-          <div className="flex items-center gap-3 pl-3 border-l border-white/10">
+          <div className="flex items-center gap-3 pl-3 border-l border-white/15">
             <div className="w-8 h-8 rounded-full bg-gold/20 border border-gold/40 flex items-center justify-center text-gold font-bold text-xs">
               {currentUser?.email ? currentUser.email.charAt(0).toUpperCase() : 'A'}
             </div>
@@ -102,11 +95,11 @@ const AdminLayout = () => {
       </header>
 
       <div className="flex-1 flex overflow-hidden">
-        {/* Sidebar Desktop */}
-        <aside className={`hidden md:flex flex-col border-r border-gold/15 bg-black/60 backdrop-blur-md transition-all duration-300 ${sidebarCollapsed ? 'w-20' : 'w-64'}`}>
+        {/* Sidebar Desktop Obsidian & Gold */}
+        <aside className={`hidden md:flex flex-col border-r border-gold/20 bg-[#0B0E14] text-white transition-all duration-300 ${sidebarCollapsed ? 'w-20' : 'w-64'}`}>
           <div className="p-4 flex flex-col gap-1.5 flex-1">
             <div className="px-3 py-2 text-[10px] uppercase font-bold tracking-widest text-slate-400">
-              {!sidebarCollapsed ? 'Navegación del Sistema' : '•••'}
+              {!sidebarCollapsed ? 'Módulos de Gestión' : '•••'}
             </div>
             {navItems.map((item) => {
               const Icon = item.icon;
@@ -118,8 +111,8 @@ const AdminLayout = () => {
                   className={({ isActive }) =>
                     `flex items-center gap-3 px-3.5 py-3 rounded-xl text-xs font-medium transition-all duration-200 group ${
                       isActive
-                        ? 'bg-gradient-to-r from-gold/20 to-gold/5 text-gold border border-gold/30 shadow-[0_0_15px_rgba(212,175,55,0.15)]'
-                        : 'text-slate-400 hover:text-white hover:bg-white/5 border border-transparent'
+                        ? 'bg-gold/20 text-gold border border-gold/40 shadow-[0_0_15px_rgba(212,175,55,0.15)] font-bold'
+                        : 'text-slate-300 hover:text-white hover:bg-white/10 border border-transparent'
                     }`
                   }
                 >
@@ -130,7 +123,7 @@ const AdminLayout = () => {
             })}
           </div>
 
-          <div className="p-4 border-t border-white/5">
+          <div className="p-4 border-t border-white/10">
             <button
               onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
               className="w-full py-2 px-3 rounded-lg text-[11px] text-slate-400 hover:text-gold hover:bg-white/5 transition-colors flex items-center justify-center gap-2 border border-white/5"
@@ -156,7 +149,7 @@ const AdminLayout = () => {
                 animate={{ x: 0 }}
                 exit={{ x: -280 }}
                 transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-                className="w-72 h-full bg-[#0d0f15] border-r border-gold/20 p-5 flex flex-col"
+                className="w-72 h-full bg-[#0B0E14] border-r border-gold/30 p-5 flex flex-col text-white"
                 onClick={(e) => e.stopPropagation()}
               >
                 <div className="flex items-center justify-between pb-4 border-b border-white/10 mb-4">
@@ -181,8 +174,8 @@ const AdminLayout = () => {
                         className={({ isActive }) =>
                           `flex items-center gap-3 px-3.5 py-3 rounded-xl text-xs font-medium transition-all ${
                             isActive
-                              ? 'bg-gold/20 text-gold border border-gold/30'
-                              : 'text-slate-400 hover:text-white hover:bg-white/5'
+                              ? 'bg-gold/25 text-gold border border-gold/40 font-bold'
+                              : 'text-slate-300 hover:text-white hover:bg-white/10'
                           }`
                         }
                       >
@@ -195,16 +188,15 @@ const AdminLayout = () => {
 
                 <div className="pt-4 border-t border-white/10 flex flex-col gap-2">
                   <a
-                    href="/"
-                    target="_blank"
-                    className="flex items-center justify-center gap-2 py-2.5 rounded-lg bg-white/5 text-xs text-slate-300"
+                    href="#/"
+                    className="flex items-center justify-center gap-2 py-2.5 rounded-lg bg-white/10 text-xs text-slate-200"
                   >
                     <ExternalLink size={14} />
                     <span>Ver Web Pública</span>
                   </a>
                   <button
                     onClick={handleLogout}
-                    className="flex items-center justify-center gap-2 py-2.5 rounded-lg bg-sacromonte-red/10 text-sacromonte-red text-xs font-medium"
+                    className="flex items-center justify-center gap-2 py-2.5 rounded-lg bg-sacromonte-red/20 text-sacromonte-red text-xs font-medium"
                   >
                     <LogOut size={14} />
                     <span>Cerrar Sesión</span>
@@ -215,8 +207,8 @@ const AdminLayout = () => {
           )}
         </AnimatePresence>
 
-        {/* Contenido Principal */}
-        <main className="flex-1 overflow-y-auto custom-scrollbar p-4 md:p-8 lg:p-10 bg-gradient-to-b from-[#07090E] via-[#090C12] to-[#07090E]">
+        {/* Contenido Principal con Fondo Aperlado Puro & Cards Blancas de Alto Lujo */}
+        <main className="flex-1 overflow-y-auto custom-scrollbar p-4 md:p-8 lg:p-10 bg-[#F9F8F6]">
           <div className="max-w-7xl mx-auto">
             <Outlet />
           </div>
