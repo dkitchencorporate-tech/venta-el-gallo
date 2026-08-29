@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { getMenuData, saveDishAtomic, deleteDishAtomic } from '../../../services/adminService';
+import LuxuryConfirmModal from './LuxuryConfirmModal';
 
 const ALLERGEN_LIST = [
   "Gluten", "Crustáceos", "Huevos", "Pescado", "Cacahuetes", 
@@ -41,13 +42,22 @@ const MENU_CATEGORIES = [
 ];
 
 const MenuManager = () => {
-  const [activeTab, setActiveTab] = useState('carta'); // 'carta' o 'menu'
+  const [activeTab, setActiveTab] = useState('carta');
   const [activeCat, setActiveCat] = useState('entrantes');
   const [menuState, setMenuState] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingDish, setEditingDish] = useState(null);
   
-  // Modal Form State con Control Estricto de Destino y Categoría
+  // Confirm Modal State
+  const [confirmModal, setConfirmModal] = useState({
+    isOpen: false,
+    title: '',
+    message: '',
+    onConfirm: null,
+    type: 'danger'
+  });
+
+  // Modal Form State
   const [formScope, setFormScope] = useState('carta');
   const [formCategory, setFormCategory] = useState('entrantes');
   const [formName, setFormName] = useState('');
@@ -100,16 +110,23 @@ const MenuManager = () => {
     setIsModalOpen(true);
   };
 
-  const handleDelete = (dishId, dishTitle) => {
-    if (window.confirm(`¿Estás seguro de eliminar "${dishTitle}" de forma permanente?`)) {
-      const updatedMenu = deleteDishAtomic({
-        scope: activeTab,
-        category: activeCat,
-        dishId
-      });
-      setMenuState(updatedMenu);
-      showToast(`Plato "${dishTitle}" eliminado correctamente.`);
-    }
+  const handleDeletePrompt = (dishId, dishTitle) => {
+    setConfirmModal({
+      isOpen: true,
+      title: `Eliminar Plato`,
+      message: `¿Estás seguro de eliminar "${dishTitle}" de la carta? El cambio se reflejará al instante en el restaurante público.`,
+      confirmText: 'Eliminar Plato',
+      type: 'danger',
+      onConfirm: () => {
+        const updatedMenu = deleteDishAtomic({
+          scope: activeTab,
+          category: activeCat,
+          dishId
+        });
+        setMenuState(updatedMenu);
+        showToast(`Plato "${dishTitle}" eliminado correctamente.`);
+      }
+    });
   };
 
   const toggleAllergen = (allergen) => {
@@ -147,7 +164,6 @@ const MenuManager = () => {
 
     setMenuState(updatedMenu);
     
-    // Si el plato se guardó en una sección distinta a la que se estaba viendo, sincronizar la vista activa
     if (activeTab !== formScope || activeCat !== formCategory) {
       setActiveTab(formScope);
       setActiveCat(formCategory);
@@ -300,7 +316,7 @@ const MenuManager = () => {
                   <span>Editar</span>
                 </button>
                 <button
-                  onClick={() => handleDelete(dish.id, title)}
+                  onClick={() => handleDeletePrompt(dish.id, title)}
                   className="px-3.5 py-1.5 rounded-full bg-stone-100 hover:bg-sacromonte-red/10 text-stone-600 hover:text-sacromonte-red transition-colors text-xs flex items-center gap-1 font-medium"
                 >
                   <Trash2 size={13} />
@@ -318,7 +334,7 @@ const MenuManager = () => {
         )}
       </div>
 
-      {/* Modal de Creación / Edición con Control Riguroso de Asignación */}
+      {/* Modal de Creación / Edición */}
       <AnimatePresence>
         {isModalOpen && (
           <motion.div
@@ -348,8 +364,6 @@ const MenuManager = () => {
               </div>
 
               <form onSubmit={handleSubmit} className="space-y-4">
-                
-                {/* Selector de Destino: Carta Completa vs Menú Degustación */}
                 <div className="grid grid-cols-2 gap-3 p-1.5 bg-stone-100 rounded-2xl">
                   <button
                     type="button"
@@ -373,7 +387,6 @@ const MenuManager = () => {
                   </button>
                 </div>
 
-                {/* Selector de Categoría según el Destino seleccionado */}
                 <div>
                   <label className="block text-xs uppercase tracking-wider text-stone-600 mb-1 font-semibold flex items-center gap-1.5">
                     <FolderOpen size={13} className="text-gold" />
@@ -413,7 +426,6 @@ const MenuManager = () => {
                   />
                 </div>
 
-                {/* Precio (Solo activo para Carta Completa, ya que el Menú Degustación es precio cerrado por pase) */}
                 {formScope === 'carta' ? (
                   <div>
                     <label className="block text-xs uppercase tracking-wider text-stone-600 mb-1 font-semibold">Precio Individual (€) *</label>
@@ -476,6 +488,17 @@ const MenuManager = () => {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Modal de Confirmación de Autor */}
+      <LuxuryConfirmModal
+        isOpen={confirmModal.isOpen}
+        title={confirmModal.title}
+        message={confirmModal.message}
+        confirmText={confirmModal.confirmText}
+        type={confirmModal.type}
+        onConfirm={confirmModal.onConfirm}
+        onClose={() => setConfirmModal({ ...confirmModal, isOpen: false })}
+      />
 
     </div>
   );
