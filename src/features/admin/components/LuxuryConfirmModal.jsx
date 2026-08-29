@@ -1,4 +1,5 @@
 import React from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { AlertTriangle, Trash2, X, Info } from 'lucide-react';
 
@@ -10,43 +11,42 @@ const LuxuryConfirmModal = ({
   message = "¿Estás seguro de continuar?", 
   confirmText = "Eliminar Definitivamente", 
   cancelText = "Cancelar",
-  type = "danger" // "danger" | "warning" | "info"
+  type = "danger"
 }) => {
-  if (!isOpen) return null;
-
   const isDanger = type === 'danger';
   const isWarning = type === 'warning';
 
-  return (
+  const modalContent = (
     <AnimatePresence>
       {isOpen && (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-[99999] flex items-center justify-center p-4 bg-black/65 backdrop-blur-sm"
+          transition={{ duration: 0.2 }}
+          className="fixed inset-0 z-[999999] flex items-center justify-center p-4 bg-black/75 backdrop-blur-md"
           onClick={onClose}
         >
           <motion.div
-            initial={{ scale: 0.95, opacity: 0, y: 15 }}
+            initial={{ scale: 0.9, opacity: 0, y: 20 }}
             animate={{ scale: 1, opacity: 1, y: 0 }}
-            exit={{ scale: 0.95, opacity: 0, y: 15 }}
-            transition={{ type: "spring", stiffness: 320, damping: 26 }}
-            className="w-full max-w-md bg-white border border-stone-200/80 rounded-3xl p-6 sm:p-8 shadow-[0_25px_60px_rgba(0,0,0,0.18)] relative overflow-hidden"
+            exit={{ scale: 0.9, opacity: 0, y: 20 }}
+            transition={{ type: "spring", stiffness: 350, damping: 25 }}
+            className="w-full max-w-md bg-white border border-stone-200 rounded-3xl p-6 sm:p-8 shadow-[0_30px_70px_rgba(0,0,0,0.3)] relative overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Cabecera con Icono y Badge Luxury */}
             <div className="flex items-start gap-4 mb-4">
               <div className={`w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0 ${
                 isDanger 
-                  ? 'bg-rose-50 text-sacromonte-red border border-rose-100' 
+                  ? 'bg-rose-50 text-sacromonte-red border border-rose-200' 
                   : isWarning 
-                    ? 'bg-amber-50 text-amber-600 border border-amber-100'
-                    : 'bg-stone-50 text-gold border border-gold/20'
+                    ? 'bg-amber-50 text-amber-600 border border-amber-200'
+                    : 'bg-stone-50 text-gold border border-gold/30'
               }`}>
-                {isDanger && <Trash2 size={22} />}
-                {isWarning && <AlertTriangle size={22} />}
-                {!isDanger && !isWarning && <Info size={22} />}
+                {isDanger && <Trash2 size={22} className="text-sacromonte-red" />}
+                {isWarning && <AlertTriangle size={22} className="text-amber-600" />}
+                {!isDanger && !isWarning && <Info size={22} className="text-gold" />}
               </div>
 
               <div className="flex-1">
@@ -64,6 +64,7 @@ const LuxuryConfirmModal = ({
               <button 
                 onClick={onClose}
                 className="p-1.5 rounded-full text-stone-400 hover:text-stone-700 hover:bg-stone-100 transition-colors"
+                title="Cerrar"
               >
                 <X size={18} />
               </button>
@@ -112,6 +113,8 @@ const LuxuryConfirmModal = ({
       )}
     </AnimatePresence>
   );
+
+  return createPortal(modalContent, document.body);
 };
 
 export default LuxuryConfirmModal;
