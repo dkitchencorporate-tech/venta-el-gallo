@@ -1,152 +1,135 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import { Lock, Mail, Loader2, ArrowRight, ShieldCheck, Sparkles } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { Lock, Mail, ExternalLink, AlertCircle } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import logoGallo from '../../assets/raw/logoVentaelGallo.webp';
 
 const AdminLogin = () => {
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState('info@cuevaventaelgallo.es');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const { login } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
-    setIsLoading(true);
+    setLoading(true);
 
     try {
       await login(email, password);
       navigate('/admin');
     } catch (err) {
-      setError('Credenciales incorrectas. Acceso exclusivo para administradores autorizados.');
+      setError(err.message || 'Credenciales incorrectas.');
     } finally {
-      setIsLoading(false);
+      setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#07090E] relative overflow-hidden px-4 selection:bg-gold/30 selection:text-white">
+    <div className="min-h-screen w-full bg-[#FAF9F6] flex items-center justify-center p-6 relative overflow-hidden font-sans">
       
-      {/* Background Decorativo Dinámico */}
-      <div className="absolute inset-0 z-0 pointer-events-none">
-        <div className="absolute top-1/4 left-1/3 w-[500px] h-[500px] bg-gold/5 rounded-full blur-[140px]" />
-        <div className="absolute bottom-1/4 right-1/3 w-[450px] h-[450px] bg-[#8B0000]/10 rounded-full blur-[140px]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(7,9,14,0.85)_100%)]" />
+      <div className="w-full max-w-md bg-white border border-stone-200/80 rounded-3xl p-8 sm:p-10 shadow-[0_20px_50px_rgba(0,0,0,0.04)] relative z-10">
+        
+        {/* Logo & Header */}
+        <div className="text-center mb-8">
+          <img src={logoGallo} alt="Venta El Gallo" className="h-14 mx-auto mb-4 object-contain" />
+          <div className="flex items-center justify-center gap-2 mb-1">
+            <div className="w-3 h-[1px] bg-sacromonte-red"></div>
+            <span className="text-[10px] uppercase tracking-[0.25em] font-bold text-gold">
+              Panel Administrativo
+            </span>
+            <div className="w-3 h-[1px] bg-sacromonte-red"></div>
+          </div>
+          <h1 className="text-2xl font-serif text-[#1A1A1A] font-bold">
+            Iniciar Sesión
+          </h1>
+          <p className="text-xs text-stone-500 mt-1 font-light">
+            Gestión interna de Cueva Flamenca Venta El Gallo
+          </p>
+        </div>
+
+        {/* Alerta de Error */}
+        <AnimatePresence>
+          {error && (
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              className="p-3.5 rounded-2xl bg-rose-50 border border-rose-200 text-rose-800 text-xs flex items-center gap-2 mb-6 font-medium"
+            >
+              <AlertCircle size={16} className="text-rose-600 flex-shrink-0" />
+              <span>{error}</span>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Formulario */}
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label className="block text-xs uppercase tracking-wider text-stone-600 mb-1.5 font-semibold">
+              Correo Electrónico
+            </label>
+            <div className="relative">
+              <Mail size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-400" />
+              <input
+                type="email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="info@cuevaventaelgallo.es"
+                className="w-full bg-stone-50 border border-stone-200 rounded-2xl pl-11 pr-4 py-3 text-xs text-[#1A1A1A] focus:outline-none focus:border-gold font-medium"
+              />
+            </div>
+          </div>
+
+          <div>
+            <div className="flex items-center justify-between mb-1.5">
+              <label className="text-xs uppercase tracking-wider text-stone-600 font-semibold">
+                Contraseña
+              </label>
+              <Link
+                to="/admin/reset-password"
+                className="text-[11px] text-gold hover:underline font-medium"
+              >
+                ¿Olvidaste tu contraseña?
+              </Link>
+            </div>
+            <div className="relative">
+              <Lock size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-400" />
+              <input
+                type="password"
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="••••••••••••"
+                className="w-full bg-stone-50 border border-stone-200 rounded-2xl pl-11 pr-4 py-3 text-xs text-[#1A1A1A] focus:outline-none focus:border-gold font-medium"
+              />
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full py-3.5 rounded-full bg-gold hover:bg-[#1A1A1A] hover:text-white text-black font-bold uppercase tracking-wider text-xs shadow-md transition-all mt-4 disabled:opacity-50"
+          >
+            {loading ? 'Accediendo...' : 'Entrar al Panel'}
+          </button>
+        </form>
+
+        {/* Footer */}
+        <div className="mt-8 pt-6 border-t border-stone-100 flex items-center justify-between text-xs text-stone-500">
+          <Link to="/" className="inline-flex items-center gap-1.5 hover:text-gold transition-colors">
+            <ExternalLink size={13} />
+            <span>Volver a la Web</span>
+          </Link>
+          <span className="text-[10px] text-stone-400 font-mono">v2.0 Luxury</span>
+        </div>
+
       </div>
 
-      <motion.div 
-        initial={{ opacity: 0, y: 25 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
-        className="w-full max-w-md relative z-10"
-      >
-        <div className="bg-black/70 backdrop-blur-2xl border border-gold/30 p-8 md:p-10 rounded-3xl shadow-[0_30px_90px_rgba(0,0,0,0.8)] relative overflow-hidden group">
-          
-          {/* Resplandor superior dorado */}
-          <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-transparent via-gold to-transparent opacity-80" />
-
-          <div className="text-center mb-8">
-            <motion.div 
-              initial={{ scale: 0.9 }}
-              animate={{ scale: 1 }}
-              className="inline-block mb-4"
-            >
-              <img 
-                src={logoGallo} 
-                alt="Venta El Gallo" 
-                className="h-16 w-auto mx-auto object-contain filter drop-shadow-[0_0_15px_rgba(212,175,55,0.4)]" 
-              />
-            </motion.div>
-            
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gold/10 border border-gold/30 mb-2">
-              <ShieldCheck size={12} className="text-gold" />
-              <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-gold">Acceso Seguro</span>
-            </div>
-            
-            <h1 className="font-serif text-2xl md:text-3xl text-white tracking-wide uppercase mt-1">
-              Panel de Control
-            </h1>
-            <p className="text-xs text-slate-400 mt-1 font-light">
-              Cueva Flamenca Venta El Gallo (Sacromonte)
-            </p>
-          </div>
-
-          <form onSubmit={handleSubmit} className="space-y-5">
-            <div>
-              <label className="block text-[11px] uppercase tracking-widest text-slate-300 mb-2 font-medium">
-                Usuario / Correo Electrónico
-              </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
-                  <Mail size={16} />
-                </div>
-                <input
-                  type="email"
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full bg-[#0d1017]/90 border border-white/10 rounded-xl pl-10 pr-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-all"
-                  placeholder="admin@ventaelgallo.com"
-                />
-              </div>
-            </div>
-
-            <div>
-              <label className="block text-[11px] uppercase tracking-widest text-slate-300 mb-2 font-medium">
-                Clave de Seguridad
-              </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
-                  <Lock size={16} />
-                </div>
-                <input
-                  type="password"
-                  required
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="w-full bg-[#0d1017]/90 border border-white/10 rounded-xl pl-10 pr-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-all"
-                  placeholder="••••••••••••"
-                />
-              </div>
-            </div>
-
-            {error && (
-              <motion.div 
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
-                className="text-sacromonte-red text-xs bg-sacromonte-red/10 border border-sacromonte-red/30 p-3 rounded-xl text-center leading-relaxed"
-              >
-                {error}
-              </motion.div>
-            )}
-
-            <button
-              type="submit"
-              disabled={isLoading}
-              className="w-full bg-gradient-to-r from-gold via-[#e6ca65] to-gold hover:from-white hover:to-white text-black font-extrabold uppercase tracking-[0.2em] text-xs py-4 rounded-xl shadow-[0_0_25px_rgba(212,175,55,0.25)] hover:shadow-[0_0_35px_rgba(212,175,55,0.4)] transition-all duration-300 flex items-center justify-center gap-2 group disabled:opacity-60"
-            >
-              {isLoading ? (
-                <Loader2 size={16} className="animate-spin" />
-              ) : (
-                <>
-                  <span>Ingresar al Sistema</span>
-                  <ArrowRight size={16} className="transform group-hover:translate-x-1 transition-transform" />
-                </>
-              )}
-            </button>
-          </form>
-
-          <div className="mt-6 pt-5 border-t border-white/10 text-center">
-            <a href="/" className="text-xs text-slate-400 hover:text-gold transition-colors">
-              ← Volver al Sitio Web Principal
-            </a>
-          </div>
-        </div>
-      </motion.div>
     </div>
   );
 };
