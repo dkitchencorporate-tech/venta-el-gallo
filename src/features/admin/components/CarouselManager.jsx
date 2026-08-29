@@ -3,19 +3,16 @@ import {
   Images, 
   Plus, 
   Trash2, 
-  Upload, 
   Check, 
   AlertTriangle, 
   X, 
-  Sparkles, 
   ArrowUp, 
   ArrowDown 
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { getCarouselImages, saveCarouselImages } from '../../../services/adminService';
+import { getCarouselImages, saveCarouselImages, resolveAssetUrl } from '../../../services/adminService';
 
 const MAX_IMAGES = 25;
-const MAX_SIZE_MB = 0.5; // 500KB
 
 const CarouselManager = () => {
   const [images, setImages] = useState([]);
@@ -65,7 +62,7 @@ const CarouselManager = () => {
 
     const newImgObj = {
       id: `car-${Date.now()}`,
-      url: newUrl.trim(),
+      src: newUrl.trim(),
       alt: newAlt.trim() || 'Experiencia Gastronómica Venta El Gallo',
       title: newAlt.trim() || 'Venta El Gallo'
     };
@@ -83,24 +80,24 @@ const CarouselManager = () => {
     <div className="space-y-8 fade-in">
       
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-gold/15">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-stone-200">
         <div>
           <div className="flex items-center gap-2 text-gold text-xs uppercase font-bold tracking-widest mb-1">
             <Images size={16} />
             <span>Gestor de Fotografías</span>
           </div>
-          <h1 className="text-2xl md:text-3xl font-serif text-white uppercase tracking-tight">
+          <h1 className="text-2xl md:text-3xl font-serif text-slate-900 uppercase tracking-tight font-bold">
             Carrusel de <span className="text-gold">Experiencia</span>
           </h1>
-          <p className="text-slate-400 text-xs mt-1 font-light">
-            Reordena las fotos, añade nuevas tomas de gastronomía y ambiente (Slots activos: <strong className="text-white">{images.length}/{MAX_IMAGES}</strong>).
+          <p className="text-slate-600 text-xs mt-1 font-normal">
+            Reordena las fotos, añade nuevas tomas de gastronomía y ambiente (Slots activos: <strong className="text-slate-900">{images.length}/{MAX_IMAGES}</strong>).
           </p>
         </div>
 
         <button
           onClick={() => { setErrorMsg(''); setIsModalOpen(true); }}
           disabled={images.length >= MAX_IMAGES}
-          className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-gold via-[#e8cd6e] to-gold hover:from-white hover:to-white text-black font-extrabold uppercase tracking-wider text-xs shadow-lg transition-colors disabled:opacity-50"
+          className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-gold via-[#e8cd6e] to-gold hover:from-black hover:to-black hover:text-gold text-black font-extrabold uppercase tracking-wider text-xs shadow-md transition-all disabled:opacity-50"
         >
           <Plus size={16} strokeWidth={3} />
           <span>Añadir Imagen</span>
@@ -113,69 +110,71 @@ const CarouselManager = () => {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className="p-4 rounded-xl bg-emerald-500/15 border border-emerald-500/40 text-emerald-300 text-xs flex items-center gap-2"
+            className="p-4 rounded-xl bg-emerald-50 border border-emerald-300 text-emerald-800 text-xs flex items-center gap-2 shadow-sm font-medium"
           >
-            <Check size={16} className="text-emerald-400" />
+            <Check size={16} className="text-emerald-600" />
             <span>{toastMsg}</span>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Grid de Imágenes del Carrusel */}
+      {/* Grid de Imágenes con Cards Blancas */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        {images.map((img, idx) => (
-          <div
-            key={img.id || idx}
-            className="rounded-2xl bg-black/60 border border-white/10 hover:border-gold/40 transition-all overflow-hidden flex flex-col backdrop-blur-md group"
-          >
-            <div className="relative aspect-[16/10] bg-black overflow-hidden">
-              <img
-                src={img.url}
-                alt={img.alt}
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                onError={(e) => { e.target.src = '/src/assets/raw/placeholder.png'; }}
-              />
-              <span className="absolute top-3 left-3 px-2 py-0.5 rounded-full bg-black/70 border border-gold/30 text-[9px] font-bold text-gold font-mono">
-                #{idx + 1}
-              </span>
-            </div>
+        {images.map((img, idx) => {
+          const imgSrc = resolveAssetUrl(img.src || img.url);
+          return (
+            <div
+              key={img.id || idx}
+              className="rounded-2xl bg-white border border-stone-200 hover:border-gold/60 transition-all overflow-hidden flex flex-col shadow-sm hover:shadow-lg group"
+            >
+              <div className="relative aspect-[16/10] bg-stone-900 overflow-hidden">
+                <img
+                  src={imgSrc}
+                  alt={img.alt}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+                <span className="absolute top-3 left-3 px-2.5 py-0.5 rounded-full bg-black/80 border border-gold/40 text-[9px] font-bold text-gold font-mono">
+                  #{idx + 1}
+                </span>
+              </div>
 
-            <div className="p-4 flex-1 flex flex-col justify-between space-y-3">
-              <p className="text-xs text-white font-medium truncate">
-                {img.title || img.alt || `Foto #${idx + 1}`}
-              </p>
+              <div className="p-4 flex-1 flex flex-col justify-between space-y-3">
+                <p className="text-xs text-slate-800 font-bold truncate">
+                  {img.title || img.alt || `Foto #${idx + 1}`}
+                </p>
 
-              <div className="flex items-center justify-between pt-2 border-t border-white/10">
-                <div className="flex items-center gap-1">
+                <div className="flex items-center justify-between pt-3 border-t border-stone-100">
+                  <div className="flex items-center gap-1">
+                    <button
+                      disabled={idx === 0}
+                      onClick={() => handleMove(idx, 'up')}
+                      className="p-1.5 rounded-lg bg-stone-100 hover:bg-gold/20 text-slate-600 hover:text-black disabled:opacity-30"
+                      title="Mover posición"
+                    >
+                      <ArrowUp size={13} />
+                    </button>
+                    <button
+                      disabled={idx === images.length - 1}
+                      onClick={() => handleMove(idx, 'down')}
+                      className="p-1.5 rounded-lg bg-stone-100 hover:bg-gold/20 text-slate-600 hover:text-black disabled:opacity-30"
+                      title="Mover posición"
+                    >
+                      <ArrowDown size={13} />
+                    </button>
+                  </div>
+
                   <button
-                    disabled={idx === 0}
-                    onClick={() => handleMove(idx, 'up')}
-                    className="p-1.5 rounded-lg bg-white/5 hover:bg-gold/20 text-slate-400 hover:text-gold disabled:opacity-30"
-                    title="Mover a la izquierda / arriba"
+                    onClick={() => handleDelete(img.id)}
+                    className="p-1.5 rounded-lg bg-stone-100 hover:bg-sacromonte-red/10 text-slate-600 hover:text-sacromonte-red"
+                    title="Eliminar Fotografía"
                   >
-                    <ArrowUp size={13} />
-                  </button>
-                  <button
-                    disabled={idx === images.length - 1}
-                    onClick={() => handleMove(idx, 'down')}
-                    className="p-1.5 rounded-lg bg-white/5 hover:bg-gold/20 text-slate-400 hover:text-gold disabled:opacity-30"
-                    title="Mover a la derecha / abajo"
-                  >
-                    <ArrowDown size={13} />
+                    <Trash2 size={13} />
                   </button>
                 </div>
-
-                <button
-                  onClick={() => handleDelete(img.id)}
-                  className="p-1.5 rounded-lg bg-white/5 hover:bg-sacromonte-red/20 text-slate-400 hover:text-sacromonte-red"
-                  title="Eliminar Fotografía"
-                >
-                  <Trash2 size={13} />
-                </button>
               </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       {/* Modal Añadir Imagen */}
@@ -185,22 +184,22 @@ const CarouselManager = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md"
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-md"
             onClick={() => setIsModalOpen(false)}
           >
             <motion.div
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.95, opacity: 0 }}
-              className="w-full max-w-lg bg-[#0d1017] border border-gold/30 rounded-3xl p-6 md:p-8 shadow-2xl"
+              className="w-full max-w-lg bg-white border border-stone-300 rounded-3xl p-6 md:p-8 shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="flex items-center justify-between pb-4 border-b border-white/10 mb-6">
+              <div className="flex items-center justify-between pb-4 border-b border-stone-200 mb-6">
                 <div>
-                  <h3 className="font-serif text-xl text-white">Añadir Fotografía al Carrusel</h3>
-                  <p className="text-xs text-slate-400">Recomendado formato WebP / JPG optimizado &lt;500KB</p>
+                  <h3 className="font-serif text-xl text-slate-900 font-bold">Añadir Fotografía al Carrusel</h3>
+                  <p className="text-xs text-slate-500">Recomendado formato WebP / JPG optimizado &lt;500KB</p>
                 </div>
-                <button onClick={() => setIsModalOpen(false)} className="text-slate-400 hover:text-white">
+                <button onClick={() => setIsModalOpen(false)} className="text-slate-400 hover:text-slate-700">
                   <X size={20} />
                 </button>
               </div>
@@ -213,7 +212,7 @@ const CarouselManager = () => {
 
               <form onSubmit={handleAddImage} className="space-y-4">
                 <div>
-                  <label className="block text-[11px] uppercase tracking-widest text-slate-300 mb-1 font-medium">
+                  <label className="block text-[11px] uppercase tracking-widest text-slate-700 mb-1 font-bold">
                     Ruta o URL de la Imagen *
                   </label>
                   <input
@@ -221,13 +220,13 @@ const CarouselManager = () => {
                     required
                     value={newUrl}
                     onChange={(e) => setNewUrl(e.target.value)}
-                    placeholder="Ej: /images/carrusel/cena-espectaculo-flamenco-granada.jpeg"
-                    className="w-full bg-black/60 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-gold"
+                    placeholder="Ej: images/carrusel/cena-espectaculo-flamenco-granada.jpeg"
+                    className="w-full bg-stone-50 border border-stone-300 rounded-xl px-4 py-2.5 text-sm text-slate-900 focus:outline-none focus:border-gold"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-[11px] uppercase tracking-widest text-slate-300 mb-1 font-medium">
+                  <label className="block text-[11px] uppercase tracking-widest text-slate-700 mb-1 font-bold">
                     Título / Texto Alternativo (SEO)
                   </label>
                   <input
@@ -235,21 +234,21 @@ const CarouselManager = () => {
                     value={newAlt}
                     onChange={(e) => setNewAlt(e.target.value)}
                     placeholder="Ej: Terraza con vistas a la Alhambra"
-                    className="w-full bg-black/60 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-gold"
+                    className="w-full bg-stone-50 border border-stone-300 rounded-xl px-4 py-2.5 text-sm text-slate-900 focus:outline-none focus:border-gold"
                   />
                 </div>
 
-                <div className="pt-4 border-t border-white/10 flex items-center justify-end gap-3">
+                <div className="pt-4 border-t border-stone-200 flex items-center justify-end gap-3">
                   <button
                     type="button"
                     onClick={() => setIsModalOpen(false)}
-                    className="px-5 py-2.5 rounded-xl bg-white/5 text-slate-300 text-xs"
+                    className="px-5 py-2.5 rounded-xl bg-stone-100 text-slate-700 text-xs font-bold"
                   >
                     Cancelar
                   </button>
                   <button
                     type="submit"
-                    className="px-6 py-2.5 rounded-xl bg-gold hover:bg-white text-black font-extrabold uppercase tracking-wider text-xs shadow-lg transition-colors"
+                    className="px-6 py-2.5 rounded-xl bg-gold hover:bg-black hover:text-gold text-black font-extrabold uppercase tracking-wider text-xs shadow-md transition-colors"
                   >
                     Añadir Imagen
                   </button>
