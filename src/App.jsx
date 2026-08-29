@@ -1,71 +1,85 @@
-import React, { useEffect } from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import React from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import MainLayout from './layouts/MainLayout';
 import AdminLayout from './layouts/AdminLayout';
+
+// Vistas Públicas
 import Home from './features/home/Home';
-import Restaurant from './features/restaurant/Restaurant';
 import Artists from './features/artists/Artists';
+import Restaurant from './features/restaurant/Restaurant';
 import History from './features/history/History';
-import Agencias from './features/b2b/Agencias';
+import Agencies from './features/agencies/Agencies';
 import Booking from './features/booking/Booking';
 import Blog from './features/blog/Blog';
-import BlogPost from './features/blog/BlogPost';
-import Privacy from './features/legal/Privacy';
-import Terms from './features/legal/Terms';
+import Contact from './features/contact/Contact';
 import Legal from './features/legal/Legal';
+import Privacy from './features/legal/Privacy';
+import Cookies from './features/legal/Cookies';
+import Allergens from './features/allergens/Allergens';
+import FAQ from './features/faq/FAQ';
 
-// Admin Components
+// Vistas del Admin
 import AdminLogin from './features/admin/AdminLogin';
+import AdminResetPassword from './features/admin/AdminResetPassword';
 import AdminDashboard from './features/admin/AdminDashboard';
 import ArtistManager from './features/admin/components/ArtistManager';
 import MenuManager from './features/admin/components/MenuManager';
 import CarouselManager from './features/admin/components/CarouselManager';
 import PasesManager from './features/admin/components/PasesManager';
 
-import { AuthProvider } from './context/AuthContext';
-import { BookingProvider } from './context/BookingContext';
+import { useAuth } from './context/AuthContext';
 
-function ScrollToTop() {
-  const { pathname } = useLocation();
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
-  return null;
-}
+const ProtectedRoute = ({ children }) => {
+  const { currentUser } = useAuth();
+  if (!currentUser) {
+    return <Navigate to="/admin/login" replace />;
+  }
+  return children;
+};
 
 function App() {
   return (
-    <AuthProvider>
-      <BookingProvider>
-        <ScrollToTop />
-        <Routes>
-          {/* Rutas Públicas Principales */}
-          <Route path="/" element={<MainLayout />}>
-            <Route index element={<Home />} />
-            <Route path="restaurante" element={<Restaurant />} />
-            <Route path="artistas" element={<Artists />} />
-            <Route path="historia" element={<History />} />
-            <Route path="agencias" element={<Agencias />} />
-            <Route path="reservas" element={<Booking />} />
-            <Route path="blog" element={<Blog />} />
-            <Route path="blog/:slug" element={<BlogPost />} />
-            <Route path="privacidad" element={<Privacy />} />
-            <Route path="terminos" element={<Terms />} />
-            <Route path="aviso-legal" element={<Legal />} />
-          </Route>
+    <Routes>
+      {/* 1. Rutas Públicas */}
+      <Route path="/" element={<MainLayout />}>
+        <Route index element={<Home />} />
+        <Route path="artistas" element={<Artists />} />
+        <Route path="restaurante" element={<Restaurant />} />
+        <Route path="historia" element={<History />} />
+        <Route path="agencias" element={<Agencies />} />
+        <Route path="reservas" element={<Booking />} />
+        <Route path="blog" element={<Blog />} />
+        <Route path="contacto" element={<Contact />} />
+        <Route path="aviso-legal" element={<Legal />} />
+        <Route path="privacidad" element={<Privacy />} />
+        <Route path="cookies" element={<Cookies />} />
+        <Route path="alergenos" element={<Allergens />} />
+        <Route path="faq" element={<FAQ />} />
+      </Route>
 
-          {/* Rutas de Administración Micro-SaaS */}
-          <Route path="/admin/login" element={<AdminLogin />} />
-          <Route path="/admin" element={<AdminLayout />}>
-            <Route index element={<AdminDashboard />} />
-            <Route path="artistas" element={<ArtistManager />} />
-            <Route path="menu" element={<MenuManager />} />
-            <Route path="carrusel" element={<CarouselManager />} />
-            <Route path="pases" element={<PasesManager />} />
-          </Route>
-        </Routes>
-      </BookingProvider>
-    </AuthProvider>
+      {/* 2. Autenticación y Seguridad del Admin */}
+      <Route path="/admin/login" element={<AdminLogin />} />
+      <Route path="/admin/reset-password" element={<AdminResetPassword />} />
+
+      {/* 3. Panel de Administración Protegido */}
+      <Route
+        path="/admin"
+        element={
+          <ProtectedRoute>
+            <AdminLayout />
+          </ProtectedRoute>
+        }
+      >
+        <Route index element={<AdminDashboard />} />
+        <Route path="artistas" element={<ArtistManager />} />
+        <Route path="menu" element={<MenuManager />} />
+        <Route path="carrusel" element={<CarouselManager />} />
+        <Route path="pases" element={<PasesManager />} />
+      </Route>
+
+      {/* Redirección por defecto */}
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
   );
 }
 
