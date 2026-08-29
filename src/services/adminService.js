@@ -37,8 +37,16 @@ export const resolveAssetUrl = (url) => {
   if (!url) return jaraImg;
   if (artistImageMap[url]) return artistImageMap[url];
   if (url.startsWith('http') || url.startsWith('data:') || url.startsWith('blob:')) return url;
+  
+  const base = import.meta.env.BASE_URL || '/';
+  
+  // Si la URL ya incluye la base o proviene de Vite bundle (/assets/)
+  if (url.includes('/assets/') || url.startsWith(base)) {
+    return url;
+  }
+
   const clean = url.replace(/^\//, '');
-  return `${import.meta.env.BASE_URL}${clean}`;
+  return `${base}${clean}`;
 };
 
 export const initialArtistsList = [
@@ -117,10 +125,10 @@ export const initialArtistsList = [
 ];
 
 const STORAGE_KEYS = {
-  ARTISTS: 'veg_admin_artists',
-  MENU_DATA: 'veg_admin_menu',
-  CAROUSEL: 'veg_admin_carousel',
-  PASES_CONFIG: 'veg_admin_pases'
+  ARTISTS: 'veg_admin_artists_v2',
+  MENU_DATA: 'veg_admin_menu_v2',
+  CAROUSEL: 'veg_admin_carousel_v2',
+  PASES_CONFIG: 'veg_admin_pases_v2'
 };
 
 // ==========================================
@@ -131,10 +139,12 @@ export const getArtists = () => {
     const stored = localStorage.getItem(STORAGE_KEYS.ARTISTS);
     if (stored) {
       const parsed = JSON.parse(stored);
-      return parsed.map(a => ({
-        ...a,
-        imageUrl: artistImageMap[a.id] || artistImageMap[a.name] || a.imageUrl || jaraImg
-      }));
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        return parsed.map(a => ({
+          ...a,
+          imageUrl: artistImageMap[a.id] || artistImageMap[a.name] || a.imageUrl || jaraImg
+        }));
+      }
     }
   } catch (e) {
     console.warn('Error reading artists from localStorage:', e);
@@ -152,6 +162,7 @@ export const addArtist = (artist) => {
   const newArtist = {
     ...artist,
     id: `art-${Date.now()}`,
+    imageUrl: artist.imageUrl || jaraImg,
     order: list.length + 1
   };
   const updated = [newArtist, ...list];
@@ -179,7 +190,12 @@ export const deleteArtist = (id) => {
 export const getMenuData = () => {
   try {
     const stored = localStorage.getItem(STORAGE_KEYS.MENU_DATA);
-    if (stored) return JSON.parse(stored);
+    if (stored) {
+      const parsed = JSON.parse(stored);
+      if (parsed?.cartaData && parsed?.menuData) {
+        return parsed;
+      }
+    }
   } catch (e) {
     console.warn('Error reading menuData from localStorage:', e);
   }
@@ -197,7 +213,10 @@ export const saveMenuData = (data) => {
 export const getCarouselImages = () => {
   try {
     const stored = localStorage.getItem(STORAGE_KEYS.CAROUSEL);
-    if (stored) return JSON.parse(stored);
+    if (stored) {
+      const parsed = JSON.parse(stored);
+      if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+    }
   } catch (e) {
     console.warn('Error reading carousel from localStorage:', e);
   }
