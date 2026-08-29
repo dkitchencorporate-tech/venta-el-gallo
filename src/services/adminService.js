@@ -39,8 +39,6 @@ export const resolveAssetUrl = (url) => {
   if (url.startsWith('http') || url.startsWith('data:') || url.startsWith('blob:')) return url;
   
   const base = import.meta.env.BASE_URL || '/';
-  
-  // Si la URL ya incluye la base o proviene de Vite bundle (/assets/)
   if (url.includes('/assets/') || url.startsWith(base)) {
     return url;
   }
@@ -185,7 +183,7 @@ export const deleteArtist = (id) => {
 };
 
 // ==========================================
-// 2. CARTA Y MENÚ
+// 2. CARTA Y MENÚ (GOBERNANZA ATÓMICA AISLADA)
 // ==========================================
 export const getMenuData = () => {
   try {
@@ -203,8 +201,69 @@ export const getMenuData = () => {
 };
 
 export const saveMenuData = (data) => {
-  localStorage.setItem(STORAGE_KEYS.MENU_DATA, JSON.stringify(data));
-  window.dispatchEvent(new CustomEvent('veg_menu_updated', { detail: data }));
+  // Garantizar aislamiento estricto de ramas
+  const sanitized = {
+    cartaData: data.cartaData || menuCentralizado.cartaData,
+    menuData: data.menuData || menuCentralizado.menuData
+  };
+  localStorage.setItem(STORAGE_KEYS.MENU_DATA, JSON.stringify(sanitized));
+  window.dispatchEvent(new CustomEvent('veg_menu_updated', { detail: sanitized }));
+  return sanitized;
+};
+
+// Operación atómica de guardado/edición de plato
+export const saveDishAtomic = ({ scope, category, dish, isEdit, editId }) => {
+  const currentMenu = getMenuData();
+  const branchKey = scope === 'carta' ? 'cartaData' : 'menuData';
+  const currentBranch = { ...(currentMenu[branchKey] || {}) };
+  const currentCategoryList = [...(currentBranch[category] || [])];
+
+  const sanitizedDish = {
+    id: isEdit ? editId : `${scope === 'carta' ? 'c' : 'm'}_${category}_${Date.now()}`,
+    title: dish.title?.trim() || dish.name?.trim() || 'Sin Título',
+    name: dish.title?.trim() || dish.name?.trim() || 'Sin Título',
+    desc: dish.desc?.trim() || dish.description?.trim() || '',
+    description: dish.desc?.trim() || dish.description?.trim() || '',
+    price: scope === 'carta' ? (dish.price ? (dish.price.includes('€') ? dish.price.trim() : `${dish.price.trim()}€`) : '') : '',
+    allergens: Array.isArray(dish.allergens) ? dish.allergens : []
+  };
+
+  let updatedCategoryList;
+  if (isEdit) {
+    updatedCategoryList = currentCategoryList.map(item => item.id === editId ? sanitizedDish : item);
+  } else {
+    updatedCategoryList = [...currentCategoryList, sanitizedDish];
+  }
+
+  const updatedMenu = {
+    ...currentMenu,
+    [branchKey]: {
+      ...currentBranch,
+      [category]: updatedCategoryList
+    }
+  };
+
+  return saveMenuData(updatedMenu);
+};
+
+// Operación atómica de eliminación de plato
+export const deleteDishAtomic = ({ scope, category, dishId }) => {
+  const currentMenu = getMenuData();
+  const branchKey = scope === 'carta' ? 'cartaData' : 'menuData';
+  const currentBranch = { ...(currentMenu[branchKey] || {}) };
+  const currentCategoryList = [...(currentBranch[category] || [])];
+
+  const updatedCategoryList = currentCategoryList.filter(item => item.id !== dishId);
+
+  const updatedMenu = {
+    ...currentMenu,
+    [branchKey]: {
+      ...currentBranch,
+      [category]: updatedCategoryList
+    }
+  };
+
+  return saveMenuData(updatedMenu);
 };
 
 // ==========================================
