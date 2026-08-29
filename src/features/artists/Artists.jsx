@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import ArtistsHero from './components/ArtistsHero';
 import ArtistCard from './components/ArtistCard';
 import BiographyModal from './components/BiographyModal';
 import { useBooking } from '../../context/BookingContext';
+import { getArtists } from '../../services/adminService';
 
 // Real Asset Imports
 import dinastiaHerediaImg from '../../assets/raw/Dinastia-Heredia.jpeg';
@@ -32,21 +32,31 @@ const imageMap = {
 
 const Artists = () => {
   const { t } = useTranslation();
-  const rawArtists = t('artists_page.artists', { returnObjects: true }) || [];
-  const artistsData = rawArtists.map(artist => ({
-    ...artist,
-    imageUrl: imageMap[artist.name]
-  }));
-
+  const [artistsList, setArtistsList] = useState([]);
   const [selectedIdx, setSelectedIdx] = useState(null);
   const { openBooking } = useBooking();
 
+  useEffect(() => {
+    const loadArtists = () => {
+      const stored = getArtists();
+      const mapped = stored.map(artist => ({
+        ...artist,
+        imageUrl: imageMap[artist.name] || artist.imageUrl || jaraImg
+      }));
+      setArtistsList(mapped);
+    };
+
+    loadArtists();
+    window.addEventListener('veg_artists_updated', loadArtists);
+    return () => window.removeEventListener('veg_artists_updated', loadArtists);
+  }, []);
+
   const handleNext = () => {
-    setSelectedIdx((prev) => (prev + 1) % artistsData.length);
+    setSelectedIdx((prev) => (prev + 1) % artistsList.length);
   };
 
   const handlePrev = () => {
-    setSelectedIdx((prev) => (prev - 1 + artistsData.length) % artistsData.length);
+    setSelectedIdx((prev) => (prev - 1 + artistsList.length) % artistsList.length);
   };
 
   return (
@@ -55,9 +65,9 @@ const Artists = () => {
       
       <div className="container mx-auto px-6 -mt-10 lg:-mt-20 relative z-20">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12 lg:gap-20">
-           {artistsData.map((artist, idx) => (
+           {artistsList.map((artist, idx) => (
              <ArtistCard 
-               key={idx} 
+               key={artist.id || idx} 
                name={artist.name} 
                role={artist.role} 
                imageUrl={artist.imageUrl}
@@ -71,7 +81,7 @@ const Artists = () => {
 
       <BiographyModal 
         isOpen={selectedIdx !== null}
-        artist={selectedIdx !== null ? artistsData[selectedIdx] : null}
+        artist={selectedIdx !== null ? artistsList[selectedIdx] : null}
         onClose={() => setSelectedIdx(null)}
         onNext={handleNext}
         onPrev={handlePrev}
@@ -89,7 +99,6 @@ const Artists = () => {
           <div className="absolute bottom-0 right-0 w-24 h-24 border-b-2 border-r-2 border-gold/50 rounded-br-[3rem] opacity-50 m-4 md:m-8"></div>
           
           <div className="relative z-10 max-w-4xl mx-auto flex flex-col items-center">
-            
             <div className="mb-6 md:mb-8 flex items-center justify-center gap-4">
               <div className="h-[2px] w-8 md:w-16 bg-gold/50"></div>
               <span className="text-gold text-[10px] md:text-sm font-black uppercase tracking-[0.4em]">{t('artists_page.cta.tag')}</span>
@@ -104,7 +113,7 @@ const Artists = () => {
               {t('artists_page.cta.desc_1')}<strong className="font-bold text-deep-black">{t('artists_page.cta.desc_2')}</strong>{t('artists_page.cta.desc_3')}
             </p>
             
-            {/* Botón CTA con Estilo Oro Puro y Transición Suave */}
+            {/* Botón CTA con Estilo Oro Puro */}
             <button onClick={() => openBooking({from: 'artists'})} className="group relative inline-flex items-center justify-center px-12 md:px-16 py-5 md:py-6 bg-deep-black border border-gold/50 rounded-full shadow-[0_0_40px_rgba(212,175,55,0.1)] hover:shadow-[0_0_60px_rgba(212,175,55,0.4)] hover:border-gold hover:-translate-y-1 transition-all duration-500">
               <span className="relative z-10 text-gold font-extrabold uppercase tracking-[0.3em] text-[10px] md:text-sm drop-shadow-md group-hover:text-gold/80 group-hover:scale-105 transition-all duration-500">
                 {t('artists_page.cta.button')}
@@ -114,7 +123,6 @@ const Artists = () => {
         </div>
       </div>
       
-      {/* Immersive closer strictly tucked near footer */}
       <div className="text-center pb-8 px-6">
         <p className="text-gold-500/20 font-serif italic text-xs md:text-sm max-w-lg mx-auto">
           {t('artists_page.footer')}
