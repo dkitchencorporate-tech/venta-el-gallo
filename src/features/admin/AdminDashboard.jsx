@@ -52,8 +52,7 @@ const AdminDashboard = () => {
       icon: Users2,
       path: '/admin/artistas',
       tag: 'Activo',
-      color: 'bg-white text-slate-900 border-gold/40 shadow-[0_10px_30px_rgba(212,175,55,0.1)]',
-      iconBg: 'bg-gold/15 text-gold',
+      accentColor: 'bg-gold',
     },
     {
       title: 'Carta & Menús Gastronómicos',
@@ -62,8 +61,7 @@ const AdminDashboard = () => {
       icon: UtensilsCrossed,
       path: '/admin/menu',
       tag: 'Sincronizado',
-      color: 'bg-white text-slate-900 border-stone-300 shadow-sm',
-      iconBg: 'bg-orange-500/10 text-orange-600',
+      accentColor: 'bg-sacromonte-red',
     },
     {
       title: 'Carrusel de Experiencia',
@@ -72,8 +70,7 @@ const AdminDashboard = () => {
       icon: Images,
       path: '/admin/carrusel',
       tag: '11 Destacadas',
-      color: 'bg-white text-slate-900 border-stone-300 shadow-sm',
-      iconBg: 'bg-blue-500/10 text-blue-600',
+      accentColor: 'bg-gold',
     },
     {
       title: 'Pases & Tracking Google Ads',
@@ -82,45 +79,47 @@ const AdminDashboard = () => {
       icon: CalendarClock,
       path: '/admin/pases',
       tag: 'Conectado',
-      color: 'bg-white text-slate-900 border-emerald-500/40 shadow-sm',
-      iconBg: 'bg-emerald-500/10 text-emerald-600',
+      accentColor: 'bg-sacromonte-red',
     }
   ];
 
   return (
     <div className="space-y-8 fade-in">
       
-      {/* Header Banner - Fondo Claro de Alto Lujo con Acento Oro */}
-      <div className="relative rounded-3xl p-6 md:p-8 bg-white border border-gold/30 overflow-hidden shadow-[0_15px_40px_rgba(0,0,0,0.06)]">
+      {/* Header Banner - Marco Negro con Sombra Profunda */}
+      <div className="relative rounded-[2rem] p-6 md:p-8 bg-[#FBFBFA] border-2 border-black shadow-[0_15px_35px_rgba(0,0,0,0.1)] overflow-hidden">
         <div className="absolute top-0 right-0 w-96 h-96 bg-gold/10 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20"></div>
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gold/15 border border-gold/40 text-black text-[10px] uppercase font-bold tracking-[0.2em] mb-3">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-black text-gold text-[10px] uppercase font-black tracking-[0.2em] mb-3 shadow-sm border border-gold/30">
               <Sparkles size={12} className="text-gold" />
               <span>Micro-SaaS Engine Activo</span>
             </div>
-            <h1 className="text-2xl md:text-4xl font-serif text-slate-900 uppercase tracking-tight font-bold">
-              Panel de Control <span className="text-gold">Venta El Gallo</span>
-            </h1>
-            <p className="text-slate-600 text-xs md:text-sm mt-1 max-w-xl font-normal">
+            <div className="flex items-center gap-3 mb-1">
+              <div className="w-6 h-[3px] bg-sacromonte-red"></div>
+              <h1 className="text-2xl md:text-4xl font-serif text-black uppercase tracking-tight font-black">
+                Panel de Control <span className="text-gold">Venta El Gallo</span>
+              </h1>
+            </div>
+            <p className="text-slate-700 text-xs md:text-sm mt-1 max-w-xl font-medium leading-relaxed">
               Sistema integral de autogestión para Cueva Flamenca Venta El Gallo. Administra artistas, carta, carrusel y tracking de Google Ads con sincronización en tiempo real.
             </p>
           </div>
 
           <div className="flex items-center gap-3 self-start md:self-auto">
-            <div className="px-5 py-3 rounded-2xl bg-stone-50 border border-stone-200 text-right">
-              <span className="text-[10px] text-slate-500 uppercase tracking-widest block font-bold">Estado del Sistema</span>
+            <div className="px-5 py-3 rounded-2xl bg-white border-2 border-black shadow-md text-right">
+              <span className="text-[10px] text-slate-600 uppercase tracking-widest block font-black">Estado del Sistema</span>
               <div className="flex items-center gap-2 mt-0.5 justify-end">
                 <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span>
-                <span className="text-xs font-bold text-emerald-700">100% Operativo</span>
+                <span className="text-xs font-black text-emerald-800">100% Operativo</span>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Grid de Tarjetas */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+      {/* Grid de Tarjetas con Marcos Negros Exactos y Mismo Tamaño */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {cards.map((card, idx) => {
           const Icon = card.icon;
           return (
@@ -129,29 +128,33 @@ const AdminDashboard = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: idx * 0.1, duration: 0.4 }}
+              className="h-full"
             >
               <Link
                 to={card.path}
-                className={`block h-full p-6 rounded-2xl ${card.color} hover:border-gold hover:-translate-y-1.5 transition-all duration-300 group relative overflow-hidden`}
+                className="h-full min-h-[260px] p-6 rounded-[2rem] bg-white border-2 border-black shadow-[0_12px_30px_rgba(0,0,0,0.08)] hover:shadow-[0_20px_45px_rgba(0,0,0,0.18)] hover:-translate-y-2 transition-all duration-300 flex flex-col justify-between group relative overflow-hidden"
               >
-                <div className="flex justify-between items-start mb-5">
-                  <div className={`p-3 rounded-xl ${card.iconBg} group-hover:scale-110 transition-transform`}>
-                    <Icon size={22} />
-                  </div>
-                  <span className="text-[9px] px-2.5 py-0.5 rounded-full bg-stone-100 border border-stone-300 text-slate-700 font-mono uppercase font-bold">
-                    {card.tag}
-                  </span>
-                </div>
+                {/* Indicador de acento superior */}
+                <div className={`absolute top-0 inset-x-0 h-1.5 ${card.accentColor}`} />
 
                 <div>
-                  <h3 className="text-xs uppercase font-bold tracking-wider text-slate-600 mb-1">{card.title}</h3>
-                  <p className="text-2xl font-serif font-bold text-slate-900 tracking-tight mb-1">{card.value}</p>
-                  <p className="text-[11px] text-slate-500 font-normal leading-relaxed">{card.desc}</p>
+                  <div className="flex justify-between items-start mb-4 pt-1">
+                    <div className="p-3.5 rounded-2xl bg-[#0B0E14] text-gold group-hover:scale-110 transition-transform shadow-md border border-black">
+                      <Icon size={22} />
+                    </div>
+                    <span className="text-[10px] px-3 py-1 rounded-full bg-stone-100 border border-stone-300 text-slate-800 font-mono uppercase font-bold">
+                      {card.tag}
+                    </span>
+                  </div>
+
+                  <h3 className="text-xs uppercase font-black tracking-wider text-slate-600 mb-1">{card.title}</h3>
+                  <p className="text-2xl font-serif font-black text-black tracking-tight mb-1.5">{card.value}</p>
+                  <p className="text-xs text-slate-600 font-medium leading-relaxed">{card.desc}</p>
                 </div>
 
-                <div className="mt-5 pt-4 border-t border-stone-200 flex items-center justify-between text-xs text-gold font-bold">
+                <div className="mt-5 pt-4 border-t border-stone-200 flex items-center justify-between text-xs text-black font-black uppercase tracking-wider group-hover:text-gold transition-colors">
                   <span>Gestionar Módulo</span>
-                  <ArrowUpRight size={15} className="transform group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform text-gold" />
+                  <ArrowUpRight size={16} className="transform group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                 </div>
               </Link>
             </motion.div>
@@ -161,57 +164,61 @@ const AdminDashboard = () => {
 
       {/* Monitor de Salud y Google Ads */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2 rounded-3xl p-6 bg-white border border-stone-200 shadow-sm space-y-4">
-          <div className="flex items-center justify-between">
-            <h3 className="text-sm font-serif uppercase tracking-widest text-slate-900 font-bold flex items-center gap-2">
-              <Activity size={18} className="text-gold" />
-              <span>Gobernanza de Módulos & Sincronización</span>
-            </h3>
-            <span className="text-[10px] text-slate-500 font-mono bg-stone-100 px-2 py-0.5 rounded">React 19 + Supabase Ready</span>
+        <div className="lg:col-span-2 rounded-[2rem] p-6 md:p-8 bg-white border-2 border-black shadow-[0_15px_35px_rgba(0,0,0,0.08)] space-y-4">
+          <div className="flex items-center justify-between pb-2 border-b border-stone-100">
+            <div className="flex items-center gap-2.5">
+              <div className="w-3 h-3 rounded-full bg-sacromonte-red"></div>
+              <h3 className="text-sm md:text-base font-serif uppercase tracking-widest text-black font-black flex items-center gap-2">
+                <Activity size={18} className="text-gold" />
+                <span>Gobernanza de Módulos & Sincronización</span>
+              </h3>
+            </div>
+            <span className="text-[10px] text-slate-600 font-mono bg-stone-100 border border-stone-300 px-2.5 py-1 rounded-full font-bold">React 19 + Supabase Ready</span>
           </div>
 
-          <div className="space-y-3 text-xs text-slate-700">
-            <div className="p-3.5 rounded-xl bg-stone-50 border border-stone-200 flex items-center justify-between">
+          <div className="space-y-3.5 text-xs text-slate-800">
+            <div className="p-4 rounded-2xl bg-[#FBFBFA] border-2 border-stone-200 flex items-center justify-between">
               <div>
-                <strong className="text-slate-900 block font-bold">Sincronización Reactiva con Web Pública</strong>
-                <span className="text-slate-500 text-[11px]">Capa desacoplada <code className="text-gold font-bold">adminService.js</code> lista para conexión instantánea a Supabase / Firebase.</span>
+                <strong className="text-black block font-black text-sm">Sincronización Reactiva con Web Pública</strong>
+                <span className="text-slate-600 text-xs">Capa desacoplada <code className="text-black bg-gold/20 px-1.5 py-0.5 rounded font-bold">adminService.js</code> lista para conexión instantánea a Supabase / Firebase.</span>
               </div>
-              <CheckCircle2 size={18} className="text-emerald-600 flex-shrink-0" />
+              <CheckCircle2 size={20} className="text-emerald-600 flex-shrink-0" />
             </div>
 
-            <div className="p-3.5 rounded-xl bg-stone-50 border border-stone-200 flex items-center justify-between">
+            <div className="p-4 rounded-2xl bg-[#FBFBFA] border-2 border-stone-200 flex items-center justify-between">
               <div>
-                <strong className="text-slate-900 block font-bold">Aislamiento de Producción IONOS</strong>
-                <span className="text-slate-500 text-[11px]">El entorno en vivo permanece protegido sin ningún riesgo de alteración hasta tu aprobación final.</span>
+                <strong className="text-black block font-black text-sm">Aislamiento de Producción IONOS</strong>
+                <span className="text-slate-600 text-xs">El entorno en vivo permanece 100% protegido sin ningún riesgo de alteración hasta tu aprobación final.</span>
               </div>
-              <ShieldCheck size={18} className="text-emerald-600 flex-shrink-0" />
+              <ShieldCheck size={20} className="text-emerald-600 flex-shrink-0" />
             </div>
 
-            <div className="p-3.5 rounded-xl bg-stone-50 border border-stone-200 flex items-center justify-between">
+            <div className="p-4 rounded-2xl bg-[#FBFBFA] border-2 border-stone-200 flex items-center justify-between">
               <div>
-                <strong className="text-slate-900 block font-bold">Integración Oficial Google Tag Manager</strong>
-                <span className="text-slate-500 text-[11px]">Contenedor <code className="text-gold font-bold">GTM-T22JXC3T</code> inyectado para medición de conversiones de Google Ads.</span>
+                <strong className="text-black block font-black text-sm">Integración Oficial Google Tag Manager</strong>
+                <span className="text-slate-600 text-xs">Contenedor <code className="text-black bg-gold/20 px-1.5 py-0.5 rounded font-bold">GTM-T22JXC3T</code> inyectado para medición de conversiones de Google Ads.</span>
               </div>
-              <CheckCircle2 size={18} className="text-emerald-600 flex-shrink-0" />
+              <CheckCircle2 size={20} className="text-emerald-600 flex-shrink-0" />
             </div>
           </div>
         </div>
 
-        <div className="rounded-3xl p-6 bg-gradient-to-b from-stone-900 via-black to-stone-900 text-white border border-gold/40 shadow-md flex flex-col justify-between">
+        <div className="rounded-[2rem] p-6 md:p-8 bg-[#0B0E14] text-white border-2 border-black shadow-[0_15px_35px_rgba(0,0,0,0.3)] flex flex-col justify-between relative overflow-hidden">
+          <div className="absolute top-0 inset-x-0 h-1 bg-sacromonte-red" />
           <div>
-            <div className="flex items-center gap-2 text-gold text-xs uppercase font-bold tracking-widest mb-3">
+            <div className="flex items-center gap-2 text-gold text-xs uppercase font-black tracking-widest mb-3">
               <Tag size={16} />
               <span>Google Ads Tracking</span>
             </div>
-            <h4 className="text-lg font-serif text-white mb-2">Caso Google: 9-7847000041569</h4>
-            <p className="text-xs text-slate-300 leading-relaxed font-light mb-4">
+            <h4 className="text-lg font-serif text-white mb-2 font-black">Caso Google: 9-7847000041569</h4>
+            <p className="text-xs text-slate-300 leading-relaxed font-normal mb-4">
               El contenedor <strong>GTM-T22JXC3T</strong> está configurado en el código fuente para recolectar eventos de reserva, clics de WhatsApp y llamadas telefónicas.
             </p>
           </div>
 
           <Link
             to="/admin/pases"
-            className="w-full py-3 px-4 rounded-xl bg-gold hover:bg-white text-black font-extrabold uppercase tracking-wider text-[11px] text-center transition-colors shadow-lg"
+            className="w-full py-3.5 px-4 rounded-2xl bg-gradient-to-r from-gold via-[#e8cd6e] to-gold hover:from-white hover:to-white text-black font-black uppercase tracking-wider text-xs text-center transition-all shadow-md"
           >
             Ver Detalles de Tracking
           </Link>
