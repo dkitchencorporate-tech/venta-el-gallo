@@ -1,18 +1,30 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 
-const AuthContext = createContext(null);
+const defaultAuth = {
+  currentUser: null,
+  login: async () => {},
+  logout: () => {},
+  requestPasswordReset: async () => ({ success: true, message: '' }),
+  confirmPasswordReset: async () => ({ success: true, message: '' }),
+  loading: false
+};
+
+const AuthContext = createContext(defaultAuth);
 
 export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(() => {
-    const saved = localStorage.getItem('veg_auth_user');
-    return saved ? JSON.parse(saved) : null;
+    try {
+      const saved = localStorage.getItem('veg_auth_user');
+      return saved ? JSON.parse(saved) : null;
+    } catch {
+      return null;
+    }
   });
   const [loading, setLoading] = useState(false);
 
   const login = async (email, password) => {
     setLoading(true);
     try {
-      // Intentar autenticación contra API si está disponible en producción
       const isProduction = window.location.hostname.includes('cuevaventaelgallo.es');
       
       if (isProduction) {
@@ -30,7 +42,7 @@ export const AuthProvider = ({ children }) => {
         setCurrentUser(data.user);
         return data.user;
       } else {
-        // En entorno de pruebas GitHub Pages (Modo Staging Seguro)
+        // Modo Staging Seguro para GitHub Pages
         if (email.toLowerCase() === 'info@cuevaventaelgallo.es' || email.toLowerCase() === 'admin@ventaelgallo.com') {
           const user = { email: email.toLowerCase(), role: 'admin' };
           localStorage.setItem('veg_auth_token', 'mock_jwt_staging_token_2026');
@@ -95,4 +107,7 @@ export const AuthProvider = ({ children }) => {
   );
 };
 
-export const useAuth = () => useContext(AuthContext);
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  return context || defaultAuth;
+};
