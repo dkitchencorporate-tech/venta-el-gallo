@@ -16,10 +16,10 @@ import {
   saveCarouselImages, 
   resolveAssetUrl 
 } from '../../../services/adminService';
+import LuxuryConfirmModal from './LuxuryConfirmModal';
 
 const MAX_IMAGES = 12;
 
-// Helper para optimizar fotos del carrusel desde el dispositivo
 const optimizeCarouselFile = (file) => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -65,10 +65,18 @@ const CarouselManager = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newUrl, setNewUrl] = useState('');
   const [newAlt, setNewAlt] = useState('');
-  const [errorMsg, setErrorMsg] = useState('');
   const [toastMsg, setToastMsg] = useState('');
   const [isUploading, setIsUploading] = useState(false);
   const fileInputRef = useRef(null);
+
+  // Confirm Modal State
+  const [confirmModal, setConfirmModal] = useState({
+    isOpen: false,
+    title: '',
+    message: '',
+    onConfirm: null,
+    type: 'danger'
+  });
 
   const loadCarousel = () => {
     setImages(getCarouselImages());
@@ -99,17 +107,31 @@ const CarouselManager = () => {
     showToast('Orden del carrusel actualizado.');
   };
 
-  const handleDelete = (id) => {
+  const handleDeletePrompt = (id) => {
     if (images.length <= 3) {
-      alert('Se recomienda mantener un mínimo de 3 fotografías activas en el carrusel.');
+      setConfirmModal({
+        isOpen: true,
+        title: 'Límite de Galería',
+        message: 'Se recomienda mantener un mínimo de 3 fotografías activas en el carrusel para preservar la fluidez visual de la web pública.',
+        type: 'warning',
+        onConfirm: null
+      });
       return;
     }
-    if (window.confirm('¿Estás seguro de eliminar esta fotografía de la galería?')) {
-      const updated = images.filter((img) => img.id !== id);
-      setImages(updated);
-      saveCarouselImages(updated);
-      showToast('Fotografía eliminada con éxito.');
-    }
+
+    setConfirmModal({
+      isOpen: true,
+      title: 'Eliminar Fotografía',
+      message: '¿Estás seguro de que deseas eliminar esta fotografía del carrusel de inicio? Esta acción retirará la imagen de la galería pública.',
+      confirmText: 'Eliminar Foto',
+      type: 'danger',
+      onConfirm: () => {
+        const updated = images.filter((img) => img.id !== id);
+        setImages(updated);
+        saveCarouselImages(updated);
+        showToast('Fotografía eliminada con éxito.');
+      }
+    });
   };
 
   const handleFileChange = async (e) => {
@@ -117,13 +139,18 @@ const CarouselManager = () => {
     if (!file) return;
 
     if (!file.type.startsWith('image/')) {
-      setErrorMsg('Por favor selecciona una imagen válida (JPG, PNG, WEBP).');
+      setConfirmModal({
+        isOpen: true,
+        title: 'Formato no compatible',
+        message: 'Por favor selecciona una imagen válida en formato JPG, PNG o WEBP.',
+        type: 'warning',
+        onConfirm: null
+      });
       return;
     }
 
     try {
       setIsUploading(true);
-      setErrorMsg('');
       const optimized = await optimizeCarouselFile(file);
       setNewUrl(optimized);
       if (!newAlt) {
@@ -132,7 +159,13 @@ const CarouselManager = () => {
       showToast('Fotografía cargada y optimizada.');
     } catch (err) {
       console.error(err);
-      setErrorMsg('Error al procesar la imagen seleccionada.');
+      setConfirmModal({
+        isOpen: true,
+        title: 'Error al procesar',
+        message: 'No se pudo optimizar la fotografía seleccionada.',
+        type: 'warning',
+        onConfirm: null
+      });
     } finally {
       setIsUploading(false);
     }
@@ -141,7 +174,13 @@ const CarouselManager = () => {
   const handleAddImage = (e) => {
     e.preventDefault();
     if (!newUrl.trim()) {
-      setErrorMsg('Debes subir una fotografía desde tu dispositivo.');
+      setConfirmModal({
+        isOpen: true,
+        title: 'Fotografía requerida',
+        message: 'Debes seleccionar una fotografía desde tu dispositivo antes de añadirla.',
+        type: 'warning',
+        onConfirm: null
+      });
       return;
     }
 
@@ -183,7 +222,7 @@ const CarouselManager = () => {
         </div>
 
         <button
-          onClick={() => { setErrorMsg(''); setNewUrl(''); setNewAlt(''); setIsModalOpen(true); }}
+          onClick={() => { setNewUrl(''); setNewAlt(''); setIsModalOpen(true); }}
           disabled={images.length >= MAX_IMAGES}
           className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gold hover:bg-[#1A1A1A] hover:text-white text-black font-bold uppercase tracking-wider text-xs shadow-md transition-all disabled:opacity-50 self-start sm:self-auto"
         >
@@ -206,7 +245,7 @@ const CarouselManager = () => {
         )}
       </AnimatePresence>
 
-      {/* Grid de Imágenes con Tarjetas Luxury */}
+      {/* Grid de Imágenes */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {images.map((img, idx) => {
           const imgSrc = resolveAssetUrl(img.src || img.url);
@@ -252,7 +291,7 @@ const CarouselManager = () => {
                   </div>
 
                   <button
-                    onClick={() => handleDelete(img.id)}
+                    onClick={() => handleDeletePrompt(img.id)}
                     className="p-1.5 rounded-full bg-stone-100 hover:bg-sacromonte-red/10 text-stone-500 hover:text-sacromonte-red transition-colors"
                     title="Eliminar Fotografía"
                   >
@@ -292,15 +331,7 @@ const CarouselManager = () => {
                 </button>
               </div>
 
-              {errorMsg && (
-                <div className="mb-4 p-3 rounded-2xl bg-sacromonte-red/10 border border-sacromonte-red/20 text-sacromonte-red text-xs">
-                  {errorMsg}
-                </div>
-              )}
-
               <form onSubmit={handleAddImage} className="space-y-4">
-                
-                {/* ZONA DE SUBIDA DIRECTA DE FOTO */}
                 <div>
                   <label className="block text-xs uppercase tracking-wider text-stone-600 mb-2 font-semibold flex items-center gap-1.5">
                     <ImageIcon size={14} className="text-gold" />
@@ -393,6 +424,17 @@ const CarouselManager = () => {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Modal de Confirmación de Autor */}
+      <LuxuryConfirmModal
+        isOpen={confirmModal.isOpen}
+        title={confirmModal.title}
+        message={confirmModal.message}
+        confirmText={confirmModal.confirmText}
+        type={confirmModal.type}
+        onConfirm={confirmModal.onConfirm}
+        onClose={() => setConfirmModal({ ...confirmModal, isOpen: false })}
+      />
 
     </div>
   );
