@@ -39,7 +39,7 @@ const MENU_CATEGORIES = [
 ];
 
 const MenuManager = () => {
-  const [activeTab, setActiveTab] = useState('carta');
+  const [activeTab, setActiveTab] = useState('carta'); // 'carta' o 'menu'
   const [activeCat, setActiveCat] = useState('entrantes');
   const [menuState, setMenuState] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -52,8 +52,15 @@ const MenuManager = () => {
   const [formAllergens, setFormAllergens] = useState([]);
   const [toastMsg, setToastMsg] = useState('');
 
-  useEffect(() => {
+  const loadMenu = () => {
     setMenuState(getMenuData());
+  };
+
+  useEffect(() => {
+    loadMenu();
+    const handleUpdate = () => loadMenu();
+    window.addEventListener('veg_menu_updated', handleUpdate);
+    return () => window.removeEventListener('veg_menu_updated', handleUpdate);
   }, []);
 
   const showToast = (msg) => {
@@ -78,15 +85,15 @@ const MenuManager = () => {
 
   const handleOpenEdit = (dish, index) => {
     setEditingDish({ ...dish, index });
-    setFormName(dish.name || '');
-    setFormDesc(dish.description || '');
-    setFormPrice(dish.price || '');
+    setFormName(dish.title || dish.name || '');
+    setFormDesc(dish.desc || dish.description || '');
+    setFormPrice(dish.price ? dish.price.replace('€', '').trim() : '');
     setFormAllergens(dish.allergens || []);
     setIsModalOpen(true);
   };
 
-  const handleDelete = (index, dishName) => {
-    if (window.confirm(`¿Eliminar "${dishName}" de esta categoría?`)) {
+  const handleDelete = (index, dishTitle) => {
+    if (window.confirm(`¿Eliminar "${dishTitle}" de esta categoría?`)) {
       const updatedList = currentDishes.filter((_, idx) => idx !== index);
       const updatedMenu = {
         ...menuState,
@@ -97,7 +104,7 @@ const MenuManager = () => {
       };
       setMenuState(updatedMenu);
       saveMenuData(updatedMenu);
-      showToast(`Plato "${dishName}" eliminado.`);
+      showToast(`Plato "${dishTitle}" eliminado.`);
     }
   };
 
@@ -113,10 +120,15 @@ const MenuManager = () => {
     e.preventDefault();
     if (!formName.trim()) return;
 
+    const formattedPrice = formPrice ? (formPrice.includes('€') ? formPrice.trim() : `${formPrice.trim()}€`) : '';
+
     const newDish = {
+      id: editingDish?.id || `${activeTab === 'carta' ? 'c' : 'm'}_${activeCat}_${Date.now()}`,
+      title: formName.trim(),
       name: formName.trim(),
+      desc: formDesc.trim(),
       description: formDesc.trim(),
-      price: formPrice ? `${formPrice}€` : '',
+      price: formattedPrice,
       allergens: formAllergens
     };
 
@@ -158,7 +170,7 @@ const MenuManager = () => {
             Carta & <span className="text-gold italic">Menús</span>
           </h1>
           <p className="text-stone-500 text-xs mt-1 font-light">
-            Edita platos, precios, temporadas (invierno/verano) y alérgenos de la normativa europea.
+            Edita platos, precios, temporadas (invierno/verano) y alérgenos con sincronización instantánea en la web pública.
           </p>
         </div>
 
@@ -215,6 +227,7 @@ const MenuManager = () => {
         {currentCategories.map(cat => {
           const isWinter = cat.id === 'invierno';
           const isSummer = cat.id === 'verano';
+          const dishCount = currentDishesObj[cat.id]?.length || 0;
           return (
             <button
               key={cat.id}
@@ -229,7 +242,7 @@ const MenuManager = () => {
               {isSummer && <Sun size={13} className="text-amber-400" />}
               <span>{cat.name}</span>
               <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-stone-100 text-stone-600 font-mono">
-                {currentDishesObj[cat.id]?.length || 0}
+                {dishCount}
               </span>
             </button>
           );
@@ -238,58 +251,62 @@ const MenuManager = () => {
 
       {/* Grid de Platos */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {currentDishes.map((dish, idx) => (
-          <div
-            key={idx}
-            className="p-6 rounded-3xl bg-white border border-stone-200/80 hover:border-gold/50 transition-all duration-300 flex flex-col justify-between space-y-4 shadow-[0_10px_25px_rgba(0,0,0,0.02)] hover:shadow-[0_15px_30px_rgba(212,175,55,0.08)] group"
-          >
-            <div className="flex items-start justify-between gap-4">
-              <div>
-                <h4 className="font-serif text-lg text-[#1A1A1A] font-bold group-hover:text-gold transition-colors">
-                  {dish.name}
-                </h4>
-                {dish.description && (
-                  <p className="text-xs text-stone-500 mt-1 font-light leading-relaxed">
-                    {dish.description}
-                  </p>
+        {currentDishes.map((dish, idx) => {
+          const title = dish.title || dish.name || 'Sin título';
+          const desc = dish.desc || dish.description || '';
+          return (
+            <div
+              key={dish.id || idx}
+              className="p-6 rounded-3xl bg-white border border-stone-200/80 hover:border-gold/50 transition-all duration-300 flex flex-col justify-between space-y-4 shadow-[0_10px_25px_rgba(0,0,0,0.02)] hover:shadow-[0_15px_30px_rgba(212,175,55,0.08)] group"
+            >
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <h4 className="font-serif text-lg text-[#1A1A1A] font-bold group-hover:text-gold transition-colors">
+                    {title}
+                  </h4>
+                  {desc && (
+                    <p className="text-xs text-stone-500 mt-1 font-light leading-relaxed">
+                      {desc}
+                    </p>
+                  )}
+                </div>
+                {dish.price && (
+                  <span className="text-sm font-mono font-bold text-[#1A1A1A] px-3 py-1 rounded-full bg-gold/15 border border-gold/30 flex-shrink-0">
+                    {dish.price}
+                  </span>
                 )}
               </div>
-              {dish.price && (
-                <span className="text-sm font-mono font-bold text-[#1A1A1A] px-3 py-1 rounded-full bg-gold/15 border border-gold/30 flex-shrink-0">
-                  {dish.price}
-                </span>
+
+              {/* Alérgenos */}
+              {dish.allergens && dish.allergens.length > 0 && (
+                <div className="flex flex-wrap gap-1.5 pt-1">
+                  {dish.allergens.map((alg, aIdx) => (
+                    <span key={aIdx} className="text-[9px] px-2.5 py-0.5 rounded-full bg-stone-100 text-stone-600 font-medium">
+                      {alg}
+                    </span>
+                  ))}
+                </div>
               )}
-            </div>
 
-            {/* Alérgenos */}
-            {dish.allergens && dish.allergens.length > 0 && (
-              <div className="flex flex-wrap gap-1.5 pt-1">
-                {dish.allergens.map((alg, aIdx) => (
-                  <span key={aIdx} className="text-[9px] px-2.5 py-0.5 rounded-full bg-stone-100 text-stone-600 font-medium">
-                    {alg}
-                  </span>
-                ))}
+              <div className="pt-3 border-t border-stone-100 flex items-center justify-end gap-2">
+                <button
+                  onClick={() => handleOpenEdit(dish, idx)}
+                  className="px-3.5 py-1.5 rounded-full bg-stone-100 hover:bg-gold hover:text-black text-stone-700 transition-colors text-xs flex items-center gap-1 font-medium"
+                >
+                  <Edit3 size={13} />
+                  <span>Editar</span>
+                </button>
+                <button
+                  onClick={() => handleDelete(idx, title)}
+                  className="px-3.5 py-1.5 rounded-full bg-stone-100 hover:bg-sacromonte-red/10 text-stone-600 hover:text-sacromonte-red transition-colors text-xs flex items-center gap-1 font-medium"
+                >
+                  <Trash2 size={13} />
+                  <span>Eliminar</span>
+                </button>
               </div>
-            )}
-
-            <div className="pt-3 border-t border-stone-100 flex items-center justify-end gap-2">
-              <button
-                onClick={() => handleOpenEdit(dish, idx)}
-                className="px-3.5 py-1.5 rounded-full bg-stone-100 hover:bg-gold hover:text-black text-stone-700 transition-colors text-xs flex items-center gap-1 font-medium"
-              >
-                <Edit3 size={13} />
-                <span>Editar</span>
-              </button>
-              <button
-                onClick={() => handleDelete(idx, dish.name)}
-                className="px-3.5 py-1.5 rounded-full bg-stone-100 hover:bg-sacromonte-red/10 text-stone-600 hover:text-sacromonte-red transition-colors text-xs flex items-center gap-1 font-medium"
-              >
-                <Trash2 size={13} />
-                <span>Eliminar</span>
-              </button>
             </div>
-          </div>
-        ))}
+          );
+        })}
 
         {currentDishes.length === 0 && (
           <div className="col-span-full p-12 text-center rounded-3xl border border-dashed border-stone-200 text-stone-400 bg-white">
