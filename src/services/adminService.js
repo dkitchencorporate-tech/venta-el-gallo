@@ -3,8 +3,7 @@
  * Venta El Gallo - Cueva Milenaria Sacromonte
  */
 
-import rawCartaData from '../features/restaurant/data/cartaData.json';
-import rawDegustacionData from '../features/restaurant/data/menuDegustacionData.json';
+import { menuCentralizado } from '../data/menuData';
 
 // Assets oficiales
 import dinastiaHerediaImg from '../assets/raw/Dinastia-Heredia.jpeg';
@@ -239,10 +238,7 @@ export const getMenuData = () => {
   } catch (e) {
     console.warn('Error reading menu data from localStorage:', e);
   }
-  return {
-    cartaData: rawCartaData,
-    menuData: rawDegustacionData
-  };
+  return menuCentralizado;
 };
 
 export const saveMenuData = (data) => {
