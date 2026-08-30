@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit;
 }
 
-// 2. Clave Secreta para Tokens HMAC (Cambiar en despliegue si se desea)
+// 2. Clave Secreta para Tokens HMAC
 define('JWT_SECRET', 'veg_sacromonte_auth_secret_key_2026_luxury_secure_token');
 define('ADMIN_EMAIL', 'info@cuevaventaelgallo.es');
 
@@ -57,28 +57,6 @@ try {
             expires_at DATETIME NOT NULL,
             used INTEGER DEFAULT 0,
             created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-        );
-
-        CREATE TABLE IF NOT EXISTS dishes (
-            id TEXT PRIMARY KEY,
-            scope TEXT NOT NULL,
-            category TEXT NOT NULL,
-            title TEXT NOT NULL,
-            desc TEXT,
-            price TEXT,
-            allergens TEXT,
-            order_num INTEGER DEFAULT 0,
-            updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
-        );
-
-        CREATE TABLE IF NOT EXISTS artists (
-            id TEXT PRIMARY KEY,
-            name TEXT NOT NULL,
-            role TEXT NOT NULL,
-            imageUrl TEXT,
-            description TEXT,
-            order_num INTEGER DEFAULT 0,
-            updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
         );
 
         CREATE TABLE IF NOT EXISTS site_settings (
@@ -134,11 +112,40 @@ function verify_jwt($token) {
     return $payload;
 }
 
+function get_bearer_token() {
+    // 1. Direct Server Vars (Apache FastCGI / Nginx)
+    $authHeader = $_SERVER['HTTP_AUTHORIZATION'] ?? $_SERVER['REDIRECT_HTTP_AUTHORIZATION'] ?? '';
+    
+    // 2. Headers Functions
+    if (empty($authHeader)) {
+        $headers = function_exists('getallheaders') ? getallheaders() : [];
+        foreach ($headers as $k => $v) {
+            if (strtolower($k) === 'authorization') {
+                $authHeader = $v;
+                break;
+            }
+        }
+    }
+    
+    // 3. Fallback to GET / POST / JSON Body Token
+    if (empty($authHeader)) {
+        if (!empty($_GET['token'])) return trim($_GET['token']);
+        if (!empty($_POST['token'])) return trim($_POST['token']);
+        $raw = @json_decode(file_get_contents('php://input'), true);
+        if (!empty($raw['token'])) return trim($raw['token']);
+    }
+
+    if (preg_match('/Bearer\s(\S+)/i', $authHeader, $matches)) {
+        return $matches[1];
+    }
+
+    return null;
+}
+
 function require_auth() {
-    $headers = getallheaders();
-    $authHeader = $headers['Authorization'] ?? $headers['authorization'] ?? '';
-    if (preg_match('/Bearer\s(\S+)/', $authHeader, $matches)) {
-        $payload = verify_jwt($matches[1]);
+    $token = get_bearer_token();
+    if ($token) {
+        $payload = verify_jwt($token);
         if ($payload) return $payload;
     }
     http_response_code(401);
