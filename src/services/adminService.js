@@ -1,4 +1,12 @@
-// Imports de imágenes reales de artistas
+/**
+ * Servicio Central de Administración & Sincronización Atómica con SQLite
+ * Venta El Gallo - Cueva Milenaria Sacromonte
+ */
+
+import rawCartaData from '../features/restaurant/data/cartaData.json';
+import rawDegustacionData from '../features/restaurant/data/menuDegustacionData.json';
+
+// Assets oficiales
 import dinastiaHerediaImg from '../assets/raw/Dinastia-Heredia.jpeg';
 import antoniaImg from '../assets/raw/antonia-ready.jpg';
 import jaraImg from '../assets/raw/jara-heredia-portrait.jpg';
@@ -9,244 +17,278 @@ import pacoImg from '../assets/raw/Artista-1.jpg';
 import rayImg from '../assets/raw/Raimundo.jpg';
 import antonioCantaorImg from '../assets/raw/antonio-heredia-cantaor.jpg';
 
-import { menuCentralizado } from '../data/menuData';
-import { carouselImagesData as initialCarousel } from '../features/restaurant/components/GastronomyCarousel';
-
-export const artistImageMap = {
-  "art-1": jaraImg,
-  "art-2": antoniaImg,
-  "art-3": dinastiaHerediaImg,
-  "art-4": chonicoImg,
-  "art-5": miguelImg,
-  "art-6": pacoImg,
-  "art-7": coralImg,
-  "art-8": rayImg,
-  "art-9": antonioCantaorImg,
-  "Jara Heredia": jaraImg,
-  "Antonia Heredia": antoniaImg,
-  "Dinastía Heredia": dinastiaHerediaImg,
-  "Antonio Heredia «El Chonico»": chonicoImg,
-  "Miguel Ángel Cortés": miguelImg,
-  "Paco Fernández": pacoImg,
-  "Coral Fernández": coralImg,
-  "Raimundo Benítez": rayImg,
-  "Antonio Heredia": antonioCantaorImg
+const STORAGE_KEYS = {
+  ARTISTS: 'veg_artists_data_v2',
+  MENU_DATA: 'veg_menu_data_v2',
+  CAROUSEL: 'veg_carousel_images_v2',
+  PASES_CONFIG: 'veg_pases_config_v2'
 };
 
 export const resolveAssetUrl = (url) => {
-  if (!url) return jaraImg;
-  if (artistImageMap[url]) return artistImageMap[url];
-  if (url.startsWith('http') || url.startsWith('data:') || url.startsWith('blob:')) return url;
-  
-  const base = import.meta.env.BASE_URL || '/';
-  if (url.includes('/assets/') || url.startsWith(base)) {
+  if (!url) return '';
+  if (url.startsWith('data:') || url.startsWith('http://') || url.startsWith('https://') || url.startsWith('blob:')) {
     return url;
   }
-
-  const clean = url.replace(/^\//, '');
-  return `${base}${clean}`;
+  const isGhPages = window.location.hostname.includes('github.io');
+  const base = isGhPages ? '/venta-el-gallo/' : '/';
+  const cleanUrl = url.startsWith('/') ? url.slice(1) : url;
+  if (cleanUrl.startsWith('venta-el-gallo/')) {
+    return '/' + cleanUrl;
+  }
+  return base + cleanUrl;
 };
 
-export const initialArtistsList = [
+// 1. Datos iniciales canónicos de artistas
+export const initialArtists = [
   {
-    id: "art-1",
+    id: 'art-1',
     name: "Jara Heredia",
     role: "Bailaora",
     imageUrl: jaraImg,
-    description: "Fuerza, temperamento y pureza en cada desplante. Heredera directa de la tradición del Sacromonte.",
-    order: 1
+    description: "Heredera de una de las dinastías flamencas más puras del Sacromonte, Jara transmite en cada desplante la fuerza ancestral del baile gitano. Con una técnica impecable y una fuerza magnética, cada movimiento rinde homenaje a sus raíces."
   },
   {
-    id: "art-2",
+    id: 'art-2',
     name: "Antonia Heredia",
     role: "Bailaora",
     imageUrl: antoniaImg,
-    description: "Elegancia y duende gitano. Su baile transmite la esencia ancestral de las zambras granadinas.",
-    order: 2
+    description: "Elegancia, compás y duende definen la presencia escénica de Antonia. Formada desde la infancia en las cuevas del Sacromonte, su baile es un diálogo visceral con el cante y la guitarra flamenca."
   },
   {
-    id: "art-3",
+    id: 'art-3',
     name: "Dinastía Heredia",
     role: "Familia Flamenca",
     imageUrl: dinastiaHerediaImg,
-    description: "Generaciones de arte puro custodiando el legado flamenco en las entrañas del Sacromonte.",
-    order: 3
+    description: "Sello inconfundible de Venta El Gallo. Cuatro generaciones dedicadas a preservar el patrimonio inmaterial de la Zambra gitana en su máxima pureza y autenticidad histórica."
   },
   {
-    id: "art-4",
+    id: 'art-4',
     name: "Antonio Heredia «El Chonico»",
     role: "Guitarrista",
     imageUrl: chonicoImg,
-    description: "Maestría y compás en las seis cuerdas. Soniquete único que acompaña el alma del cante.",
-    order: 4
+    description: "Maestro del toque sacromontano, su soniquete y sensibilidad acompañan cada quejío con la maestría de quien lleva el compás flamenco en la sangre desde su nacimiento."
   },
   {
-    id: "art-5",
+    id: 'art-5',
     name: "Miguel Ángel Cortés",
     role: "Guitarrista",
     imageUrl: miguelImg,
-    description: "Virtuosismo y sensibilidad armónica. Uno de los grandes referentes de la guitarra flamenca contemporánea.",
-    order: 5
+    description: "Figura imprescindible de la guitarra flamenca contemporánea. Su toque virtuoso aúna el respeto a la tradición más jonda con una exquisita armonía musical reconocida internacionalmente."
   },
   {
-    id: "art-6",
+    id: 'art-6',
     name: "Paco Fernández",
     role: "Cantaor",
     imageUrl: pacoImg,
-    description: "Voz desgarradora y jondura inigualable en los cantes de fragua y soleá.",
-    order: 6
+    description: "Voz desgarradora y jonda que recorre los palos más antiguos de Granada. Su cante traspasa el alma y evoca las noches más auténticas del Sacromonte."
   },
   {
-    id: "art-7",
+    id: 'art-7',
     name: "Coral Fernández",
     role: "Cantaora",
     imageUrl: coralImg,
-    description: "Cante dulce y profundo que eriza la piel en cada tercio flamenco.",
-    order: 7
+    description: "Dulzura y temperamento en un quejío único. Coral aporta la pasión y el lirismo necesarios para elevar cada cuadro flamenco a una experiencia inolvidable."
   },
   {
-    id: "art-8",
+    id: 'art-8',
     name: "Raimundo Benítez",
     role: "Bailaor",
     imageUrl: rayImg,
-    description: "Zapateado vertiginoso y presencia escénica arrolladora.",
-    order: 8
+    description: "Fuerza, desplante y elegancia masculina sobre las tablas. Su zapateado rítmico y temperamento imponente marcan el pulso de la cueva con autenticidad."
   },
   {
-    id: "art-9",
+    id: 'art-9',
     name: "Antonio Heredia",
     role: "Cantaor",
     imageUrl: antonioCantaorImg,
-    description: "Eco gitano de pura cepa, maestro de los tangos y bulerías del Sacromonte.",
-    order: 9
+    description: "Guateque, fiesta y compás puro. Antonio llena el escenario de alegría gitana y sabiduría flamenca, transmitiendo la esencia viva del Sacromonte."
   }
 ];
 
-const STORAGE_KEYS = {
-  ARTISTS: 'veg_admin_artists_v2',
-  MENU_DATA: 'veg_admin_menu_v2',
-  CAROUSEL: 'veg_admin_carousel_v2',
-  PASES_CONFIG: 'veg_admin_pases_v2'
+// 2. Datos iniciales del carrusel
+export const initialCarousel = [
+  { id: 'carrusel-1', src: 'images/carrusel/cena-espectaculo-flamenco-granada.jpeg', alt: 'Cena con Espectáculo Flamenco en Granada', title: 'Cena y Show Flamenco en Cueva' },
+  { id: 'carrusel-2', src: 'images/carrusel/cenar-en-cueva-flamenca.jpeg', alt: 'Cenar en una Cueva Flamenca en el Sacromonte', title: 'Ambiente Único en Cueva Milenaria' },
+  { id: 'carrusel-3', src: 'images/carrusel/experiencia-culinaria-granada.jpeg', alt: 'Experiencia Culinaria Tradicional Andaluza', title: 'Gastronomía Andaluza de Autor' },
+  { id: 'carrusel-4', src: 'images/carrusel/gastronomia-andaluza-sacromonte.jpeg', alt: 'Gastronomía Andaluza en el Sacromonte', title: 'Sabores Auténticos de Granada' },
+  { id: 'carrusel-5', src: 'images/carrusel/menu-degustacion-sacromonte.jpeg', alt: 'Menú Degustación en Cueva Flamenca', title: 'Menú Degustación Sacromonte' },
+  { id: 'carrusel-6', src: 'images/carrusel/platos-tradicionales-flamenco.jpeg', alt: 'Platos Tradicionales y Espectáculo de Flamenco', title: 'Tradición y Vanguardia Culinaria' },
+  { id: 'carrusel-7', src: 'images/carrusel/restaurante-flamenco-andaluz.jpeg', alt: 'Restaurante Flamenco Andaluz en Granada', title: 'Restaurante Venta El Gallo' },
+  { id: 'carrusel-8', src: 'images/carrusel/restaurante-sacromonte-granada-vistas.jpeg', alt: 'Restaurante en el Sacromonte con Vistas a la Alhambra', title: 'Vistas Privilegiadas a la Alhambra' },
+  { id: 'carrusel-9', src: 'images/carrusel/tapas-premium-venta-el-gallo.jpeg', alt: 'Tapas Premium y Gastronomía en Venta El Gallo', title: 'Tapas y Raciones Selectas' },
+  { id: 'carrusel-10', src: 'images/carrusel/terraza-con-encanto-granada.jpeg', alt: 'Terraza con Encanto en el Sacromonte Granada', title: 'Terraza Panorámica Exclusiva' },
+  { id: 'carrusel-11', src: 'images/carrusel/terraza-venta-el-gallo-alhambra.jpeg', alt: 'Terraza Venta El Gallo Frente a la Alhambra', title: 'Atardeceres frente a la Alhambra' }
+];
+
+// Helper para sincronizar datos con el servidor backend SQLite
+const syncWithBackend = async (type, data) => {
+  try {
+    const isProduction = window.location.hostname.includes('cuevaventaelgallo.es');
+    if (!isProduction) return;
+
+    const token = localStorage.getItem('veg_auth_token');
+    const headers = { 'Content-Type': 'application/json' };
+    if (token) headers['Authorization'] = `Bearer ${token}`;
+
+    await fetch(`/api/content.php?type=${type}`, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({ data })
+    });
+  } catch (err) {
+    console.warn(`[Sync Warning] No se pudo guardar ${type} en SQLite remoto:`, err);
+  }
 };
 
+// Sincronización Inicial Asíncrona desde SQLite para todos los visitantes
+export const initRemoteContentSync = async () => {
+  try {
+    const isProduction = window.location.hostname.includes('cuevaventaelgallo.es');
+    if (!isProduction) return;
+
+    const res = await fetch('/api/content.php?type=all');
+    if (!res.ok) return;
+
+    const remote = await res.json();
+    if (!remote.success) return;
+
+    if (remote.artists && Array.isArray(remote.artists) && remote.artists.length > 0) {
+      localStorage.setItem(STORAGE_KEYS.ARTISTS, JSON.stringify(remote.artists));
+      window.dispatchEvent(new CustomEvent('veg_artists_updated', { detail: remote.artists }));
+    }
+
+    if (remote.menu && typeof remote.menu === 'object') {
+      localStorage.setItem(STORAGE_KEYS.MENU_DATA, JSON.stringify(remote.menu));
+      window.dispatchEvent(new CustomEvent('veg_menu_updated', { detail: remote.menu }));
+    }
+
+    if (remote.carousel && Array.isArray(remote.carousel) && remote.carousel.length > 0) {
+      localStorage.setItem(STORAGE_KEYS.CAROUSEL, JSON.stringify(remote.carousel));
+      window.dispatchEvent(new CustomEvent('veg_carousel_updated', { detail: remote.carousel }));
+    }
+  } catch (e) {
+    console.warn('[Remote Sync] Usando caché local offline:', e);
+  }
+};
+
+// Auto-inicializar sincronización al cargar el script
+if (typeof window !== 'undefined') {
+  initRemoteContentSync();
+}
+
 // ==========================================
-// 1. ARTISTAS (CRUD)
+// 1. ARTISTAS (CRUD ATÓMICO + SYNC)
 // ==========================================
 export const getArtists = () => {
   try {
     const stored = localStorage.getItem(STORAGE_KEYS.ARTISTS);
     if (stored) {
       const parsed = JSON.parse(stored);
-      if (Array.isArray(parsed) && parsed.length > 0) {
-        return parsed.map(a => ({
-          ...a,
-          imageUrl: artistImageMap[a.id] || artistImageMap[a.name] || a.imageUrl || jaraImg
-        }));
-      }
+      if (Array.isArray(parsed) && parsed.length > 0) return parsed;
     }
   } catch (e) {
     console.warn('Error reading artists from localStorage:', e);
   }
-  return initialArtistsList;
+  return initialArtists;
 };
 
 export const saveArtists = (artists) => {
   localStorage.setItem(STORAGE_KEYS.ARTISTS, JSON.stringify(artists));
   window.dispatchEvent(new CustomEvent('veg_artists_updated', { detail: artists }));
+  syncWithBackend('artists', artists);
 };
 
 export const addArtist = (artist) => {
-  const list = getArtists();
+  const current = getArtists();
   const newArtist = {
-    ...artist,
     id: `art-${Date.now()}`,
-    imageUrl: artist.imageUrl || jaraImg,
-    order: list.length + 1
+    name: artist.name,
+    role: artist.role || "Elenco Principal",
+    imageUrl: artist.imageUrl || "",
+    description: artist.description || ""
   };
-  const updated = [newArtist, ...list];
+  const updated = [newArtist, ...current];
   saveArtists(updated);
-  return updated;
+  return newArtist;
 };
 
 export const updateArtist = (id, updatedFields) => {
-  const list = getArtists();
-  const updated = list.map(item => item.id === id ? { ...item, ...updatedFields } : item);
+  const current = getArtists();
+  const updated = current.map(item => item.id === id ? { ...item, ...updatedFields } : item);
   saveArtists(updated);
   return updated;
 };
 
 export const deleteArtist = (id) => {
-  const list = getArtists();
-  const updated = list.filter(item => item.id !== id);
+  const current = getArtists();
+  const updated = current.filter(item => item.id !== id);
   saveArtists(updated);
   return updated;
 };
 
 // ==========================================
-// 2. CARTA Y MENÚ (GOBERNANZA ATÓMICA AISLADA)
+// 2. CARTA & MENÚ DEGUSTACIÓN (CRUD ATÓMICO)
 // ==========================================
 export const getMenuData = () => {
   try {
     const stored = localStorage.getItem(STORAGE_KEYS.MENU_DATA);
     if (stored) {
       const parsed = JSON.parse(stored);
-      if (parsed?.cartaData && parsed?.menuData) {
-        return parsed;
-      }
+      if (parsed && typeof parsed === 'object') return parsed;
     }
   } catch (e) {
-    console.warn('Error reading menuData from localStorage:', e);
+    console.warn('Error reading menu data from localStorage:', e);
   }
-  return menuCentralizado;
+  return {
+    cartaData: rawCartaData,
+    menuData: rawDegustacionData
+  };
 };
 
 export const saveMenuData = (data) => {
-  // Garantizar aislamiento estricto de ramas
-  const sanitized = {
-    cartaData: data.cartaData || menuCentralizado.cartaData,
-    menuData: data.menuData || menuCentralizado.menuData
-  };
-  localStorage.setItem(STORAGE_KEYS.MENU_DATA, JSON.stringify(sanitized));
-  window.dispatchEvent(new CustomEvent('veg_menu_updated', { detail: sanitized }));
-  return sanitized;
+  localStorage.setItem(STORAGE_KEYS.MENU_DATA, JSON.stringify(data));
+  window.dispatchEvent(new CustomEvent('veg_menu_updated', { detail: data }));
+  syncWithBackend('menu', data);
+  return data;
 };
 
-// Operación atómica de guardado/edición de plato
-export const saveDishAtomic = ({ scope, category, dish, isEdit, editId }) => {
+export const saveDishAtomic = ({ scope, category, dish, isEdit = false, editId = null }) => {
   const currentMenu = getMenuData();
   const branchKey = scope === 'carta' ? 'cartaData' : 'menuData';
   const currentBranch = { ...(currentMenu[branchKey] || {}) };
   const currentCategoryList = [...(currentBranch[category] || [])];
 
-  const sanitizedDish = {
-    id: isEdit ? editId : `${scope === 'carta' ? 'c' : 'm'}_${category}_${Date.now()}`,
-    title: dish.title?.trim() || dish.name?.trim() || 'Sin Título',
-    name: dish.title?.trim() || dish.name?.trim() || 'Sin Título',
-    desc: dish.desc?.trim() || dish.description?.trim() || '',
-    description: dish.desc?.trim() || dish.description?.trim() || '',
-    price: scope === 'carta' ? (dish.price ? (dish.price.includes('€') ? dish.price.trim() : `${dish.price.trim()}€`) : '') : '',
-    allergens: Array.isArray(dish.allergens) ? dish.allergens : []
-  };
-
-  let updatedCategoryList;
-  if (isEdit) {
-    updatedCategoryList = currentCategoryList.map(item => item.id === editId ? sanitizedDish : item);
+  let updatedList;
+  if (isEdit && editId) {
+    updatedList = currentCategoryList.map(item => {
+      if (item.id === editId) {
+        return {
+          ...item,
+          ...dish,
+          id: editId
+        };
+      }
+      return item;
+    });
   } else {
-    updatedCategoryList = [...currentCategoryList, sanitizedDish];
+    const newDishItem = {
+      id: `${scope === 'carta' ? 'c' : 'm'}_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
+      ...dish
+    };
+    updatedList = [...currentCategoryList, newDishItem];
   }
 
   const updatedMenu = {
     ...currentMenu,
     [branchKey]: {
       ...currentBranch,
-      [category]: updatedCategoryList
+      [category]: updatedList
     }
   };
 
   return saveMenuData(updatedMenu);
 };
 
-// Operación atómica de eliminación de plato
 export const deleteDishAtomic = ({ scope, category, dishId }) => {
   const currentMenu = getMenuData();
   const branchKey = scope === 'carta' ? 'cartaData' : 'menuData';
@@ -267,7 +309,7 @@ export const deleteDishAtomic = ({ scope, category, dishId }) => {
 };
 
 // ==========================================
-// 3. CARRUSEL
+// 3. CARRUSEL DE FOTOGRAFÍAS (CRUD + SYNC)
 // ==========================================
 export const getCarouselImages = () => {
   try {
@@ -285,47 +327,5 @@ export const getCarouselImages = () => {
 export const saveCarouselImages = (images) => {
   localStorage.setItem(STORAGE_KEYS.CAROUSEL, JSON.stringify(images));
   window.dispatchEvent(new CustomEvent('veg_carousel_updated', { detail: images }));
-};
-
-// ==========================================
-// 4. PASES & TARIFAS MATRIZ REAL
-// ==========================================
-export const initialPases = {
-  pase1: { 
-    id: 'pase1', 
-    time: "19:00", 
-    name: "Primer Pase (Zambra Flamenca)", 
-    active: true, 
-    packShow: { title: "Espectáculo + Consumición", price: "25€", priceNum: 25 },
-    packDinner: { title: "Cena Gastronómica + Espectáculo", price: "55€", priceNum: 55 }
-  },
-  pase2: { 
-    id: 'pase2', 
-    time: "21:00", 
-    name: "Segundo Pase (Zambra Flamenca)", 
-    active: true, 
-    packShow: { title: "Espectáculo + Consumición", price: "25€", priceNum: 25 },
-    packDinner: { title: "Cena Gastronómica + Espectáculo", price: "55€", priceNum: 55 }
-  },
-  general: {
-    whatsappNumber: "+34958049461",
-    gtmContainerId: "GTM-T22JXC3T",
-    gtmActive: true,
-    currency: "EUR"
-  }
-};
-
-export const getPasesConfig = () => {
-  try {
-    const stored = localStorage.getItem(STORAGE_KEYS.PASES_CONFIG);
-    if (stored) return JSON.parse(stored);
-  } catch (e) {
-    console.warn('Error reading pases from localStorage:', e);
-  }
-  return initialPases;
-};
-
-export const savePasesConfig = (config) => {
-  localStorage.setItem(STORAGE_KEYS.PASES_CONFIG, JSON.stringify(config));
-  window.dispatchEvent(new CustomEvent('veg_pases_updated', { detail: config }));
+  syncWithBackend('carousel', images);
 };
