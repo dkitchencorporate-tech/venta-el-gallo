@@ -2,6 +2,7 @@ import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import MainLayout from './layouts/MainLayout';
 import AdminLayout from './layouts/AdminLayout';
+import ScrollToTop from './components/ScrollToTop';
 
 // Vistas Públicas
 import Home from './features/home/Home';
@@ -36,44 +37,47 @@ const ProtectedRoute = ({ children }) => {
 
 function App() {
   return (
-    <Routes>
-      {/* 1. Rutas Públicas */}
-      <Route path="/" element={<MainLayout />}>
-        <Route index element={<Home />} />
-        <Route path="artistas" element={<Artists />} />
-        <Route path="restaurante" element={<Restaurant />} />
-        <Route path="historia" element={<History />} />
-        <Route path="agencias" element={<Agencias />} />
-        <Route path="reservas" element={<Booking />} />
-        <Route path="blog" element={<Blog />} />
-        <Route path="aviso-legal" element={<Legal />} />
-        <Route path="privacidad" element={<Privacy />} />
-        <Route path="terminos" element={<Terms />} />
-        <Route path="alergenos" element={<Allergens />} />
-      </Route>
+    <>
+      <ScrollToTop />
+      <Routes>
+        {/* 1. Rutas Públicas */}
+        <Route path="/" element={<MainLayout />}>
+          <Route index element={<Home />} />
+          <Route path="artistas" element={<Artists />} />
+          <Route path="restaurante" element={<Restaurant />} />
+          <Route path="historia" element={<History />} />
+          <Route path="agencias" element={<Agencias />} />
+          <Route path="reservas" element={<Booking />} />
+          <Route path="blog" element={<Blog />} />
+          <Route path="aviso-legal" element={<Legal />} />
+          <Route path="privacidad" element={<Privacy />} />
+          <Route path="terminos" element={<Terms />} />
+          <Route path="alergenos" element={<Allergens />} />
+        </Route>
 
-      {/* 2. Autenticación y Seguridad del Admin */}
-      <Route path="/admin/login" element={<AdminLogin />} />
-      <Route path="/admin/reset-password" element={<AdminResetPassword />} />
+        {/* 2. Autenticación y Seguridad del Admin */}
+        <Route path="/admin/login" element={<AdminLogin />} />
+        <Route path="/admin/reset-password" element={<AdminResetPassword />} />
 
-      {/* 3. Panel de Administración Protegido */}
-      <Route
-        path="/admin"
-        element={
-          <ProtectedRoute>
-            <AdminLayout />
-          </ProtectedRoute>
-        }
-      >
-        <Route index element={<AdminDashboard />} />
-        <Route path="artistas" element={<ArtistManager />} />
-        <Route path="menu" element={<MenuManager />} />
-        <Route path="carrusel" element={<CarouselManager />} />
-      </Route>
+        {/* 3. Panel de Administración Protegido */}
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoute>
+              <AdminLayout />
+            </ProtectedRoute>
+          }
+        >
+          <Route index element={<AdminDashboard />} />
+          <Route path="artistas" element={<ArtistManager />} />
+          <Route path="menu" element={<MenuManager />} />
+          <Route path="carrusel" element={<CarouselManager />} />
+        </Route>
 
-      {/* Redirección por defecto */}
-      <Route path="*" element={<Navigate to="/" replace />} />
-    </Routes>
+        {/* Redirección por defecto */}
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </>
   );
 }
 
