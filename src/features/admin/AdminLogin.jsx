@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import logoGallo from '../../assets/raw/logoVentaelGallo.webp';
 
 const AdminLogin = () => {
-  const [email, setEmail] = useState('info@cuevaventaelgallo.es');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -79,7 +79,8 @@ const AdminLogin = () => {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="info@cuevaventaelgallo.es"
+                placeholder="tu-correo@dominio.es"
+                autoComplete="email"
                 className="w-full bg-stone-50 border border-stone-200 rounded-2xl pl-11 pr-4 py-3 text-xs text-[#1A1A1A] focus:outline-none focus:border-gold font-medium"
               />
             </div>
@@ -105,6 +106,7 @@ const AdminLogin = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••••••"
+                autoComplete="current-password"
                 className="w-full bg-stone-50 border border-stone-200 rounded-2xl pl-11 pr-4 py-3 text-xs text-[#1A1A1A] focus:outline-none focus:border-gold font-medium"
               />
             </div>
