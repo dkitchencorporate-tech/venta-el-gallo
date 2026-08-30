@@ -23,7 +23,6 @@ import AdminDashboard from './features/admin/AdminDashboard';
 import ArtistManager from './features/admin/components/ArtistManager';
 import MenuManager from './features/admin/components/MenuManager';
 import CarouselManager from './features/admin/components/CarouselManager';
-import PasesManager from './features/admin/components/PasesManager';
 
 import { useAuth } from './context/AuthContext';
 
@@ -70,7 +69,6 @@ function App() {
         <Route path="artistas" element={<ArtistManager />} />
         <Route path="menu" element={<MenuManager />} />
         <Route path="carrusel" element={<CarouselManager />} />
-        <Route path="pases" element={<PasesManager />} />
       </Route>
 
       {/* Redirección por defecto */}
