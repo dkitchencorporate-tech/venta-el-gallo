@@ -1,34 +1,25 @@
 import React, { useState } from 'react';
 import { Outlet, NavLink, useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
 import { 
-  LayoutDashboard, 
   Users2, 
   UtensilsCrossed, 
   Images, 
-  CalendarClock, 
-  ExternalLink, 
+  LayoutDashboard, 
   LogOut, 
-  Menu, 
-  X, 
+  ExternalLink,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  Menu,
+  X
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import logoGallo from '../assets/raw/logoVentaelGallo.webp';
-
-const navItems = [
-  { name: 'Panel Principal', path: '/admin', icon: LayoutDashboard, exact: true },
-  { name: 'Gestor de Artistas', path: '/admin/artistas', icon: Users2 },
-  { name: 'Carta y Menú', path: '/admin/menu', icon: UtensilsCrossed },
-  { name: 'Carrusel de Fotos', path: '/admin/carrusel', icon: Images },
-  { name: 'Pases & Tarifas', path: '/admin/pases', icon: CalendarClock },
-];
+import logoGallo from '../assets/raw/gallo-logo.png';
+import { useAuth } from '../context/AuthContext';
 
 const AdminLayout = () => {
-  const { currentUser, logout } = useAuth();
+  const [collapsed, setCollapsed] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const { logout } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -36,32 +27,73 @@ const AdminLayout = () => {
     navigate('/admin/login');
   };
 
+  const navItems = [
+    { name: 'Dashboard', path: '/admin', icon: LayoutDashboard, exact: true },
+    { name: 'Artistas', path: '/admin/artistas', icon: Users2 },
+    { name: 'Carta & Menú', path: '/admin/menu', icon: UtensilsCrossed },
+    { name: 'Carrusel de Fotos', path: '/admin/carrusel', icon: Images },
+  ];
+
   return (
-    <div className="h-screen w-full bg-[#FAF9F6] text-[#1A1A1A] flex overflow-hidden font-sans selection:bg-gold/30 selection:text-black">
+    <div className="min-h-screen bg-[#FAF9F6] text-[#1A1A1A] flex flex-col font-sans selection:bg-gold selection:text-black">
       
-      {/* 1. Sidebar Fijo de Arriba a Abajo (100vh exacto, sin cortes ni huecos) */}
-      <aside className={`hidden md:flex flex-col h-screen bg-[#0B0E14] text-white border-r border-gold/20 flex-shrink-0 transition-all duration-300 ${sidebarCollapsed ? 'w-20' : 'w-64'} justify-between p-4 z-40`}>
-        
-        {/* Parte Superior del Sidebar */}
-        <div>
-          {/* Logo y Branding */}
-          <div className="flex items-center gap-3 px-2 py-3 mb-6 border-b border-white/10">
-            <img src={logoGallo} alt="Logo" className="h-10 w-auto object-contain flex-shrink-0" />
-            {!sidebarCollapsed && (
-              <div className="truncate">
-                <span className="font-serif text-sm uppercase tracking-widest text-white font-bold block leading-tight">Venta El Gallo</span>
-                <span className="text-[10px] text-gold tracking-wider uppercase font-semibold">Admin Panel</span>
-              </div>
-            )}
-          </div>
-
-          {/* Navegación */}
-          <div className="flex flex-col gap-1.5">
-            <div className="px-3 py-2 text-[10px] uppercase font-bold tracking-[0.2em] text-gold/80 flex items-center gap-2">
-              <div className="w-2 h-[1px] bg-sacromonte-red"></div>
-              {!sidebarCollapsed && <span>Menú de Gestión</span>}
+      {/* 1. TOPBAR FIJA SUPERIOR */}
+      <header className="fixed top-0 left-0 right-0 h-16 bg-white/95 backdrop-blur-md border-b border-stone-200/80 z-30 flex items-center justify-between px-4 lg:px-8">
+        <div className="flex items-center gap-3">
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="p-2 rounded-xl text-stone-600 hover:text-black hover:bg-stone-100 lg:hidden"
+            title="Menú"
+          >
+            {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
+          
+          <div className="flex items-center gap-3">
+            <img src={logoGallo} alt="Venta El Gallo" className="h-9 w-auto drop-shadow-sm" />
+            <div>
+              <span className="font-serif font-black text-sm uppercase tracking-widest text-[#1A1A1A] block leading-none">
+                Venta El Gallo
+              </span>
+              <span className="text-[10px] tracking-[0.25em] text-gold uppercase font-bold block mt-0.5">
+                Panel de Administración
+              </span>
             </div>
+          </div>
+        </div>
 
+        <div className="flex items-center gap-3">
+          <a
+            href="#/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-full border border-stone-300 hover:border-gold text-stone-700 hover:text-black text-xs font-semibold transition-all bg-stone-50/50 hover:bg-gold/10"
+          >
+            <ExternalLink size={14} className="text-gold" />
+            <span>Ver Web Pública</span>
+          </a>
+
+          <button
+            onClick={handleLogout}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-stone-100 hover:bg-sacromonte-red/10 text-stone-700 hover:text-sacromonte-red text-xs font-semibold transition-colors"
+            title="Cerrar Sesión"
+          >
+            <LogOut size={14} />
+            <span className="hidden sm:inline">Cerrar Sesión</span>
+          </button>
+        </div>
+      </header>
+
+      {/* 2. CONTENEDOR PRINCIPAL */}
+      <div className="flex-1 pt-16 flex relative">
+        
+        {/* SIDEBAR CONTINUO 100VH FIJO (Escritorio) */}
+        <aside
+          className={`hidden lg:flex fixed top-16 bottom-0 left-0 bg-[#0B0E14] text-white flex-col justify-between border-r border-white/10 z-20 transition-all duration-300 ${
+            collapsed ? 'w-20' : 'w-64'
+          }`}
+        >
+          {/* Navegación */}
+          <div className="p-4 space-y-2">
             {navItems.map((item) => {
               const Icon = item.icon;
               return (
@@ -70,92 +102,59 @@ const AdminLayout = () => {
                   to={item.path}
                   end={item.exact}
                   className={({ isActive }) =>
-                    `flex items-center gap-3.5 px-4 py-3.5 rounded-2xl text-xs font-medium transition-all duration-200 group ${
+                    `flex items-center gap-3.5 px-4 py-3 rounded-2xl text-xs font-medium transition-all group ${
                       isActive
-                        ? 'bg-gold text-black font-bold shadow-[0_4px_15px_rgba(212,175,55,0.3)]'
-                        : 'text-stone-300 hover:text-white hover:bg-white/10'
+                        ? 'bg-gold text-black font-bold shadow-lg shadow-gold/20'
+                        : 'text-stone-300 hover:text-white hover:bg-white/5'
                     }`
                   }
+                  title={collapsed ? item.name : undefined}
                 >
-                  <Icon size={19} className="flex-shrink-0 group-hover:scale-110 transition-transform" />
-                  {!sidebarCollapsed && <span className="truncate tracking-wide">{item.name}</span>}
+                  <Icon size={18} className="flex-shrink-0" />
+                  {!collapsed && <span className="truncate">{item.name}</span>}
                 </NavLink>
               );
             })}
           </div>
-        </div>
 
-        {/* Base del Sidebar: Botón Plegar / Desplegar */}
-        <div className="pt-3 border-t border-white/10">
-          <button
-            onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
-            className="w-full py-2.5 px-3 rounded-xl text-xs text-stone-400 hover:text-gold hover:bg-white/5 transition-colors flex items-center justify-center gap-2"
-          >
-            {sidebarCollapsed ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
-            {!sidebarCollapsed && <span>Plegar Menú</span>}
-          </button>
-        </div>
-      </aside>
-
-      {/* 2. Contenedor Derecho: Topbar Fija + Main Workspace Scrollable */}
-      <div className="flex-1 flex flex-col h-screen overflow-hidden">
-        
-        {/* Topbar Fija (Nunca se mueve ni se oculta con el scroll) */}
-        <header className="h-16 bg-white/95 backdrop-blur-md border-b border-stone-200/80 px-6 md:px-8 flex items-center justify-between shadow-sm flex-shrink-0 z-30">
-          <div className="flex items-center gap-3">
-            <button
-              onClick={() => setMobileMenuOpen(true)}
-              className="md:hidden p-2 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-700 transition-colors"
-            >
-              <Menu size={20} />
-            </button>
-            <div className="flex items-center gap-2">
-              <span className="text-xs uppercase tracking-widest text-stone-400 font-semibold hidden sm:inline">Panel de Control</span>
-              <span className="text-stone-300 hidden sm:inline">/</span>
-              <span className="text-xs font-bold text-stone-700 font-serif uppercase tracking-wider">Cueva Flamenca Venta El Gallo</span>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-4">
-            <a
-              href="#/"
-              className="hidden sm:flex items-center gap-2 text-xs font-semibold text-stone-700 hover:text-gold transition-colors px-4 py-2 rounded-full bg-stone-100 hover:bg-stone-200"
-            >
-              <ExternalLink size={14} />
-              <span>Ver Web Pública</span>
-            </a>
-
-            <div className="flex items-center gap-3 pl-3 border-l border-stone-200">
-              <div className="w-8 h-8 rounded-full bg-gold/20 border border-gold/40 flex items-center justify-center text-gold font-bold text-xs">
-                {currentUser?.email ? currentUser.email.charAt(0).toUpperCase() : 'A'}
+          {/* Pie del Sidebar y Toggle de Colapso */}
+          <div className="p-4 border-t border-white/10 flex items-center justify-between">
+            {!collapsed && (
+              <div className="text-[11px] text-stone-400 font-light truncate">
+                <span className="block text-white font-medium">Sacromonte, Granada</span>
+                <span>Modo Autónomo</span>
               </div>
-              <button
-                onClick={handleLogout}
-                title="Cerrar Sesión"
-                className="p-2 rounded-lg text-stone-400 hover:text-sacromonte-red transition-colors"
-              >
-                <LogOut size={18} />
-              </button>
-            </div>
+            )}
+            <button
+              onClick={() => setCollapsed(!collapsed)}
+              className="p-2 rounded-xl bg-white/5 hover:bg-gold hover:text-black text-stone-400 transition-colors mx-auto"
+              title={collapsed ? 'Expandir Menú' : 'Colapsar Menú'}
+            >
+              {collapsed ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
+            </button>
           </div>
-        </header>
+        </aside>
 
-        {/* 3. Área de Contenido Única con Scroll Suave */}
-        <main className="flex-1 overflow-y-auto custom-scrollbar p-6 md:p-10 lg:p-12 bg-[#FAF9F6]">
+        {/* ÁREA DE CONTENIDO CON SCROLL INDEPENDIENTE */}
+        <main
+          className={`flex-1 p-6 md:p-10 transition-all duration-300 ${
+            collapsed ? 'lg:ml-20' : 'lg:ml-64'
+          }`}
+        >
           <div className="max-w-6xl mx-auto">
             <Outlet />
           </div>
         </main>
       </div>
 
-      {/* Mobile Drawer */}
+      {/* 3. MENÚ MÓVIL OVERLAY */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 md:hidden bg-black/70 backdrop-blur-md"
+            className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm lg:hidden"
             onClick={() => setMobileMenuOpen(false)}
           >
             <motion.div
