@@ -4,11 +4,10 @@ import {
   Users2, 
   UtensilsCrossed, 
   Images, 
-  CalendarClock, 
   ArrowRight
 } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { getArtists, getMenuData, getCarouselImages, getPasesConfig } from '../../services/adminService';
+import { getArtists, getMenuData, getCarouselImages } from '../../services/adminService';
 
 const AdminDashboard = () => {
   const [stats, setStats] = useState({
@@ -38,7 +37,7 @@ const AdminDashboard = () => {
     {
       title: 'Elenco de Artistas',
       subtitle: `${stats.artistsCount} Artistas en Cartelera`,
-      description: 'Añade nuevos artistas, modifica fotos, roles flamencos y biografías visibles en la web.',
+      description: 'Sube fotos directamente desde tu móvil o PC, edita biografías y actualiza el cartel flamenco en tiempo real.',
       icon: Users2,
       path: '/admin/artistas',
       btnText: 'Gestionar Artistas'
@@ -46,33 +45,25 @@ const AdminDashboard = () => {
     {
       title: 'Carta & Menús Gastronómicos',
       subtitle: `${stats.menuItemsCount} Platos Registrados`,
-      description: 'Actualiza platos, precios, temporadas de verano/invierno y tabla oficial de alérgenos.',
+      description: 'Control estricto de platos con asignación a Carta Completa o Menú Degustación, precios y alérgenos.',
       icon: UtensilsCrossed,
       path: '/admin/menu',
-      btnText: 'Gestionar Menú'
+      btnText: 'Gestionar Carta'
     },
     {
       title: 'Carrusel de Fotos',
       subtitle: `${stats.carouselCount} Fotografías Activas`,
-      description: 'Cambia el orden visual, añade nuevas tomas de gastronomía, cueva y ambiente.',
+      description: 'Sube nuevas fotografías de la cueva, cambia el orden visual y actualiza la galería de la web.',
       icon: Images,
       path: '/admin/carrusel',
       btnText: 'Gestionar Galería'
-    },
-    {
-      title: 'Horarios & Tarifas de Pases',
-      subtitle: 'Pase 1 (19:00) y Pase 2 (21:00)',
-      description: 'Ajusta los precios de los pases (Consumición: 25€ / Cena: 55€) y horarios de las funciones.',
-      icon: CalendarClock,
-      path: '/admin/pases',
-      btnText: 'Gestionar Pases'
     }
   ];
 
   return (
     <div className="space-y-10 fade-in">
       
-      {/* Header de Bienvenida Premium */}
+      {/* Header de Bienvenida Luxury */}
       <div className="border-b border-stone-200/80 pb-6">
         <div className="flex items-center gap-2 mb-2">
           <div className="w-4 h-[1px] bg-sacromonte-red"></div>
@@ -88,8 +79,8 @@ const AdminDashboard = () => {
         </p>
       </div>
 
-      {/* Grid de 4 Secciones de Gestión */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {/* Grid de Secciones de Gestión */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {managementSections.map((section, idx) => {
           const Icon = section.icon;
           return (
