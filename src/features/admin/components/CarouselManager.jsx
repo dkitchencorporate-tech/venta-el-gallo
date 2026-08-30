@@ -246,7 +246,7 @@ const CarouselManager = () => {
       </AnimatePresence>
 
       {/* Grid de Imágenes */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 w-full min-w-0">
         {images.map((img, idx) => {
           const imgSrc = resolveAssetUrl(img.src || img.url);
           return (
