@@ -13,7 +13,7 @@ import {
   X
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import logoGallo from '../assets/raw/gallo-logo.png';
+import logoGallo from '../assets/raw/logoVentaelGallo.webp';
 import { useAuth } from '../context/AuthContext';
 
 const AdminLayout = () => {
